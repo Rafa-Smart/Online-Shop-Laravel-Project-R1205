@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->foreignId('buyer_id')->constrained()->onDelete('cascade'); // pemilik wishlist
     $table->foreignId('product_id')->constrained()->onDelete('cascade'); // produk yang di wishlist
-    $table->foreignId('wishlist_category_id')->nullable()->constrained('wishlist_categories')->onDelete('set null'); // kategori wishlist
+    $table->foreignId('wishlist_category_id')->nullable()->constrained('wishlist_categories')->onDelete('cascade'); // kategori wishlist
     $table->timestamps();
 });
 

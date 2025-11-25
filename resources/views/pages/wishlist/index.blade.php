@@ -357,25 +357,8 @@
         opacity: 1;
     }
 
-    .btn-add,
-    .btn-fav {
-        background: #19253d;
-        color: #fff;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 8px rgba(25, 37, 61, 0.25);
-    }
 
-    .btn-add:hover,
-    .btn-fav:hover {
-        background: #3282b8;
-        transform: scale(1.1);
-    }
+
 
     /* ===========================
    PRODUCT INFO AREA
@@ -428,6 +411,106 @@
         color: #fbbf24;
         font-size: 0.9rem;
     }
+
+
+
+.btn-delete-wishlist {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.btn-delete-wishlist i {
+    color: #ff4d4d; /* warna merah ikon (bisa ganti) */
+    font-size: 20px;
+    transition: 0.2s;
+    /* position: relative;
+    right: 3px; */
+}
+
+.btn-delete-wishlist:hover i {
+    color: #d93636; 
+    transform: scale(1.1);
+}
+.btn-add {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add i {
+    color: #1e88e5; /* warna biru ikon (bisa diganti) */
+    font-size: 20px;
+    transition: 0.2s ease;
+    position: relative;
+    right:1px;
+    bottom:3px;
+}
+
+.btn-add:hover i {
+    color: #0d6efd;
+    transform: scale(1.1);
+}
+
+
+
+.product-card {
+    position: relative;
+    overflow: hidden;
+}
+.product-hover {
+    position: absolute;
+    right: 10px;
+    /* top: 90px; */
+    width: 42px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px 0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    height: 90px;
+
+    /* ANIMASI BARU */
+    opacity: 1;                       /* langsung kelihatan */
+    transform: translateY(40px);      /* muncul dari bawah */
+    transition: transform 0.50s ease; 
+}
+
+/* Saat hover product, batang naik */
+.product-card:hover .product-hover {
+    transform: translateY(0);         /* naik ke posisi normal */
+}
+/* Button transparan */
+.btn-add,
+.btn-delete-wishlist {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-add i,
+.btn-delete-wishlist i {
+    color: #fff;
+    font-size: 15px;
+    transition: 0.25s ease;
+}
+
+/* efek hover ikon */
+.btn-add:hover i,
+.btn-delete-wishlist:hover i {
+    transform: scale(1.15);
+    opacity: 0.8;
+}
 </style>
 <div class="container py-4">
     <div class="row justify-content-center">
@@ -548,7 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- =================== MODAL TAMBAH KATEGORI =================== -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1">
   <div class="modal-dialog">
-      <form action="{{ route('wishlist-categories.store') }}" method="POST" class="modal-content">
+      <form action="{{ route('wishlist.category.store') }}" method="POST" class="modal-content">
           @csrf
 
           <div class="modal-header">

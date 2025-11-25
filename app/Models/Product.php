@@ -78,6 +78,9 @@ public function getAverageRatingAttribute()
 
     return round($this->reviews->avg('rating'), 1);
 }
-
+public function wishlists()
+{
+    return $this->hasMany(Wishlist::class);
+}
 
 }

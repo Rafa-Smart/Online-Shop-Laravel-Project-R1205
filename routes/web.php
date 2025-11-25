@@ -146,8 +146,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
  Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('/wishlist/all', [WishlistController::class, 'allWishlist'])->name('wishlist.all');
     Route::get('/wishlist/category/{id}', [WishlistController::class, 'categoryWishlist'])->name('wishlist.category');
-    Route::get('/wishlist/create/{product_id}', [WishlistController::class, 'store'])->name('wishlist.store');
-    Route::post('/wishlist-categories', [WishlistController::class, 'storeCategory'])->name('wishlist-categories.store');
+
+
+Route::post('/wishlist/store/{product_id}', [WishlistController::class, 'store'])
+    ->name('wishlist.store');
+
+Route::post('/wishlist/category/store', [WishlistController::class, 'storeCategory'])
+    ->name('wishlist.category.store');
+
+
+Route::delete('/wishlist/product/{product_id}/delete', [WishlistController::class, 'destroyByProduct'])
+    ->name('wishlist.destroyByProduct');
+
+
+
+
       Route::get('/wishlist/category/detail/{id}', [WishlistController::class, 'categoryDetailPage'])->name('wishlist.category.detail');
+
+
+
+
+
+      Route::get('/api/wishlist/categories', function() {
+    $categories = auth()->user()->buyer->wishlistCategories()->get();
+    return response()->json(['categories' => $categories]);
+});
+
 
 });

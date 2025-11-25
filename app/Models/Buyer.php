@@ -39,12 +39,13 @@ class Buyer extends Model
     {
         return $this->hasMany(Comment::class);
     }
-        public function wishlists()
+public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
-    }   
+    }
 
-            public function wishlistCategories()
+    // Buyer punya banyak kategori wishlist
+    public function wishlistCategories()
     {
         return $this->hasMany(WishlistCategory::class);
     }

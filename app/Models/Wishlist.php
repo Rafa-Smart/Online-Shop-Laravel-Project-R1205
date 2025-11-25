@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wishlist extends Model
 {
-    protected $fillable = ['buyer_id', 'product_id'];
+    protected $fillable = ['buyer_id', 'product_id','wishlist_category_id'];
 
     public function buyer()
     {

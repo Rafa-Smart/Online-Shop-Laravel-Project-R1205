@@ -599,16 +599,25 @@
                                                     <a href="{{ route('addCart', $product->id) }}" class="btn-add">
                                                         <i class="fas fa-shopping-cart"></i>
                                                     </a>
-                                                    <a href="{{ route('wishlist.store',['product_id'=>$product->id]) }}" class="btn-fav">
+                                                    <a href="#" class="btn-fav" data-bs-toggle="modal"
+                                                        data-bs-target="#wishlistModal"
+                                                        data-product-id="{{ $product->id }}">
                                                         <i class="fas fa-heart"></i>
                                                     </a>
+
                                                 </div>
                                             </div>
 
                                             <div class="product-info">
-                                                <a href="#" class="product-category">
-                                                    {{ $product->category->category_name ?? 'Uncategorized' }}
-                                                </a>
+
+
+
+
+
+
+
+
+
                                                 <h5 class="product-name">{{ $product->product_name }}</h5>
 
                                                 <div class="product-sales-info mt-1 mb-2">
@@ -1647,6 +1656,140 @@
     </div> --}}
         <!-- Bestseller Products End -->
     </div>
+
+    <!-- Modal Wishlist -->
+    <div class="modal fade" id="wishlistModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                @php
+                    $categories = auth()->user()->buyer->wishlistCategories;
+                @endphp
+
+                <!-- Jika belum punya category -->
+                @if ($categories->count() == 0)
+                    <div class="modal-header">
+                        <h5 class="modal-title">Buat Kategori Wishlist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Kamu belum mempunyai kategori wishlist. Buat dulu ya!</p>
+
+                        <form action="{{ route('wishlist.category.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label>Nama Kategori</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Deskripsi</label>
+                                <textarea name="description" class="form-control" required></textarea>
+                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit">
+                                Buat Kategori
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <!-- Jika sudah ada category -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pilih Kategori Wishlist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <form id="wishlistForm" method="POST" action="{{ route("wishlist.category.store") }}">
+                        @csrf
+                        <div class="modal-body">
+
+                            <input type="hidden" id="wishlistProductId">
+
+                            <label>Pilih kategori:</label>
+                            <select name="wishlist_category_id" class="form-control" required>
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary w-100">Tambahkan ke Wishlist</button>
+                        </div>
+                    </form>
+
+                @endif
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('wishlistModal');
+
+            modal.addEventListener('show.bs.modal', function(event) {
+                const button = event.relatedTarget;
+                const productId = button.getAttribute('data-product-id');
+
+                const form = document.getElementById('wishlistForm');
+
+                if (form) {
+                    form.action = "/wishlist/store/"+productId;
+                }
+            });
+        });
+
+        let selectedProductId = null;
+
+        function openWishlistModal(productId) {
+            selectedProductId = productId;
+
+            const categories = @json(auth()->user()->buyer->wishlistCategories);
+
+            document.querySelector('#choose-category-box').classList.add('d-none');
+            document.querySelector('#no-category-box').classList.add('d-none');
+            document.querySelector('#add-category-box').classList.add('d-none');
+
+            // Jika kategori kosong
+            if (categories.length === 0) {
+                document.querySelector('#no-category-box').classList.remove('d-none');
+            } else {
+                let html = "";
+                categories.forEach(cat => {
+                    html += `
+                <div class="form-check mb-2">
+                    <input type="radio" name="wishlist_category_id" class="form-check-input" value="${cat.id}">
+                    <label class="form-check-label">${cat.name}</label>
+                </div>
+            `;
+                });
+
+                document.querySelector('#category-list').innerHTML = html;
+
+                let form = document.querySelector('#choose-category-box');
+                form.action = "/wishlist/store/" + selectedProductId;
+
+                form.classList.remove('d-none');
+            }
+
+            new bootstrap.Modal(document.getElementById('wishlistModal')).show();
+        }
+
+        function showCategoryForm() {
+            document.querySelector('#choose-category-box').classList.add('d-none');
+            document.querySelector('#no-category-box').classList.add('d-none');
+            document.querySelector('#add-category-box').classList.remove('d-none');
+        }
+
+        function showCategoryChoose() {
+            openWishlistModal(selectedProductId);
+        }
+    </script>
+
 
 @endsection
 

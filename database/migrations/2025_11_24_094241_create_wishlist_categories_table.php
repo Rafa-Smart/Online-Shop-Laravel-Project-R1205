@@ -15,7 +15,7 @@ return new class extends Migration
     $table->id();
     $table->foreignId('buyer_id')->constrained()->onDelete('cascade'); // pemilik kategori
     $table->string('name');
-    $table->text('descriptipn');
+    $table->text('description');
     $table->timestamps();
 });
 

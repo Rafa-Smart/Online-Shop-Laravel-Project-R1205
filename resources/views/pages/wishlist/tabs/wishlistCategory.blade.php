@@ -15,7 +15,7 @@
 
 @if ($categories->sum(fn($c) => $c->wishlists->count()) === 0)
     <div class="alert alert-info text-center py-4">
-        <strong>Anda belum memiliki wishlist</strong>
+        <strong>Anda belum memiliki category wishlist</strong>
     </div>
 @else
     @foreach($categories as $category)

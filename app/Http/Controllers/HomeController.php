@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductPhoto;
+use App\Models\WishlistCategory;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 use Illuminate\Support\Carbon;
@@ -81,9 +82,14 @@ class HomeController
                      ->get()
                      ->take(5);
 
+
+        $categorie_wishlist = WishlistCategory::where('buyer_id', auth()->user()->buyer->id)
+                    
+                     ->get();
+
         session(['carts' => $carts]);
 
-        return view('pages.home', ['products' => $products]);
+        return view('pages.home', ['products' => $products, 'categories'=>$categorie_wishlist]);
     }
 
     public function getDetailProduct($id)
