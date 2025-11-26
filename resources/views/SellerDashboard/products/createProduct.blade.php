@@ -38,6 +38,34 @@
         </select>
     </div>
 
+    {{-- KONDISI PRODUK --}}
+<div class="mb-3">
+    <label class="form-label fw-bold">Kondisi Produk</label> <br>
+
+    <label class="me-3">
+        <input type="radio" name="condition" value="new" checked>
+        Barang Baru
+    </label>
+
+    <label>
+        <input type="radio" name="condition" value="used">
+        Barang Bekas
+    </label>
+</div>
+
+{{-- HARGA AWAL --}}
+<div class="mb-3">
+    <label class="form-label">Harga Awal (sebelum diskon) — optional</label>
+    <input type="number" name="starting_price" class="form-control">
+</div>
+
+{{-- HARGA SETELAH DISKON --}}
+<div class="mb-3">
+    <label class="form-label">Harga Setelah Diskon</label>
+    <input type="number" name="price" class="form-control" required>
+</div>
+
+
     {{-- THUMBNAIL UPLOAD --}}
     <div class="mb-3">
         <label class="form-label">Thumbnail Produk</label>

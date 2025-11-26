@@ -62,6 +62,37 @@
             @endforeach
         </select>
     </div>
+    {{-- KONDISI PRODUK --}}
+<div class="mb-3">
+    <label class="form-label fw-bold">Kondisi Produk</label><br>
+
+    <label class="me-3">
+        <input type="radio" name="condition" value="new"
+            {{ $product->condition == 'new' ? 'checked' : '' }}>
+        Barang Baru
+    </label>
+
+    <label>
+        <input type="radio" name="condition" value="used"
+            {{ $product->condition == 'used' ? 'checked' : '' }}>
+        Barang Bekas
+    </label>
+</div>
+
+{{-- HARGA AWAL --}}
+<div class="mb-3">
+    <label class="form-label fw-bold">Harga Awal (sebelum diskon)</label>
+    <input type="number" name="starting_price" class="form-control"
+           value="{{ old('starting_price', $product->starting_price) }}">
+</div>
+
+{{-- HARGA DISKON (price) --}}
+<div class="mb-3">
+    <label class="form-label fw-bold">Harga Setelah Diskon</label>
+    <input type="number" name="price" class="form-control"
+           value="{{ old('price', $product->price) }}" required>
+</div>
+
 
     {{-- THUMBNAIL --}}
     <div class="mb-3">

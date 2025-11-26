@@ -65,14 +65,16 @@ class ProductController extends Controller
 public function store(Request $request)
 {
     $request->validate([
-        'product_name' => 'required|string|max:255',
-        'price' => 'required|integer',
-        'stock' => 'required|integer',
-        'category_id' => 'required|integer',
-        'thumbnail' => 'required|image|mimes:jpg,jpeg,png,webp',
-        'detail_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-        'specifications' => 'nullable|array',
-    ]);
+    'product_name' => 'required|string|max:255',
+    'starting_price' => 'nullable|integer',
+    'price' => 'required|integer',
+    'stock' => 'required|integer',
+    'condition' => 'required|in:new,used',
+    'category_id' => 'required|integer',
+    'thumbnail' => 'required|image|mimes:jpg,jpeg,png,webp',
+    'detail_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+]);
+
 
     // =============================
     // 1. Upload thumbnail dulu
@@ -96,14 +98,17 @@ public function store(Request $request)
     // =============================
 
     $product = Product::create([
-        'seller_id' => auth()->user()->seller->id,
-        'category_id' => $request->category_id,
-        'product_name' => $request->product_name,
-        'price' => $request->price,
-        'stock' => $request->stock,
-        'product_specifications' => $request->specifications,
-        'img' => $thumbnailPath, // <-- aman karena sudah ada sebelum insert
-    ]);
+    'seller_id' => auth()->user()->seller->id,
+    'category_id' => $request->category_id,
+    'product_name' => $request->product_name,
+    'starting_price' => $request->starting_price, // harga awal
+    'price' => $request->price, // harga setelah diskon
+    'stock' => $request->stock,
+    'condition' => $request->condition, // NEW / USED
+    'product_specifications' => $request->specifications,
+    'img' => $thumbnailPath,
+]);
+
 
     // =============================
     // 3. Simpan detail photos (jika ada)
@@ -157,16 +162,16 @@ public function update(Request $request, $id)
 {
     $product = Product::findOrFail($id);
 
-    $request->validate([
-        'product_name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'price' => 'required|integer',
-        'stock' => 'required|integer',
-        'category_id' => 'required|integer',
-        'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-        'detail_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-        'specifications' => 'nullable|array',
-    ]);
+$request->validate([
+    'product_name' => 'required|string|max:255',
+    'description' => 'required|string',
+    'starting_price' => 'nullable|integer',
+    'price' => 'required|integer',
+    'stock' => 'required|integer',
+    'condition' => 'required|in:new,used',
+    'category_id' => 'required|integer',
+    'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+]);
 
     // === THUMBNAIL UPDATE ===
     if ($request->hasFile('thumbnail')) {
@@ -180,14 +185,16 @@ public function update(Request $request, $id)
     }
 
     // === UPDATE DATA UTAMA ===
-    $product->update([
-        'product_name' => $request->product_name,
-        'description' => $request->description,
-        'category_id' => $request->category_id,
-        'price' => $request->price,
-        'stock' => $request->stock,
-        'product_specifications' => $request->specifications,
-    ]);
+$product->update([
+    'product_name' => $request->product_name,
+    'description' => $request->description,
+    'category_id' => $request->category_id,
+    'starting_price' => $request->starting_price,
+    'price' => $request->price,
+    'stock' => $request->stock,
+    'condition' => $request->condition,
+    'product_specifications' => $request->specifications,
+]);
 
     // === DETAIL PHOTOS UPDATE (TAMBAH BARU) ===
     if ($request->hasFile('detail_photos')) {

@@ -17,6 +17,8 @@ protected $fillable = [
     'price',
     'stock',
     'img',
+    'starting_price',
+    'condition',
     'product_specifications', // ← WAJIB TAMBAH INI
 ];
 

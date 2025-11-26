@@ -23,7 +23,8 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('starting_price')->nullable();
             $table->integer('stock');
-            $table->boolean('is_new')->default(1);
+            $table->enum('condition', ['new', 'used'])->default('new');
+
             $table->text('img'); // gambar utama (opsional)
             $table->json('product_specifications')->nullable();
             $table->float('average_rating')->default(0);
