@@ -1700,7 +1700,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form id="wishlistForm" method="POST" action="{{ route("wishlist.category.store") }}">
+                    <form id="wishlistForm" method="POST" action="{{ route('wishlist.category.store') }}">
                         @csrf
                         <div class="modal-body">
 
@@ -1738,7 +1738,7 @@
                 const form = document.getElementById('wishlistForm');
 
                 if (form) {
-                    form.action = "/wishlist/store/"+productId;
+                    form.action = "/wishlist/store/" + productId;
                 }
             });
         });

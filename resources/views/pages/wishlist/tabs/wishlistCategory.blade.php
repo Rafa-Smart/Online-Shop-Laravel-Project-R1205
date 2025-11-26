@@ -29,10 +29,11 @@
             @foreach($category->wishlists as $wishlist)
                 @php $product = $wishlist->product; @endphp
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3" >
                     <div class="card shadow-sm border-0 horizontal-card">
 
-                        <div class="row g-0">
+                        <div class="row g-0" onclick="window.location='{{ route('wishlist.category.detail', ['id' => $wishlist->id]) }}'"
+>
                             
                             {{-- IMAGE --}}
                             <div class="col-4">
