@@ -121,7 +121,7 @@ class SellerProfileController extends Controller
 
         // Hapus foto jika ada
         if ($seller && $seller->img) {
-            Storage::disk('public')->delete('profile_photos/'.$seller->img);
+            Storage::disk('public')->delete('seller_images/'.$seller->img);
         }
 
         // Hapus seller
@@ -134,5 +134,9 @@ class SellerProfileController extends Controller
         Auth::logout();
 
         return redirect('/')->with('success', 'Akun berhasil dihapus.');
+    }
+
+    public function logout(){
+        
     }
 }

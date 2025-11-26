@@ -1,20 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardSellerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\SellerController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerProfileController;
-use App\Http\Controllers\DashboardSellerController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -105,8 +105,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/profile/delete-account', [ProfileController::class, 'deleteAccount'])
         ->name('profile.deleteAccount');
 
-
-
     // ini buat profile seller
 
     Route::get('seller/profile', [SellerProfileController::class, 'index'])
@@ -140,37 +138,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/product/{id}/review', [ReviewController::class, 'store'])
         ->name('product.review');
 
-
-
     // wishlist
- Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::get('/wishlist/all', [WishlistController::class, 'allWishlist'])->name('wishlist.all');
     Route::get('/wishlist/category/{id}', [WishlistController::class, 'categoryWishlist'])->name('wishlist.category');
 
+    Route::post('/wishlist/store/{product_id}', [WishlistController::class, 'store'])
+        ->name('wishlist.store');
 
-Route::post('/wishlist/store/{product_id}', [WishlistController::class, 'store'])
-    ->name('wishlist.store');
+    Route::post('/wishlist/category/store', [WishlistController::class, 'storeCategory'])
+        ->name('wishlist.category.store');
 
-Route::post('/wishlist/category/store', [WishlistController::class, 'storeCategory'])
-    ->name('wishlist.category.store');
+    Route::delete('/wishlist/product/{product_id}/delete', [WishlistController::class, 'destroyByProduct'])
+        ->name('wishlist.destroyByProduct');
 
+    Route::get('/wishlist/category/detail/{id}', [WishlistController::class, 'categoryDetailPage'])->name('wishlist.category.detail');
 
-Route::delete('/wishlist/product/{product_id}/delete', [WishlistController::class, 'destroyByProduct'])
-    ->name('wishlist.destroyByProduct');
+    Route::get('/api/wishlist/categories', function () {
+        $categories = auth()->user()->buyer->wishlistCategories()->get();
 
+        return response()->json(['categories' => $categories]);
+    });
 
-
-
-      Route::get('/wishlist/category/detail/{id}', [WishlistController::class, 'categoryDetailPage'])->name('wishlist.category.detail');
-
-
-
-
-
-      Route::get('/api/wishlist/categories', function() {
-    $categories = auth()->user()->buyer->wishlistCategories()->get();
-    return response()->json(['categories' => $categories]);
-});
-
+    
+Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])->name('seller.logout');
 
 });

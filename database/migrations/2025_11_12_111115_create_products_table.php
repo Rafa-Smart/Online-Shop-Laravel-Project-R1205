@@ -12,23 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('seller_id')
-        ->constrained('sellers')
-        ->cascadeOnDelete();
-    $table->foreignId('category_id')
-        ->constrained('categories')
-        ->cascadeOnDelete();
-    $table->string('product_name');
-    $table->integer('price');
-    $table->integer('stock');
-    $table->text('img'); // gambar utama (opsional)
-    $table->json('product_specifications')->nullable();
-    $table->float('average_rating')->default(0);
-$table->integer('rating_count')->default(0);
+            $table->id();
+            $table->foreignId('seller_id')
+                ->constrained('sellers')
+                ->cascadeOnDelete();
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->cascadeOnDelete();
+            $table->string('product_name');
+            $table->integer('price');
+            $table->integer('starting_price')->nullable();
+            $table->integer('stock');
+            $table->boolean('is_new')->default(1);
+            $table->text('img'); // gambar utama (opsional)
+            $table->json('product_specifications')->nullable();
+            $table->float('average_rating')->default(0);
+            $table->integer('rating_count')->default(0);
 
-    $table->timestamps();
-});
+            $table->timestamps();
+        });
 
     }
 

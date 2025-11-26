@@ -246,7 +246,7 @@ $orders = App\Models\Order::where('seller_id', auth()->user()->seller->id)
                 <i class="bi bi-person-circle me-1"></i> Profil Toko
             </a>
 
-            <a href="{{ route('logout') }}" class="btn btn-outline-danger w-100">
+            <a href="{{ route('seller.logout') }}" class="btn btn-outline-danger w-100">
                 <i class="bi bi-box-arrow-right me-1"></i> Logout
             </a>
         </li>
