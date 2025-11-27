@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DashboardSellerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
-use App\Http\Controllers\SellerProfileController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\SellerProfileController;
+use App\Http\Controllers\DashboardSellerController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -162,5 +163,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     
 Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])->name('seller.logout');
+
+//  Route::resource('ads', AdController::class);
+ Route::get('/seller/ads', [AdController::class, 'index'])->name('ads.index');
+ Route::get('/seller/ads/create', [AdController::class, 'create'])->name('ads.create');
+ Route::post('/seller/ads/store', [AdController::class, 'store'])->name('ads.store');
 
 });

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ad;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductPhoto;
-use App\Models\WishlistCategory;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 use Illuminate\Support\Carbon;
+use App\Models\WishlistCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,7 +90,11 @@ class HomeController
 
         session(['carts' => $carts]);
 
-        return view('pages.home', ['products' => $products, 'categories'=>$categorie_wishlist]);
+
+        $ads = Ad::where('is_active', true)->with('product')->get();
+        // return $ads;
+
+        return view('pages.home', ['products' => $products, 'categories'=>$categorie_wishlist, 'ads' =>$ads]);
     }
 
     public function getDetailProduct($id)

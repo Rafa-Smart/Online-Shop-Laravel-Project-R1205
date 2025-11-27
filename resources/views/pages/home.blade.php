@@ -385,6 +385,82 @@
         color: #fbbf24;
         font-size: 0.9rem;
     }
+
+    .header-carousel-item {
+        padding-top:-90px;
+        position:relative;
+        top:-48px;
+    }
+    .tulisan-gede{
+        font-size: 2rem;
+    }
+
+    .carousel-item-wrapper {
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        padding: 50px 0;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .carousel-img-container {
+        width: 100%;
+        max-width: 450px;
+        /* height: 450px; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+
+    .carousel-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* gambar proporsional */
+        background: transparent;
+    }
+
+    .carousel-content h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .carousel-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .btn-cta {
+        background: #007bff;
+        border-radius: 50px;
+        padding: 14px 35px;
+        font-size: 1.1rem;
+        transition: 0.3s;
+    }
+
+    .btn-cta:hover {
+        background: #0056d2;
+        transform: translateY(-3px);
+    }
+
+    /* ANIMATION */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .carousel-item-wrapper {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .carousel-content h1 {
+            font-size: 2.2rem;
+        }
+    }
 </style>
 
 
@@ -396,61 +472,70 @@
     <div class="content-section">
 
         <!-- Carousel Start -->
-        {{-- <div class="container-fluid carousel bg-light px-0">
-        <div class="row g-0 justify-content-end">
-            <div class="col-12 col-lg-7 col-xl-9">
-                <div class="header-carousel owl-carousel bg-light py-5">
-                    <div class="row g-0 header-carousel-item align-items-center">
-                        <div class="col-xl-6 carousel-img wow fadeInLeft" data-wow-delay="0.1s">
-                            <img src="img/carousel-1.png" class="img-fluid w-100" alt="Image">
-                        </div>
-                        <div class="col-xl-6 carousel-content p-4">
-                            <h4 class="text-uppercase fw-bold mb-4 wow fadeInRight" data-wow-delay="0.1s"
-                                style="letter-spacing: 3px;">Save Up To A $400</h4>
-                            <h1 class="display-3 text-capitalize mb-4 wow fadeInRight" data-wow-delay="0.3s">On Selected
-                                Laptops & Desktop Or Smartphone</h1>
-                            <p class="text-dark wow fadeInRight" data-wow-delay="0.5s">Terms and Condition Apply</p>
-                            <a class="btn btn-primary rounded-pill py-3 px-5 wow fadeInRight" data-wow-delay="0.7s"
-                                href="#">Shop Now</a>
-                        </div>
-                    </div>
-                    <div class="row g-0 header-carousel-item align-items-center">
-                        <div class="col-xl-6 carousel-img wow fadeInLeft" data-wow-delay="0.1s">
-                            <img src="img/carousel-2.png" class="img-fluid w-100" alt="Image">
-                        </div>
-                        <div class="col-xl-6 carousel-content p-4">
-                            <h4 class="text-uppercase fw-bold mb-4 wow fadeInRight" data-wow-delay="0.1s"
-                                style="letter-spacing: 3px;">Save Up To A $200</h4>
-                            <h1 class="display-3 text-capitalize mb-4 wow fadeInRight" data-wow-delay="0.3s">On Selected
-                                Laptops & Desktop Or Smartphone</h1>
-                            <p class="text-dark wow fadeInRight" data-wow-delay="0.5s">Terms and Condition Apply</p>
-                            <a class="btn btn-primary rounded-pill py-3 px-5 wow fadeInRight" data-wow-delay="0.7s"
-                                href="#">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay="0.1s">
-                <div class="carousel-header-banner h-100">
-                    <img src="img/header-img.jpg" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Image">
-                    <div class="carousel-banner-offer">
-                        <p class="bg-primary text-white rounded fs-5 py-2 px-4 mb-0 me-3">Save $48.00</p>
-                        <p class="text-primary fs-5 fw-bold mb-0">Special Offer</p>
-                    </div>
-                    <div class="carousel-banner">
-                        <div class="carousel-banner-content text-center p-4">
-                            <a href="#" class="d-block mb-2">SmartPhone</a>
-                            <a href="#" class="d-block text-white fs-3">Apple iPad Mini <br> G2356</a>
-                            <del class="me-2 text-white fs-5">$1,250.00</del>
-                            <span class="text-primary fs-5">$1,050.00</span>
-                        </div>
-                        <a href="#" class="btn btn-primary rounded-pill py-2 px-4"><i
-                                class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                    </div>
-                </div>
+        <div class="container-fluid carousel bg-light px-0" id="carousel">
+    <div class="row g-0 justify-content-end">
+
+        <!-- LEFT PART FULL WIDTH -->
+        <div class="col-12">
+            <div class="header-carousel owl-carousel bg-light ">
+                
+                <!-- ITEM 1 -->
+@foreach ($ads as $ad)
+    <div class="row g-0 carousel-item-wrapper">
+
+        <!-- LEFT IMAGE -->
+        <div class="col-xl-6">
+            <div class="carousel-img-container">
+                <img src="{{ asset('storage/'.$ad->bg_image) }}" alt="Ad Image">
             </div>
         </div>
-    </div> --}}
+
+        <!-- RIGHT CONTENT -->
+        <div class="col-xl-6 carousel-content px-5">
+            <h4 class="text-uppercase fw-bold text-primary mb-3">
+                {{ $ad->title }}
+            </h4>
+
+            <h1 class="mb-4">
+                {{ $ad->headline }}
+            </h1>
+ 
+            <p class="mb-4 ">
+                {{ $ad->description }}
+            </p>
+
+            <a href="{{ $ad->button_link }}" class="btn btn-cta">
+                {{ $ad->button_text }}
+            </a>
+        </div>
+
+    </div>
+@endforeach
+
+
+                <!-- ITEM 2 -->
+                <div class="row g-0 header-carousel-item align-items-center">
+                    <div class="col-xl-6 carousel-img wow fadeInLeft" data-wow-delay="0.1s">
+                        <img src="img/carousel-2.png" class="img-fluid w-100" alt="Image">
+                    </div>
+                    <div class="col-xl-6 carousel-content p-4">
+                        <h4 class="text-uppercase fw-bold mb-4 wow fadeInRight" data-wow-delay="0.1s"
+                            style="letter-spacing: 3px;">Save Up To A $200</h4>
+                        <h1 class="display-3 text-capitalize mb-4 wow fadeInRight" data-wow-delay="0.3s">
+                            On Selected Laptops & Desktop Or Smartphone
+                        </h1>
+                        <p class="text-dark wow fadeInRight" data-wow-delay="0.5s">Terms and Condition Apply</p>
+                        <a class="btn btn-primary rounded-pill py-3 px-5 wow fadeInRight" data-wow-delay="0.7s"
+                            href="#">Shop Now</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
         <!-- Carousel End -->
         <!-- Searvices Start -->
         {{-- <div class="container-fluid px-0">
@@ -522,7 +607,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+        </div> --}}
         <!-- Searvices End -->
         <!-- Products Offer Start -->
         {{-- <div class="container-fluid bg-light py-5">
@@ -552,7 +637,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+        </div> --}}
         <!-- Products Offer End -->
         <!-- Our Products Start -->
 
@@ -1700,7 +1785,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <form id="wishlistForm" method="POST" action="{{ route("wishlist.category.store") }}">
+                    <form id="wishlistForm" method="POST" action="{{ route('wishlist.category.store') }}">
                         @csrf
                         <div class="modal-body">
 
@@ -1738,7 +1823,7 @@
                 const form = document.getElementById('wishlistForm');
 
                 if (form) {
-                    form.action = "/wishlist/store/"+productId;
+                    form.action = "/wishlist/store/" + productId;
                 }
             });
         });

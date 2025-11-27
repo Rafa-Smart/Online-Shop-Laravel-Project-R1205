@@ -64,7 +64,7 @@ class SellerProfileController extends Controller
 
         // Hapus foto lama jika ada
         if ($seller->img) {
-            Storage::disk('public')->delete('profile_photos/'.$seller->img);
+            Storage::disk('public')->delete('seller_images/'.$seller->img);
         }
 
         // Nama file sesuai nama toko
@@ -72,7 +72,7 @@ class SellerProfileController extends Controller
         $filename = str_replace(' ', '_', strtolower($seller->store_name)).'.'.$extension;
 
         // Simpan
-        $request->photo->storeAs('profile_photos', $filename, 'public');
+        $request->photo->storeAs('seller_images', $filename, 'public');
 
         $seller->update([
             'img' => $filename,
@@ -137,6 +137,6 @@ class SellerProfileController extends Controller
     }
 
     public function logout(){
-        
+
     }
 }
