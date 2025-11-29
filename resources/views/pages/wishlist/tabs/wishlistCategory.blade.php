@@ -47,12 +47,12 @@
                             <div class="col-8">
                                 <div class="card-body">
 
-                                    <h5 class="card-title mb-1">
-                                        {{ $product->product_name ?? 'Nama produk tidak tersedia' }}
-                                    </h5>
+                                    <h5 class="card-title mb-1">    
+                                        {{$namaXdescriptionWishlistCategory->name ?? 'Kategori Tidak Ditemukan' }}
+                                    </h5>   
 
                                     <p class="card-text small text-muted mb-2">
-                                        {{ Str::limit($product->description ?? 'Tidak ada deskripsi', 60) }}
+                                        {{ Str::limit($namaXdescriptionWishlistCategory->description ?? 'Tidak ada deskripsi', 60) }}
                                     </p>
 
                                     <p class="card-text fw-bold text-danger">

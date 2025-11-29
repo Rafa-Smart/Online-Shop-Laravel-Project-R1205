@@ -18,6 +18,7 @@ use App\Http\Controllers\SellerProfileController;
 use App\Http\Controllers\DashboardSellerController;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CustomerInsightsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -163,6 +164,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return response()->json(['categories' => $categories]);
     });
 
+    Route::delete('wishlist-category/{id}/delete', [WishlistController::class, 'destroyCategory'])
+        ->name('wishlist.category.destroy');
+    Route::put('wishlist-category/{id}/update', [WishlistController::class, 'updateCategory'])
+        ->name('wishlist.category.update');
+
     
 Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])->name('seller.logout');
 
@@ -173,8 +179,20 @@ Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])-
 
 
     // midtrans
-    Route::post('/checkout', [CheckoutController::class, 'checkout']);
-Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']);
 
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store'); // sesuai form mu
+Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']); // callback endpoint
+Route::get('/payment/finish', [\App\Http\Controllers\PaymentController::class, 'finish'])
+    ->name('payment.finish');
+
+Route::get('/payment/error', [\App\Http\Controllers\PaymentController::class, 'error'])
+    ->name('payment.error');
+
+Route::get('/payment/pending', function () {
+    return view('payment.pending');
+})->name('payment.pending');
+
+Route::get('/seller/customer-insights', [CustomerInsightsController::class, 'index'])
+        ->name('seller.customer.insights');
 
 });

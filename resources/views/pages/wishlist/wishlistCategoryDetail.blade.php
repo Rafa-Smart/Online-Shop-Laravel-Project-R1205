@@ -331,8 +331,8 @@
         }
 
         /* ===========================
-           IMAGE AREA
-           =========================== */
+                       IMAGE AREA
+                       =========================== */
         .product-image {
             position: relative;
             overflow: hidden;
@@ -384,8 +384,8 @@
 
 
         /* ===========================
-           PRODUCT INFO AREA
-           =========================== */
+                       PRODUCT INFO AREA
+                       =========================== */
         .product-info {
             padding: 1rem 1.2rem 1.5rem;
             text-align: center;
@@ -450,7 +450,7 @@
             font-size: 20px;
             transition: 0.2s;
             /* position: relative;
-            right: 3px; */
+                        right: 3px; */
         }
 
         .btn-delete-wishlist:hover i {
@@ -545,22 +545,18 @@
     </style>
     <div class="container py-4">
         <div class="row justify-content-center">
-
             <div class="col-md-10">
-
                 <div class="d-flex justify-content-between mb-3">
                     <h3 class="fw-bold">Wishlist</h3>
-
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                        + Tambah Kategori
-                    </button>
                 </div>
 
-                {{-- ================= TAB ATAS ALA TOKOPEDIA ================= --}}
+                {{-- ================= TAB ATAS ================= --}}
+                <?php
+                $nameWishlistCategory = \App\Models\WishlistCategory::where('buyer_id', auth()->user()->buyer->id)->first()->name ?? 'Kategori Tidak Ditemukan';
+                ?>
 
                 <div class="top-tabs">
-                    <div class="top-tab active" data-tab="all">Wishlist -> category wishlist</div>
-
+                    <div class="top-tab active" data-tab="all">Wishlist -> {{ $nameWishlistCategory }}</div>
 
                     @foreach ($categories as $category)
                         <div class="top-tab" data-tab="{{ $category->id }}">
@@ -568,11 +564,13 @@
                         </div>
                     @endforeach
 
-
+                    <!-- TAB SETTINGS -->
+                    <div class="top-tab" data-tab="settings">
+                        Settings
+                    </div>
 
                     <div class="tab-indicator" id="indicator"></div>
                 </div>
-
 
                 {{-- ================= ALL WISHLIST TAB ================= --}}
                 <div id="content-all" class="tab-content active">
@@ -582,10 +580,7 @@
                         </div>
                     @else
                         <div class="row g-4">
-
                             @foreach ($products as $product)
-                                {{-- {{ dd($product) }} --}}
-
                                 <div class="col-md-6 col-lg-4 col-xl-3">
                                     <div class="product-card">
                                         <div class="product-image">
@@ -616,24 +611,21 @@
                                             <h5 class="product-name">{{ $product->product_name }}</h5>
 
                                             <div class="product-sales-info mt-1 mb-2">
-
                                                 @if (isset($product->monthly_sales) && $product->monthly_sales > 0)
                                                     <p class="text-success mb-0" style="font-size: 0.85rem;">
                                                         <i class="fas fa-fire"></i> Terjual
-                                                        {{ number_format((int) $product->monthly_sales) }} kali bulan
-                                                        ini
+                                                        {{ number_format((int) $product->monthly_sales) }} kali bulan ini
                                                     </p>
                                                 @endif
-
                                                 @if (isset($product->total_sales) && $product->total_sales > 0)
                                                     <p class="text-muted mb-0" style="font-size: 0.75rem;">
                                                         Total terjual: {{ number_format((int) $product->total_sales) }}
                                                     </p>
                                                 @endif
                                             </div>
+
                                             <div class="product-pricing">
                                                 @php
-                                                    // Ambil harga yang sudah disiapkan di Controller
                                                     $originalPrice = (int) $product->original_price;
                                                     $currentPrice = (int) $product->price;
                                                     $isDiscounted = $originalPrice > $currentPrice;
@@ -653,7 +645,6 @@
                                                 @else
                                                     <span class="price-old" style="visibility: hidden;">&nbsp;</span>
                                                 @endif
-
                                                 <span class="price-new">
                                                     Rp.{{ number_format($currentPrice, 0, ',', '.') }}
                                                 </span>
@@ -670,53 +661,97 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <!-- Pagination -->
-                            {{-- <div class="mt-5 d-flex justify-content-center">
-            <div class="pagination-wrapper">
-                {{ $products->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
-            </div>
-        </div> --}}
-
                         </div>
                     @endif
                 </div>
 
-                {{-- <div id="content-horizontal" class="tab-content">
-                    @include('pages.wishlist.tabs.wishlistCategory')
-                </div> --}}
+                {{-- ================= SETTINGS TAB ================= --}}
+                <div id="content-settings" class="tab-content">
+                    <h4 class="mb-3">Kelola Kategori Wishlist</h4>
 
-                {{-- ================= CATEGORY WISHLIST TABS ================= --}}
-                {{-- @foreach ($categories as $category)
-                    <div id="content-{{ $category->id }}" class="tab-content">
+                    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                        + Tambah Kategori
+                    </button>
 
-                        <div class="row">
-                            @foreach ($category->wishlists as $wishlist)
-                                <div class="col-md-4 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Kategori</th>
+                                <th>Deskripsi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($categoryWishlist as $index => $category)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $category->category->name }}</td>
+                                    <td>{{ $category->category->description }}</td>
+                                    <td>
+                                        <!-- EDIT BUTTON -->
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#editCategoryModal{{ $category->id }}">
+                                            Edit
+                                        </button>
 
-                                            <h5 class="card-title">
-                                                {{ $wishlist->product->product_name }}
-                                            </h5>
+                                        <!-- DELETE FORM -->
+                                        <form action="{{ route('wishlist.category.destroy', $category->id) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Apakah yakin ingin menghapus kategori ini?')">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
 
-                                            <p class="card-text">
-                                                {{ $wishlist->product->description ?? '' }}
-                                            </p>
 
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
-                        </div>
-
-                    </div>
-                @endforeach --}}
-
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>
     </div>
 
+                                <!-- MODAL EDIT KATEGORI -->
+                                <div class="modal fade" id="editCategoryModal{{ $category->id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <form action="{{ route('wishlist.category.update', $category->id) }}"
+                                            method="POST" class="modal-content">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Kategori</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nama Kategori</label>
+                                                    <input type="text" name="name" class="form-control"
+                                                        value="{{ $category->name }}" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Deskripsi</label>
+                                                    <textarea name="description" class="form-control" rows="3" required>{{ $category->description }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
 
 
 

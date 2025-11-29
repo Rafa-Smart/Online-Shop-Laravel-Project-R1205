@@ -17,6 +17,12 @@ class WishlistController extends Controller
     {
         // $categories = auth()->user()->buyer->wishlistCategories()->withCount('wishlists')->get();
         $categories = Buyer::with(['wishlistCategories', 'wishlists'])->where('id', auth()->user()->buyer->id)->get();
+        // return $categories ;
+        $categoriesWishlist = Buyer::with(['wishlistCategories', 'wishlists'])->where('id', auth()->user()->buyer->id)->get()->first();
+        
+
+        $namaXdescriptionWishlistCategory = WishlistCategory::where('buyer_id', auth()->user()->buyer->id)->first();
+        // return $namaXdescriptionWishlistCategory;
 
         // Konstanta Harga Asli (Rp 100.000.000)
         $originalPriceValue = 100000000;
@@ -65,7 +71,7 @@ class WishlistController extends Controller
         // return $categories;
 
         // return $categories;
-        return view('pages.wishlist.index', ['categories' => $categories, 'products' => $products]);
+        return view('pages.wishlist.index', ['categories' => $categories, 'products' => $products, 'namaXdescriptionWishlistCategory' => $namaXdescriptionWishlistCategory, 'categoriesWishlist' => $categoriesWishlist]);
     }
 
     // Load semua wishlist (AJAX)
@@ -83,7 +89,7 @@ class WishlistController extends Controller
         // return $data;
 
 
-        if(!$data){
+        if(empty($data->toArray())) {
                     Wishlist::create([
             'buyer_id' => auth()->user()->buyer->id,
             'product_id' => $product_id,
@@ -169,24 +175,56 @@ class WishlistController extends Controller
             $product->total_sales = (int) $product->total_sales;
 
             return $product;
-        });
+        }); 
 
-        return view('pages.wishlist.wishlistCategoryDetail', ['categories' => $categories, 'products' => $products, 'id' => $id]);
+        $categoryWishlist = Wishlist::with('category')
+            ->where('buyer_id', auth()->user()->buyer->id)
+            ->where('wishlist_category_id', $id)
+            ->get();
+            // return $categoryWishlist;
+
+        return view('pages.wishlist.wishlistCategoryDetail', ['categories' => $categories, 'products' => $products, 'id' => $id, 'categoryWishlist' => $categoryWishlist]);
     }
 
-    public function destroyByProduct(Request $request, $product_id)
+    public function destroyCategory(Request $request, $id)
     {
+        // return $id;
 
-        // return $product_id;
-        $wishlist = Wishlist::where('product_id', $product_id)
+        $category = WishlistCategory::where('id', $id)
             ->where('buyer_id', auth()->user()->buyer->id)
             ->first();
 
-        if ($wishlist) {
-            $wishlist->delete();
+        if ($category) {
+            // Hapus semua wishlist yang terkait dengan kategori ini
+            Wishlist::where('wishlist_category_id', $category->id)->delete();
+
+            // Hapus kategori itu sendiri
+            $category->delete();
         }
 
-        return redirect()->back()->with('success', 'Produk berhasil dihapus dari wishlist!');
-
+        return redirect()->route('home')->with('success', 'Kategori wishlist berhasil dihapus!');
     }
+
+    public function updateCategory(Request $request, $id)
+    {
+        // return $id;
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $category = WishlistCategory::where('id', $id)
+            ->where('buyer_id', auth()->user()->buyer->id)
+            ->first();
+
+        if ($category) {
+            $category->name = $request->name;
+            $category->description = $request->description;
+            $category->save();
+        }
+
+        return redirect()->back()->with('success', 'Kategori wishlist berhasil diperbarui!');
+    }
+   
 }

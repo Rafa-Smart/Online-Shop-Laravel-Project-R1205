@@ -897,6 +897,8 @@
         margin-top: 5px;
         border-radius: 10px;
     }
+
+    
 </style>
 
 
@@ -972,100 +974,132 @@
 
 <style>
     /* Dropdown wrapper */
-    .notif-dropdown {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 330px;
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 10px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        z-index: 9999;
-        max-height: 430px;
-        overflow-y: auto;
-        border: 1px solid #eee;
-    }
+.notif-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 340px;
+    max-height: 440px;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    z-index: 9999;
+    border: 1px solid #e5e7eb;
+}
 
-    /* Notif item */
-    .notif-item {
-        background: #f9fafb;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 12px 14px;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.25s ease;
-    }
+/* Scrollbar */
+.notif-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.notif-dropdown::-webkit-scrollbar-thumb {
+    background-color: #0e1624;
+    border-radius: 3px;
+}
+.notif-dropdown::-webkit-scrollbar-track {
+    background: #f0f2f5;
+}
 
-    .notif-item:hover {
-        background: #eef2ff;
-        border-color: #c7d2fe;
-        transform: translateX(3px);
-        cursor: pointer;
-    }
+/* Notif item */
+.notif-item {
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.25s ease;
+}
+.notif-item:hover {
+    background-color: #e0e7ff;
+    transform: translateX(3px);
+    cursor: pointer;
+}
 
-    .notif-left {
-        max-width: 220px;
-    }
+.notif-left {
+    max-width: 220px;
+}
 
-    .notif-title {
-        font-weight: 600;
-        font-size: 14px;
-        margin-bottom: 3px;
-    }
+.notif-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #0e1624;
+    margin-bottom: 4px;
+}
 
-    .notif-time {
-        font-size: 12px;
-        color: #6b7280;
-    }
+.notif-time {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+}
 
-    .badge-status {
-        font-size: 11px;
-        padding: 2px 6px;
-        border-radius: 6px;
-        font-weight: 500;
-    }
+.badge-status {
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-weight: 500;
+}
 
-    .badge-approved {
-        background: #dcfce7;
-        color: #166534;
-    }
+.badge-approved {
+    background: #dcfce7;
+    color: #166534;
+}
 
-    .badge-cancelled {
-        background: #fee2e2;
-        color: #991b1b;
-    }
+.badge-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
 
-    .notif-ok-btn {
-        background: #4f46e5;
-        color: #fff;
-        border: none;
-        padding: 4px 8px;
-        font-size: 12px;
-        border-radius: 6px;
-        transition: 0.2s;
-    }
+/* OK button */
+.notif-ok-btn {
+    background: #0e1624;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+.notif-ok-btn:hover {
+    background: #162438;
+}
 
-    .notif-ok-btn:hover {
-        background: #4338ca;
-    }
+/* Optional: make last item margin-bottom 0 */
+.notif-item:last-child {
+    margin-bottom: 0;
+}
 
-    .view-all-btn {
-        margin-top: 5px;
-        border-radius: 10px;
-    }
+
+    /* test */
+.wishlist-item:hover {
+    background-color: #f0f2f5;
+    transform: translateX(2px);
+}
+
+/* Badge style */
+.badge-cart {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e4200a;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+
 </style>
 
-
 <div class="notif-dropdown" id="notifDropdown">
-
     @forelse($notifications as $order)
         <div class="notif-item" data-id="{{ $order->id }}">
-            
             <div class="notif-left" onclick="window.location.href='{{ route('buyer.notifications.read', $order->id) }}'">
                 <div class="notif-title">
                     Order #{{ $order->id }}
@@ -1085,18 +1119,12 @@
                 @csrf
                 <button class="notif-ok-btn">OK</button>
             </form>
-
         </div>
     @empty
         <div class="text-center text-muted p-3">
             No new notifications
         </div>
     @endforelse
-
-    {{-- <a href="{{ route('buyer.notifications.index') }}" 
-       class="btn btn-primary btn-sm w-100 view-all-btn">
-       View All Notifications
-    </a> --}}
 </div>
 
 </div>
@@ -1104,59 +1132,98 @@
 
 
 <div class="icon-pokoknya me-3 position-relative" id="favoriteContainer" style="cursor:pointer;">
-    <i class="fas fa-heart"></i>
-    <div class="favorite-dropdown dropdown-menu p-2 shadow rounded"
-        style="display:none; position:absolute; top:100%; right:0; width:300px; background:white; z-index:9999;">
-        <div class="text-center text-muted p-2">Daftar Wishlist masih kosong.</div>
-        <a href="{{ route('wishlist.index') }}" class="btn btn-sm btn-outline-primary w-100 mt-2">Go to Wishlst</a>
+    <i class="fas fa-heart" style="color:white; font-size:20px;"></i>
+    
+    @php
+        $wishlist = session('wishlist') ?? collect();
+    @endphp
+
+    @if ($wishlist->count() > 0)
+        <span class="badge-cart">{{ $wishlist->count() }}</span>
+    @endif
+
+    <div class="favorite-dropdown dropdown-menu shadow rounded"
+        style="display:none; position:absolute; top:110%; right:0; width:340px; max-height:420px; overflow-y:auto; background:white; z-index:9999999999; padding:12px; box-sizing:border-box; border:2px solid #0e1624;">
+        
+        @if ($wishlist->count() > 0)
+            @foreach ($wishlist as $item)
+                <div class="wishlist-item d-flex align-items-start mb-2 p-2 rounded"
+                    style="cursor:pointer; transition:all 0.2s;"
+                    onclick="window.location='{{ route('product.detail', ['id' => $item->id]) }}'">
+
+                    <img src="{{ $item->image_url ?? asset('img/product-1.png') }}"
+                        alt="{{ $item->product_name }}"
+                        style="width:55px; height:55px; object-fit:cover; border-radius:6px; margin-right:12px; flex-shrink:0; border:1px solid #0e1624;">
+
+                    <div class="item-details flex-grow-1">
+                        <p class="fw-semibold mb-1 text-truncate"
+                            style="color:#0e1624; font-size:14px; line-height:1.2;">
+                            {{ $item->product_name }}</p>
+                        <p class="mb-1" style="font-size:12px; color:#6c757d;">
+                            {{ $item->variant_name ?? 'Default' }}</p>
+
+                        <p class="mb-0 fw-bold" style="color:#0e1624; font-size:14px;">
+                            Rp{{ number_format($item->price, 0, ',', '.') }}
+                        </p>
+                    </div>
+                </div>
+            @endforeach
+
+            <a href="{{ route('wishlist.index') }}" class="btn btn-dark w-100 mt-2 py-2"
+                style="background-color:#0e1624; border:none; transition:0.3s;">Go to Wishlist</a>
+        @else
+            <div class="text-center text-muted p-3">Daftar Wishlist masih kosong.</div>
+        @endif
     </div>
 </div>
 
 
 
 <div class="icon-pokoknya me-4 position-relative" id="cartContainer" style="cursor:pointer;">
-    <i class="fas fa-cart-plus"></i>
+    <i class="fas fa-cart-plus" style="color:white; font-size:20px;"></i>
+    
     @php
         $carts = session('carts') ?? collect();
     @endphp
+
     @if ($carts->count() > 0)
         <span class="badge-cart">{{ $carts->count() }}</span>
     @endif
 
-    <div class="cart-popup dropdown-menu p-2 shadow rounded"
-        style="display:none; position:absolute; top:100%; right:0; width:300px; background:white; z-index:9999999999;">
+    <div class="cart-popup dropdown-menu shadow rounded"
+        style="display:none; position:absolute; top:110%; right:0; width:340px; max-height:420px; overflow-y:auto; background:white; z-index:9999999999; padding:12px; box-sizing:border-box; border:2px solid #0e1624;">
+        
         @if ($carts->count() > 0)
             @foreach ($carts as $cart)
-                <div class="cart-item"
-                    style="display: flex; margin-bottom: 10px; align-items: flex-start; border-bottom: 1px solid #eee; padding-bottom: 10px;" onclick="window.location='{{ route('product.detail', ['id' => $cart->product->id]) }}'">
+                <div class="cart-item d-flex align-items-start mb-2 p-2 rounded"
+                    style="cursor:pointer; transition:all 0.2s;"
+                    onclick="window.location='{{ route('product.detail', ['id' => $cart->product->id]) }}'">
 
                     <img src="{{ $cart->product->image_url ?? asset('img/product-1.png') }}"
                         alt="{{ $cart->product->product_name }}"
-                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px; flex-shrink: 0;">
+                        style="width:55px; height:55px; object-fit:cover; border-radius:6px; margin-right:12px; flex-shrink:0; border:1px solid #0e1624;">
 
                     <div class="item-details flex-grow-1">
-                        <p class="fw-semibold mb-0 text-truncate"
-                            style="color: black; font-size: 14px; line-height: 1.2;">
+                        <p class="fw-semibold mb-1 text-truncate"
+                            style="color:#0e1624; font-size:14px; line-height:1.2;">
                             {{ $cart->product->product_name }}</p>
-                        <p class="mb-0" style="color: #6c757d; font-size: 12px;">
+                        <p class="mb-1" style="font-size:12px; color:#6c757d;">
                             {{ $cart->product_variant->variant_name ?? 'Default' }}</p>
 
-                        <div style="margin-top: 5px;">
-                            <p class="mb-0" style="color: black; font-weight: 600; font-size: 14px;">
-                                {{ $cart->quantity }} x
-                                Rp{{ number_format($cart->price, 0, ',', '.') }}
-                            </p>
-                        </div>
+                        <p class="mb-0 fw-bold" style="color:#0e1624; font-size:14px;">
+                            {{ $cart->quantity }} x Rp{{ number_format($cart->product->price, 0, ',', '.') }}
+                        </p>
                     </div>
                 </div>
             @endforeach
-            <a onclick="window.location='{{ route('showCarts')}}'" class="btn btn-primary w-100 mt-2">Go to Cart (Checkout)</a>
+
+            <a onclick="window.location='{{ route('showCarts')}}'" class="btn btn-dark w-100 mt-2 py-2"
+                style="background-color:#0e1624; border:none; transition:0.3s;">Go to Cart (Checkout)</a>
         @else
-            <div class="text-center text-muted">Your cart is empty.</div>
+            <div class="text-center text-muted p-3">Your cart is empty.</div>
         @endif
     </div>
 </div>
-
                 <!-- 👤 Dropdown Profil -->
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
@@ -1330,6 +1397,19 @@
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 <script>
+    //  const favContainer = document.getElementById('favoriteContainer');
+    // const favDropdown = favContainer.querySelector('.favorite-dropdown');
+    // console.log(favContainer, favDropdown);
+    // favContainer.addEventListener('click', (e) => {
+    //     e.stopPropagation();
+    //     favDropdown.style.display = favDropdown.style.display === 'block' ? 'none' : 'block';
+    // });
+
+    // document.addEventListener('click', () => {
+    //     favDropdown.style.display = 'none';
+    // });
+
+
     const searchInput = document.querySelector('.search-input');
     const searchForm = document.querySelector('.search-form');
 

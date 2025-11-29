@@ -88,7 +88,16 @@ class HomeController
                     
                      ->get();
 
+
+        $wishlist = DB::table('wishlists')
+            ->join('products', 'wishlists.product_id', '=', 'products.id')
+            ->where('wishlists.buyer_id', auth()->user()->buyer->id)
+            ->select('products.*', 'wishlists.created_at as added_at')
+            ->get()
+            ->take(5);
+            // return $wishlist;
         session(['carts' => $carts]);
+        session(['wishlist' => $wishlist]);
 
 
         $ads = Ad::where('is_active', true)->with('product')->get();

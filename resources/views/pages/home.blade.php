@@ -387,552 +387,587 @@
     }
 
     .header-carousel-item {
-        padding-top:-90px;
-        position:relative;
-        top:-48px;
+        padding-top: -90px;
+        position: relative;
+        top: -48px;
     }
-    .tulisan-gede{
+
+    .tulisan-gede {
         font-size: 2rem;
     }
 
-
-    /*CARD CONTAINER*/
-.ad-slider-wrapper {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 20px 0;
-}
-
-.ad-slider-track {
-    display: flex;
-    transition: transform .45s ease;
-    will-change: transform;
-}
-
-.ad-slide {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-}
-
-.slide-inner {
-    background: linear-gradient(135deg, #e8f1ff, #ffffff);
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    padding: 40px;
-    box-shadow: 0 18px 40px rgba(0, 93, 255, 0.15);
-}
-
-.slide-left img {
-    width: 380px;
-    border-radius: 22px;
-    filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
-}
-
-.slide-right {
-    padding-left: 40px;
-}
-
-.slide-sub {
-    color: #0d6efd;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.slide-headline {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #042f67;
-}
-
-.slide-desc {
-    color: #555;
-    max-width: 420px;
-}
-
-.btn-slide {
-    background: #0d6efd;
-    color: white;
-    padding: 12px 26px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
-    transition: 0.25s ease;
-}
-
-.btn-slide:hover {
-    background: #084dc9;
-    transform: translateY(-3px);
-}
-
-/* BUTTONS */
-.slider-buttons {
-    position: absolute;
-    bottom: 25px;
-    right: 35px;
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    font-size: 20px;
-    box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.nav-btn:hover {
-    transform: scale(1.1);
-    background: #084dc9;
-}
-/* WRAPPER */
-.slide-inner {
-    background: linear-gradient(135deg, #e8f1ff, #ffffff);
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    padding: 40px;
-    box-shadow: 0 18px 40px rgba(0, 93, 255, 0.15);
-    width: 100%;
-    min-height: 320px; /* biar card lebih stabil */
-}
-
-/* IMAGE FIX + RESPONSIVE */
-.image-box {
-    width: 350px;           /* ukuran fix */
-    height: 320px;          /* tinggi fix */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;       /* penting agar gambar tidak keluar */
-    border-radius: 20px;
-    background: #f3f7ff;    /* warna background lembut */
-}
-
-.image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;     /* inti: gambar tidak rusak, tidak terpotong */
-    object-position: center;
-    filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
-}
-
-/* TEXT AREA */
-.slide-right {
-    flex: 1;
-    max-width: 550px;     /* batasi lebar biar tidak terlalu panjang */
-    word-wrap: break-word; /* biar teks panjang tidak keluar card */
-}
-
-.slide-headline {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #042f67;
-    line-height: 1.2;
-    word-wrap: break-word; /* WRAP otomatis */
-}
-
-.slide-desc {
-    color: #555;
-    font-size: 1rem;
-    line-height: 1.5;
-    word-wrap: break-word; /* WRAP otomatis */
-    overflow-wrap: break-word;
-}
-
-/* RESPONSIVE (HP / Tablet) */
-@media (max-width: 992px) {
-    .slide-inner {
-        flex-direction: column;
-        text-align: center;
-        gap: 25px;
-        padding: 35px;
+    .ad-slider-wrapper {
+        width: 60%;
+        overflow: hidden;
+        position: relative;
+        padding: 20px 0;
+        border-radius: 16px;
+        /* margin-top:40px; */
+        top:40px;
     }
 
-    .image-box {
-        width: 260px;
-        height: 260px;
+    .ad-slider-track {
+        display: flex;
+        transition: transform .45s ease;
+        will-change: transform;
+    }
+
+    .ad-slide {
+        min-width: 60%;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .slide-inner {
+        background: linear-gradient(135deg, #e8f1ff, #ffffff);
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        padding: 40px;
+    }
+
+    .slide-left img {
+        width: 380px;
+        border-radius: 22px;
+        filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
     }
 
     .slide-right {
-        max-width: 90%;
+        padding-left: 40px;
+    }
+
+    .slide-sub {
+        color: #0d6efd;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
     .slide-headline {
-        font-size: 2rem;
+        font-size: 3rem;
+        font-weight: 800;
+        color: #042f67;
     }
-}
 
-@media (max-width: 576px) {
+    .slide-desc {
+        color: #555;
+        max-width: 420px;
+    }
+
+    .btn-slide {
+        background: #0d6efd;
+        color: white;
+        padding: 12px 26px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
+        transition: 0.25s ease;
+    }
+
+    .btn-slide:hover {
+        background: #084dc9;
+        transform: translateY(-3px);
+    }
+
+    /* BUTTONS */
+    .slider-buttons {
+        position: absolute;
+        bottom: 25px;
+        right: 35px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        background: #0d6efd;
+        color: white;
+        font-size: 20px;
+        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
+        cursor: pointer;
+        transition: .2s ease;
+    }
+
+    .nav-btn:hover {
+        transform: scale(1.1);
+        background: #084dc9;
+    }
+
+    /* WRAPPER */
+    .slide-inner {
+        background: linear-gradient(135deg, #e8f1ff, #ffffff);
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        padding: 40px;
+        width: 60%;
+        min-height: 320px;
+        /* biar card lebih stabil */
+    }
+
+    /* IMAGE FIX + RESPONSIVE */
     .image-box {
-        width: 220px;
-        height: 220px;
+        width: 350px;
+        /* ukuran fix */
+        height: 320px;
+        /* tinggi fix */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        /* penting agar gambar tidak keluar */
+        border-radius: 20px;
+        background: #f3f7ff;
+        /* warna background lembut */
     }
 
-    .slide-inner {
-        padding: 25px;
-    }
-}
-/* WRAPPER */
-.ad-slider-wrapper {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 10px 0;
-}
-
-.ad-slider-track {
-    display: flex;
-    transition: transform .45s ease;
-}
-
-/* SLIDE */
-.ad-slide {
-    min-width: 50%;
-    display: flex;
-    justify-content: center;
-    padding: 5px;
-}
-
-/* --- CARD BARU, LEBIH KECIL & COMPACT --- */
-.slide-inner {
-    background: #ffffff;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    padding: 25px 30px;
-    box-shadow: 0 10px 28px rgba(0, 75, 200, 0.12);
-    width: 100%;
-    min-height: 210px;        /* HEIGHT BARU — lebih kecil */
-}
-
-/* --- IMAGE AREA --- */
-.slide-left img {
-    width: 230px;            /* lebih kecil */
-    height: 160px;
-    object-fit: contain;
-    border-radius: 12px;
-    background: #f3f6ff;
-    padding: 10px;
-    box-shadow: 0 5px 18px rgba(0, 75, 200, 0.15);
-}
-
-/* --- RIGHT TEXT AREA --- */
-.slide-right {
-    flex: 1;
-    max-width: 450px;
-}
-
-.slide-sub {
-    color: #0d6efd;
-    font-weight: 700;
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-.slide-headline {
-    font-size: 1.6rem;       /* lebih kecil */
-    font-weight: 800;
-    color: #042f67;
-    line-height: 1.25;
-    margin-bottom: 10px;
-}
-
-.slide-desc {
-    color: #444;
-    font-size: .95rem;
-    margin-bottom: 14px;
-    max-width: 380px;
-}
-
-/* --- CTA BUTTON --- */
-.btn-slide {
-    background: #0d6efd;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: .9rem;
-    box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
-}
-
-.btn-slide:hover {
-    background: #084dc9;
-}
-
-/* --- NAV BUTTONS --- */
-.slider-buttons {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    transition: .2s ease;
-}
-
-.nav-btn:hover {
-    transform: scale(1.1);
-    background: #084dc9;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 992px) {
-    .slide-inner {
-        flex-direction: column;
-        text-align: center;
-        min-height: 350px;
+    .image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* inti: gambar tidak rusak, tidak terpotong */
+        object-position: center;
+        filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
     }
 
-    .slide-left img {
-        width: 220px;
-        height: 170px;
-    }
-
+    /* TEXT AREA */
     .slide-right {
-        max-width: 90%;
+        flex: 1;
+        max-width: 550px;
+        /* batasi lebar biar tidak terlalu panjang */
+        word-wrap: break-word;
+        /* biar teks panjang tidak keluar card */
     }
-}
 
-@media (max-width: 576px) {
+    .slide-headline {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #042f67;
+        line-height: 1.2;
+        word-wrap: break-word;
+        /* WRAP otomatis */
+    }
+
+    .slide-desc {
+        color: #555;
+        font-size: 1rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+        /* WRAP otomatis */
+        overflow-wrap: break-word;
+    }
+
+    /* RESPONSIVE (HP / Tablet) */
+    @media (max-width: 992px) {
+        .slide-inner {
+            flex-direction: column;
+            text-align: center;
+            gap: 25px;
+            padding: 35px;
+        }
+
+        .image-box {
+            width: 260px;
+            height: 260px;
+        }
+
+        .slide-right {
+            max-width: 90%;
+        }
+
+        .slide-headline {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .image-box {
+            width: 220px;
+            height: 220px;
+        }
+
+        .slide-inner {
+            padding: 25px;
+        }
+    }
+
+    /* WRAPPER */
+    .ad-slider-wrapper {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 10px 0;
+    }
+
+    .ad-slider-track {
+        display: flex;
+        transition: transform .45s ease;
+    }
+
+    /* SLIDE */
+    .ad-slide {
+        min-width: 50%;
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+    }
+
+    /* --- CARD BARU, LEBIH KECIL & COMPACT --- */
     .slide-inner {
-        padding: 20px;
-        min-height: 330px;
-    }
-
-    .slide-left img {
-        width: 180px;
-        height: 140px;
-    }
-}
-/* RIGHT TEXT AREA — FIX WRAPPING */
-.slide-right {
-    flex: 1;
-    max-width: 450px;
-    min-width: 0;                  /* FIX PALING PENTING */
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;           /* pastikan teks boleh turun */
-}
-
-/* HEADLINE – WRAP FIX */
-.slide-headline {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #042f67;
-    line-height: 1.25;
-    margin-bottom: 10px;
-    word-break: break-word;        /* kalau kata panjang, tetap patah */
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-
-/* DESCRIPTION – WRAP FIX */
-.slide-desc {
-    color: #444;
-    font-size: .95rem;
-    margin-bottom: 14px;
-    max-width: 100%;               /* biar ikut ukuran card */
-    word-break: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-/* WRAPPER */
-.ad-slider-wrapper {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 20px 0;
-}
-
-/* TRACK */
-.ad-slider-track {
-    display: flex;
-    transition: transform .45s ease;
-}
-
-/* EACH SLIDE */
-.ad-slide {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-/* CARD */
-.slide-inner {
-    position: relative;
-    background: linear-gradient(135deg, #e8f1ff, #e4f0ff, #ffffff);
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    gap: 35px;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0, 93, 255, 0.25);
-    width: 96%;
-    min-height: 280px;
-    border: 1px solid rgba(0, 123, 255, 0.1);
-}
-
-/* DISCOUNT BADGE */
-.discount-badge {
-    position: absolute;
-    top: -12px;
-    left: -12px;
-    background: #ff3b3b;
-    color: white;
-    padding: 10px 18px;
-    font-size: 1rem;
-    border-radius: 14px;
-    font-weight: 700;
-    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
-}
-
-/* LEFT IMAGE */
-.slide-left img {
-    width: 350px;
-    height: 250px;
-    object-fit: contain;
-    background: #f5f8ff;
-    padding: 18px;
-    border-radius: 18px;
-    box-shadow: 0 12px 28px rgba(0, 75, 255, 0.15);
-}
-
-/* RIGHT TEXT */
-.slide-right {
-    flex: 1;
-    max-width: 480px;
-    min-width: 0;
-}
-
-.slide-sub {
-    color: #0d6efd;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: .9rem;
-}
-
-.slide-headline {
-    font-size: 2.3rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: #042f67;
-}
-
-.slide-desc {
-    color: #555;
-    margin: 10px 0;
-}
-
-/* PRICE AREA */
-.price-box {
-    margin-top: 10px;
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-}
-
-.price-now {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: #007bff;
-}
-
-.price-old {
-    font-size: 1.1rem;
-    color: #777;
-    text-decoration: line-through;
-}
-
-/* BUTTON */
-.btn-slide {
-    margin-top: 15px;
-    display: inline-block;
-    background: linear-gradient(135deg, #0d6efd, #3c8dff);
-    color: white;
-    padding: 12px 26px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 700;
-    box-shadow: 0 10px 25px rgba(0, 93, 255, 0.35);
-    transition: .25s ease;
-}
-
-.btn-slide:hover {
-    transform: translateY(-3px);
-    background: #0a54d6;
-}
-
-/* NAV BUTTONS */
-.slider-buttons {
-    position: absolute;
-    bottom: 20px;
-    right: 25px;
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    background: #0d6efd;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,93,255,0.3);
-    transition: .2s ease;
-}
-
-.nav-btn:hover {
-    background: #084dc9;
-    transform: scale(1.1);
-}
-
-/* RESPONSIVE */
-@media (max-width: 992px) {
-    .slide-inner {
-        flex-direction: column;
-        text-align: center;
+        background: #ffffff;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
         gap: 25px;
-        padding: 30px;
+        padding: 25px 30px;
+        width: 100%;
+        min-height: 210px;
+        /* HEIGHT BARU — lebih kecil */
     }
 
+    /* --- IMAGE AREA --- */
     .slide-left img {
-        width: 260px;
-        height: 200px;
+        width: 230px;
+        /* lebih kecil */
+        height: 160px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #f3f6ff;
+        padding: 10px;
+        box-shadow: 0 5px 18px rgba(0, 75, 200, 0.15);
     }
-}
+
+    /* --- RIGHT TEXT AREA --- */
+    .slide-right {
+        flex: 1;
+        max-width: 450px;
+    }
+
+    .slide-sub {
+        color: #0d6efd;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .slide-headline {
+        font-size: 1.6rem;
+        /* lebih kecil */
+        font-weight: 800;
+        color: #042f67;
+        line-height: 1.25;
+        margin-bottom: 10px;
+    }
+
+    .slide-desc {
+        color: #444;
+        font-size: .95rem;
+        margin-bottom: 14px;
+        max-width: 380px;
+    }
+
+    /* --- CTA BUTTON --- */
+    .btn-slide {
+        background: #0d6efd;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: .9rem;
+        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
+    }
+
+    .btn-slide:hover {
+        background: #084dc9;
+    }
+
+    /* --- NAV BUTTONS --- */
+    .slider-buttons {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: #0d6efd;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        transition: .2s ease;
+    }
+
+    .nav-btn:hover {
+        transform: scale(1.1);
+        background: #084dc9;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 992px) {
+        .slide-inner {
+            flex-direction: column;
+            text-align: center;
+            min-height: 350px;
+        }
+
+        .slide-left img {
+            width: 220px;
+            height: 170px;
+        }
+
+        .slide-right {
+            max-width: 90%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .slide-inner {
+            padding: 20px;
+            min-height: 330px;
+        }
+
+        .slide-left img {
+            width: 180px;
+            height: 140px;
+        }
+    }
+
+    /* RIGHT TEXT AREA — FIX WRAPPING */
+    .slide-right {
+        flex: 1;
+        max-width: 450px;
+        min-width: 0;
+        /* FIX PALING PENTING */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        /* pastikan teks boleh turun */
+    }
+
+    /* HEADLINE – WRAP FIX */
+    .slide-headline {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #042f67;
+        line-height: 1.25;
+        margin-bottom: 10px;
+        word-break: break-word;
+        /* kalau kata panjang, tetap patah */
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    /* DESCRIPTION – WRAP FIX */
+    .slide-desc {
+        color: #444;
+        font-size: .95rem;
+        margin-bottom: 14px;
+        max-width: 100%;
+        /* biar ikut ukuran card */
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+    }
+
+    /* WRAPPER */
+    .ad-slider-wrapper {
+        width: 60%;
+        overflow: hidden;
+        position: relative;
+        padding: 20px 0;
+    }
+
+    /* TRACK */
+    .ad-slider-track {
+        display: flex;
+        transition: transform .45s ease;
+    }
+
+    /* EACH SLIDE */
+    .ad-slide {
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* CARD */
+    .slide-inner {
+        position: relative;
+        background: linear-gradient(135deg, #e8f1ff, #e4f0ff, #ffffff);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        padding: 40px;
+        width: 91%;
+        /* min-height: 220px; */
+        height: 90%;
+        border: 1px solid rgba(0, 123, 255, 0.1);
+    }
+
+    /* DISCOUNT BADGE */
+    .discount-badge {
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        background: #ff3b3b;
+        color: white;
+        padding: 10px 18px;
+        font-size: 1rem;
+        border-radius: 14px;
+        font-weight: 700;
+        box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+    }
+
+    /* LEFT IMAGE */
+    .slide-left img {
+        width: 350px;
+        height: 250px;
+        object-fit: contain;
+        background: #f5f8ff;
+        padding: 18px;
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(0, 75, 255, 0.15);
+    }
+
+    /* RIGHT TEXT */
+    .slide-right {
+        flex: 1;
+        max-width: 480px;
+        min-width: 0;
+    }
+
+    .slide-sub {
+        color: #0d6efd;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: .9rem;
+    }
+
+    .slide-headline {
+        font-size: 2.3rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #042f67;
+    }
+
+    .slide-desc {
+        color: #555;
+        margin: 10px 0;
+    }
+
+    /* PRICE AREA */
+    .price-box {
+        margin-top: 10px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+    }
+
+    .price-now {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #007bff;
+    }
+
+    .price-old {
+        font-size: 1.1rem;
+        color: #777;
+        text-decoration: line-through;
+    }
+
+    /* BUTTON */
+    .btn-slide {
+        /* margin-top: 15px; */
+        display: inline-block;
+        background: linear-gradient(135deg, #0d6efd, #3c8dff);
+        color: white;
+        padding: 12px 26px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.35);
+        transition: .25s ease;
+    }
+
+    .btn-slide:hover {
+        transform: translateY(-3px);
+        background: #0a54d6;
+    }
+
+    /* NAV BUTTONS */
+    .slider-buttons {
+        position: absolute;
+        top:74%;
+        bottom: 20px;
+        right: 68px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: none;
+        background: #0d6efd;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0, 93, 255, 0.3);
+        transition: .2s ease;
+    }
+
+    .nav-btn:hover {
+        background: #084dc9;
+        transform: scale(1.1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+        .slide-inner {
+            flex-direction: column;
+            text-align: center;
+            gap: 25px;
+            padding: 30px;
+        }
+
+        .slide-left img {
+            width: 260px;
+            height: 200px;
+        }
+    }
+
+    .dua {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #19253d;
+        position: relative;
+        margin-top: -50px;
+        margin-bottom: 40px;
+    }
 
 
-
+    .satulagi {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 
 
@@ -944,69 +979,50 @@
     <div class="content-section">
 
         <!-- Carousel Start -->
-<div class="ad-slider-wrapper" style="margin-bottom:20px; margin-top: -40px;">
-    <div class="ad-slider-track" id="adSliderTrack">
-
-        @foreach ($ads as $ad)
-
-        @php
-            $price = $ad->product->price;
-            $start = $ad->product->starting_price;
-
-            $discount = 0;
-            if ($start > $price) {
-                $discount = round((($start - $price) / $start) * 100);
-            }
-        @endphp
-
-        <div class="ad-slide">
-            <div class="slide-inner">
-
-                <!-- BADGE DISKON -->
-                @if ($discount > 0)
-                <div class="discount-badge">
-                    -{{ $discount }}%
+        <div class="dua">
+            <div class="ad-slider-wrapper" style="margin-bottom:20px; margin-top: -40px;">
+                <div class="ad-slider-track" id="adSliderTrack">
+                    @foreach ($ads as $ad)
+                        @php
+                            $price = $ad->product->price;
+                            $start = $ad->product->starting_price;
+                            $discount = 0;
+                            if ($start > $price) {
+                                $discount = round((($start - $price) / $start) * 100);
+                            }
+                        @endphp <div class="ad-slide">
+                            <div class="slide-inner"> <!-- BADGE DISKON -->
+                                @if ($discount > 0)
+                                    <div class="discount-badge"> -{{ $discount }}% </div>
+                                @endif <!-- LEFT IMAGE -->
+                                <div class="slide-left"> <img src="{{ asset('storage/' . $ad->bg_image) }}" alt="Ad Image">
+                                </div> <!-- RIGHT -->
+                                <div class="slide-right">
+                                    <h4 class="slide-sub">{{ $ad->product->product_name }}</h4>
+                                    <h1 class="slide-headline">{{ $ad->headline }}</h1>
+                                    <p class="slide-desc">{{ $ad->description }}</p> <!-- PRICING -->
+                                    <div class="price-box"> <span class="price-now">Rp
+                                            {{ number_format($price, 0, ',', '.') }}</span>
+                                        @if ($start > $price)
+                                            <span class="price-old">Rp {{ number_format($start, 0, ',', '.') }}</span>
+                                        @endif
+                                    </div> <!-- BUTTON --> <a href="{{ $ad->button_link }}" class="btn-slide">
+                                        {{ $ad->button_text }} </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                @endif
+                <div class="slider-buttons"> <button id="prevBtn" class="nav-btn">❮</button> <button id="nextBtn"
+                        class="nav-btn">❯</button> </div>
+            </div>
 
-                <!-- LEFT IMAGE -->
-                <div class="slide-left">
-                    <img src="{{ asset('storage/'.$ad->bg_image) }}" alt="Ad Image">
-                </div>
-
-                <!-- RIGHT -->
-                <div class="slide-right">
-                    <h4 class="slide-sub">{{ $ad->product->product_name }}</h4>
-                    <h1 class="slide-headline">{{ $ad->headline }}</h1>
-                    <p class="slide-desc">{{ $ad->description }}</p>
-
-                    <!-- PRICING -->
-                    <div class="price-box">
-                        <span class="price-now">Rp {{ number_format($price, 0, ',', '.') }}</span>
-
-                        @if ($start > $price)
-                        <span class="price-old">Rp {{ number_format($start, 0, ',', '.') }}</span>
-                        @endif
-                    </div>
-
-                    <!-- BUTTON -->
-                    <a href="{{ $ad->button_link }}" class="btn-slide">
-                        {{ $ad->button_text }}
-                    </a>
-                </div>
-
+            <div class="satulagi">
+                <img src="{{ asset('img/carousel-2.png') }}" alt="" width="'100%">
             </div>
         </div>
 
-        @endforeach
 
-    </div>
-
-    <div class="slider-buttons">
-        <button id="prevBtn" class="nav-btn">❮</button>
-        <button id="nextBtn" class="nav-btn">❯</button>
-    </div>
-</div>
 
 
 
@@ -1154,7 +1170,7 @@
                                                     <img src="{{ asset('storage/' . $product->img) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('img/product-3.png') }}'">
                                                 </a>
-                                                <span class="product-badge">New</span>
+                                                <span class="product-badge">{{ $product->condition }}</span>
                                                 <div class="product-hover">
                                                     <a href="{{ route('addCart', $product->id) }}" class="btn-add">
                                                         <i class="fas fa-shopping-cart"></i>
@@ -2288,101 +2304,100 @@
 
 
     <script>
-
         document.addEventListener("DOMContentLoaded", () => {
-    const track = document.getElementById("adSliderTrack");
-    const slides = Array.from(track.children);
-    const slideWidth = slides[0].clientWidth;
+            const track = document.getElementById("adSliderTrack");
+            const slides = Array.from(track.children);
+            const slideWidth = slides[0].clientWidth;
 
-    let index = 1;
-    let isDragging = false;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
+            let index = 1;
+            let isDragging = false;
+            let startX = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
 
-    // CLONE FIRST & LAST SLIDE
-    const firstClone = slides[0].cloneNode(true);
-    const lastClone = slides[slides.length - 1].cloneNode(true);
+            // CLONE FIRST & LAST SLIDE
+            const firstClone = slides[0].cloneNode(true);
+            const lastClone = slides[slides.length - 1].cloneNode(true);
 
-    track.appendChild(firstClone);
-    track.insertBefore(lastClone, slides[0]);
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, slides[0]);
 
-    const totalSlides = track.children.length;
+            const totalSlides = track.children.length;
 
-    // Set start position
-    track.style.transform = `translateX(-${slideWidth * index}px)`;
-
-
-    // NEXT BUTTON
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        if (index >= totalSlides - 1) return;
-        index++;
-        track.style.transition = ".45s ease";
-        track.style.transform = `translateX(-${slideWidth * index}px)`;
-    });
-
-    // PREV BUTTON
-    document.getElementById("prevBtn").addEventListener("click", () => {
-        if (index <= 0) return;
-        index--;
-        track.style.transition = ".45s ease";
-        track.style.transform = `translateX(-${slideWidth * index}px)`;
-    });
-
-    // LOOPING FIX
-    track.addEventListener("transitionend", () => {
-        if (track.children[index].isEqualNode(firstClone)) {
-            track.style.transition = "none";
-            index = 1;
+            // Set start position
             track.style.transform = `translateX(-${slideWidth * index}px)`;
-        }
-        if (track.children[index].isEqualNode(lastClone)) {
-            track.style.transition = "none";
-            index = totalSlides - 2;
-            track.style.transform = `translateX(-${slideWidth * index}px)`;
-        }
-    });
 
-    /* DRAG / SWIPE */
-    track.addEventListener("mousedown", dragStart);
-    track.addEventListener("touchstart", dragStart);
 
-    track.addEventListener("mousemove", dragging);
-    track.addEventListener("touchmove", dragging);
+            // NEXT BUTTON
+            document.getElementById("nextBtn").addEventListener("click", () => {
+                if (index >= totalSlides - 1) return;
+                index++;
+                track.style.transition = ".45s ease";
+                track.style.transform = `translateX(-${slideWidth * index}px)`;
+            });
 
-    track.addEventListener("mouseup", dragEnd);
-    track.addEventListener("mouseleave", dragEnd);
-    track.addEventListener("touchend", dragEnd);
+            // PREV BUTTON
+            document.getElementById("prevBtn").addEventListener("click", () => {
+                if (index <= 0) return;
+                index--;
+                track.style.transition = ".45s ease";
+                track.style.transform = `translateX(-${slideWidth * index}px)`;
+            });
 
-    function dragStart(e) {
-        isDragging = true;
-        startX = e.pageX || e.touches[0].clientX;
-        prevTranslate = -slideWidth * index;
-    }
+            // LOOPING FIX
+            track.addEventListener("transitionend", () => {
+                if (track.children[index].isEqualNode(firstClone)) {
+                    track.style.transition = "none";
+                    index = 1;
+                    track.style.transform = `translateX(-${slideWidth * index}px)`;
+                }
+                if (track.children[index].isEqualNode(lastClone)) {
+                    track.style.transition = "none";
+                    index = totalSlides - 2;
+                    track.style.transform = `translateX(-${slideWidth * index}px)`;
+                }
+            });
 
-    function dragging(e) {
-        if (!isDragging) return;
-        const x = e.pageX || e.touches[0].clientX;
-        const diff = x - startX;
-        currentTranslate = prevTranslate + diff;
-        track.style.transform = `translateX(${currentTranslate}px)`;
-    }
+            /* DRAG / SWIPE */
+            track.addEventListener("mousedown", dragStart);
+            track.addEventListener("touchstart", dragStart);
 
-    function dragEnd() {
-        isDragging = false;
+            track.addEventListener("mousemove", dragging);
+            track.addEventListener("touchmove", dragging);
 
-        const moved = currentTranslate - prevTranslate;
+            track.addEventListener("mouseup", dragEnd);
+            track.addEventListener("mouseleave", dragEnd);
+            track.addEventListener("touchend", dragEnd);
 
-        if (moved < -80) {
-            index++;
-        } else if (moved > 80) {
-            index--;
-        }
+            function dragStart(e) {
+                isDragging = true;
+                startX = e.pageX || e.touches[0].clientX;
+                prevTranslate = -slideWidth * index;
+            }
 
-        track.style.transition = ".45s ease";
-        track.style.transform = `translateX(-${slideWidth * index}px)`;
-    }
-});
+            function dragging(e) {
+                if (!isDragging) return;
+                const x = e.pageX || e.touches[0].clientX;
+                const diff = x - startX;
+                currentTranslate = prevTranslate + diff;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            }
+
+            function dragEnd() {
+                isDragging = false;
+
+                const moved = currentTranslate - prevTranslate;
+
+                if (moved < -80) {
+                    index++;
+                } else if (moved > 80) {
+                    index--;
+                }
+
+                track.style.transition = ".45s ease";
+                track.style.transform = `translateX(-${slideWidth * index}px)`;
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('wishlistModal');
@@ -2450,6 +2465,41 @@
 @endsection
 
 <script>
+    // HORIZONTAL SLIDER
+    const horizontalSlider = document.getElementById('horizontalSlider');
+    let hIndex = 0;
+
+    document.getElementById('prevHorizontal').addEventListener('click', () => {
+        const slides = horizontalSlider.children.length;
+        hIndex = (hIndex - 1 + slides) % slides;
+        horizontalSlider.style.transform = `translateX(-${hIndex * 100}%)`;
+    });
+
+    document.getElementById('nextHorizontal').addEventListener('click', () => {
+        const slides = horizontalSlider.children.length;
+        hIndex = (hIndex + 1) % slides;
+        horizontalSlider.style.transform = `translateX(-${hIndex * 100}%)`;
+    });
+
+    // VERTICAL SLIDER
+    const verticalSlider = document.getElementById('verticalSlider');
+    let vIndex = 0;
+
+    document.getElementById('prevVertical').addEventListener('click', () => {
+        const slides = verticalSlider.children.length;
+        vIndex = (vIndex - 1 + slides) % slides;
+        verticalSlider.style.transform = `translateY(-${vIndex * 270}px)`; // 250px tinggi + 20 margin
+    });
+
+    document.getElementById('nextVertical').addEventListener('click', () => {
+        const slides = verticalSlider.children.length;
+        vIndex = (vIndex + 1) % slides;
+        verticalSlider.style.transform = `translateY(-${vIndex * 270}px)`;
+    });
+
+
+
+
     document.addEventListener("DOMContentLoaded", () => {
         const tabs = document.querySelectorAll(".costume-tab");
         console.log(tabs);

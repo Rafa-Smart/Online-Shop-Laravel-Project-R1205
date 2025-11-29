@@ -111,8 +111,8 @@
                          <p>Seller Dashboard</p>
                      </a>
                     </li>
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link">
                          <i class="bi bi-boxes nav-icon"></i>
                          <p>
                              Products
@@ -121,7 +121,7 @@
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="{{ route('seller.products.index') }}" class="nav-link active">
+                             <a href="{{ route('seller.products.index') }}" class="nav-link ">
                                  <i class="bi bi-database nav-icon"></i>
                                  <p>Products Datas</p>
                              </a>
@@ -138,125 +138,65 @@
                                  <p>Ads</p>
                              </a>
                          </li>
+                         <li class="nav-item">
+                             <a href="{{ route('ads.index') }}" class="nav-link">
+                                 <i class="nav-icon bi bi-circle"></i>
+                                 <p>Stock Manajemen</p>
+                             </a>
+                         </li>
                      </ul>
                  </li>
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon bi bi-clipboard-fill"></i>
                          <p>
-                             Layout Options
-                             <span class="nav-badge badge text-bg-secondary me-3">6</span>
+                             Orders
+                             <?php
+                                $pendingOrdersCount = \App\Models\Order::where('seller_id', Auth::user()->seller->id)
+                                                            ->where('status', 'pending')
+                                                            ->count();
+                             ?>
+                             @if ($pendingOrdersCount <= 0)
+                                 
+                             @else
+                                 <span class="nav-badge badge text-bg-secondary me-3">{{ $pendingOrdersCount }}</span>
+                             @endif
                              <i class="nav-arrow bi bi-chevron-right"></i>
+                             
                          </p>
                      </a>
                      <ul class="nav nav-treeview">
                          <li class="nav-item">
-                             <a href="./layout/unfixed-sidebar.html" class="nav-link">
+                             <a href="{{ route('seller.orders.pending') }}" class="nav-link">
                                  <i class="nav-icon bi bi-circle"></i>
-                                 <p>Default Sidebar</p>
+                                 <p>Orders Pending</p>
                              </a>
                          </li>
                          <li class="nav-item">
-                             <a href="./layout/fixed-sidebar.html" class="nav-link">
+                             <a href="{{ route('seller.customer.insights') }}" class="nav-link">
                                  <i class="nav-icon bi bi-circle"></i>
-                                 <p>Fixed Sidebar</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/fixed-header.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Fixed Header</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/fixed-footer.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Fixed Footer</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/fixed-complete.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Fixed Complete</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/layout-custom-area.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Layout <small>+ Custom Area </small></p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/sidebar-mini.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Sidebar Mini</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/collapsed-sidebar.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Sidebar Mini <small>+ Collapsed</small></p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/logo-switch.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Sidebar Mini <small>+ Logo Switch</small></p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./layout/layout-rtl.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Layout RTL</p>
+                                 <p>Orders Insights</p>
                              </a>
                          </li>
                      </ul>
                  </li>
                  <li class="nav-item">
-                     <a href="#" class="nav-link">
-                         <i class="nav-icon bi bi-tree-fill"></i>
-                         <p>
-                             UI Elements
-                             <i class="nav-arrow bi bi-chevron-right"></i>
+                     <a href="{{ route('seller.profile') }}" class="nav-link ">
+                         <i class="nav-icon bi bi-tree-fill "></i>
+                         <p >
+                             Profile
                          </p>
                      </a>
-                     <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                             <a href="./UI/general.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>General</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./UI/icons.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Icons</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./UI/timeline.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Timeline</p>
-                             </a>
-                         </li>
-                     </ul>
+                      
                  </li>
                  <li class="nav-item">
-                     <a href="#" class="nav-link">
+                     <a href="{{ route('seller.logout') }}" class="nav-link">
                          <i class="nav-icon bi bi-pencil-square"></i>
                          <p>
-                             Forms
-                             <i class="nav-arrow bi bi-chevron-right"></i>
+                             LogOut
+                            
                          </p>
                      </a>
-                     <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                             <a href="./forms/general.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>General Elements</p>
-                             </a>
-                         </li>
-                     </ul>
                  </li>
                  <li class="nav-item">
                      <a href="#" class="nav-link">

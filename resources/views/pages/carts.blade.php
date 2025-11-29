@@ -471,51 +471,50 @@
             min-width: 20px;
             text-align: center;
         }
+
+
+        /* test */
     </style>
 
-    <div class="cart-container">
-        <div class="cart-left">
-            <div class="cart-header">
-                <h2>🛍️ Keranjang Belanja</h2>
-            </div>
+<div class="cart-container">
+    <div class="cart-left">
+        <div class="cart-header">
+            <h2>🛍️ Keranjang Belanja</h2>
+        </div>
 
-            <div class="select-all-global">
-                <input type="checkbox" id="selectAll">
-                <label for="selectAll">Pilih Semua Produk</label>
-            </div>
+        <div class="select-all-global">
+            <input type="checkbox" id="selectAll">
+            <label for="selectAll">Pilih Semua Produk</label>
+        </div>
 
-            {{-- LOOP LUAR: ITERASI MELALUI GRUP PRODUK PER TOKO --}}
-            @foreach ($groupedCarts as $sellerId => $productsBySeller)
-                @php
-                    // Ambil data Seller lengkap dari Collection $sellers
-                    $seller = $sellers->get($sellerId);
-                @endphp
+        {{-- LOOP LUAR: ITERASI MELALUI GRUP PRODUK PER TOKO --}}
+        @foreach ($groupedCarts as $sellerId => $productsBySeller)
+            @php
+                $seller = $sellers->get($sellerId);
+            @endphp
 
-                <div class="cart-store-group" data-seller-id="{{ $sellerId }}">
-                    <div class="store-header">
-                        {{-- Checkbox Toko --}}
-                        <span class="store-name-label">{{ $seller->store_name ?? 'Toko Tidak Dikenal' }}</span>
-                    </div>
+            <div class="cart-store-group" data-seller-id="{{ $sellerId }}">
+                <div class="store-header">
+                    <span class="store-name-label">{{ $seller->store_name ?? 'Toko Tidak Dikenal' }}</span>
+                </div>
 
-                    {{-- LOOP DALAM: ITERASI MELALUI PRODUK HANYA UNTUK TOKO INI --}}
-                    @foreach ($productsBySeller as $productCart)
-                        {{-- Menggunakan $productCart untuk data cart, dan $productCart->product untuk data produk --}}
-                        <div class="product-item" data-id="{{ $productCart->product->id }}"
-                            data-cart-id="{{ $productCart->id }}">
+                {{-- LOOP DALAM: ITERASI MELALUI PRODUK HANYA UNTUK TOKO INI --}}
+                @foreach ($productsBySeller as $productCart)
+                    <div class="product-item" data-id="{{ $productCart->product->id }}"
+                        data-cart-id="{{ $productCart->id }}" data-stock="{{ $productCart->product->stock }}">
 
-                            <input type="checkbox" class="product-checkbox" data-id="{{ $productCart->product->id }}"
-                                data-name="{{ $productCart->product->product_name }}"
-                                data-price="{{ $productCart->product->price }}">
+                        <input type="checkbox" class="product-checkbox" data-id="{{ $productCart->product->id }}"
+                            data-name="{{ $productCart->product->product_name }}"
+                            data-price="{{ $productCart->product->price }}">
 
-                            <div class="product-info-left">
-                                <div class="product-visuals">
-                                    <img src="{{ $productCart->product->img }}" ">
-                                <span class="product-stock-label">Sisa&nbsp;2</span>
+                        <div class="product-info-left">
+                            <div class="product-visuals">
+                                <img src="{{ $productCart->product->img }}">
+                                <span class="product-stock-label">Sisa&nbsp;{{ $productCart->product->stock }}</span>
                             </div>
 
                             <div class="product-details-vertical">
                                 <span class="product-name" style="font-size:1.1rem;">{{ $productCart->product->product_name }}</span>
-                                {{-- Anda harus menyesuaikan bagian ini jika varian ada di data Cart atau Product --}}
                                 <span class="product-variant">hitam putih, 39</span>
                             </div>
                         </div>
@@ -536,191 +535,226 @@
                             </div>
                         </div>
                     </div>
-     @endforeach
-                                </div>
-                    @endforeach
-                    {{-- END LOOP TOKO --}}
+                @endforeach
+            </div>
+        @endforeach
+    </div>
 
-                </div>
+    <div class="cart-right">
+        <div class="checkout-title">🧾 Ringkasan Pesanan</div>
 
-                <div class="cart-right">
-                    <div class="checkout-title">🧾 Ringkasan Pesanan</div>
-
-                    <div class="checkout-list" id="checkoutList">
-                        <p class="empty-message">Belum ada barang dipilih.</p>
-                    </div>
-
-                    <div class="checkout-total">
-                        <span>Total Pembayaran</span>
-                        <span id="checkoutTotal">Rp 0</span>
-                    </div>
-
-                    <form action="{{ route('order.store') }}" method="POST" id="checkoutForm">
-                        @csrf
-                        <!-- Hidden input untuk menyimpan semua order per seller -->
-                        <input type="hidden" name="orders_data" id="ordersData">
-                        <button type="submit" class="checkout-btn" id="checkoutBtn" disabled>Proses Checkout</button>
-                    </form>
-
-                </div>
+        <div class="checkout-list" id="checkoutList">
+            <p class="empty-message">Belum ada barang dipilih.</p>
         </div>
 
-     <script>
-    const dataProduct = document.querySelectorAll(".product-item");
-    console.log(dataProduct.length);
+        <div class="checkout-total">
+            <span>Total Pembayaran</span>
+            <span id="checkoutTotal">Rp 0</span>
+        </div>
 
-    if (dataProduct.length == 0) {
-        const dataParent = document.querySelector('.cart-left');
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('productData');
-        itemDiv.innerHTML = `<center><h4>Keranjang masih kosong nih...</h4></center>`;
-        dataParent.appendChild(itemDiv);
-    }
+        <form action="{{ route('order.store') }}" method="POST" id="checkoutForm">
+            @csrf
+            <input type="hidden" name="orders_data" id="ordersData">
+            <button type="submit" class="checkout-btn" id="checkoutBtn" disabled>Proses Checkout</button>
+        </form>
+    </div>
+</div>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+<script>
+const dataProduct = document.querySelectorAll(".product-item");
 
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.product-checkbox');
-    const checkoutList = document.getElementById('checkoutList');
-    const checkoutTotalElement = document.getElementById('checkoutTotal');
-    const checkoutDataInput = document.getElementById('ordersData');
-    const checkoutBtn = document.getElementById('checkoutBtn');
+if (dataProduct.length == 0) {
+    const dataParent = document.querySelector('.cart-left');
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('productData');
+    itemDiv.innerHTML = `<center><h4>Keranjang masih kosong nih...</h4></center>`;
+    dataParent.appendChild(itemDiv);
+}
 
-    // Objek untuk menyimpan kuantitas setiap produk berdasarkan ID
-    const productQuantities = {};
-    document.querySelectorAll('.qty').forEach(qtySpan => {
-        const pid = qtySpan.dataset.id;
-        if(pid) productQuantities[pid] = parseInt(qtySpan.textContent) || 1;
-    });
+const selectAll = document.getElementById('selectAll');
+const checkoutList = document.getElementById('checkoutList');
+const checkoutTotalElement = document.getElementById('checkoutTotal');
+const checkoutDataInput = document.getElementById('ordersData');
+const checkoutBtn = document.getElementById('checkoutBtn');
 
-    // Fungsi format mata uang
-    function formatRupiah(number) {
-        return 'Rp ' + number.toLocaleString('id-ID');
-    }
+const productQuantities = {};
+document.querySelectorAll('.qty').forEach(qtySpan => {
+    const pid = qtySpan.dataset.id;
+    if(pid) productQuantities[pid] = parseInt(qtySpan.textContent) || 1;
+});
 
-    function updateCheckout() {
-        let total = 0;
-        checkoutList.innerHTML = '';
+function formatRupiah(number) {
+    return 'Rp ' + number.toLocaleString('id-ID');
+}
 
-        // Objek untuk menampung data order per seller
-        let ordersPerSeller = {};
+function updateCheckout() {
+    let total = 0;
+    checkoutList.innerHTML = '';
+    let ordersPerSeller = {};
 
-        document.querySelectorAll('.product-checkbox').forEach(cb => {
-            if (cb.checked) {
-                const productId = cb.dataset.id;
-                const productName = cb.dataset.name;
-                const pricePerItem = parseInt(cb.dataset.price);
-                const qty = productQuantities[productId] || 1;
-                const subtotal = pricePerItem * qty;
-                const cartItem = document.querySelector(`.product-item[data-id="${productId}"]`);
-                const sellerId = cartItem.closest('.cart-store-group').dataset.sellerId;
-
-                total += subtotal;
-
-                // Tambahkan ke ringkasan checkout
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('checkout-item');
-                itemDiv.innerHTML = `
-                    <span>${productName}</span>
-                    <span><span class="qty-summary">${qty}x</span> ${formatRupiah(subtotal)}</span>
-                `;
-                checkoutList.appendChild(itemDiv);
-
-                // Data untuk backend
-                if (!ordersPerSeller[sellerId]) {
-                    ordersPerSeller[sellerId] = {
-                        buyer_id: {{ auth()->user()->buyer->id ?? 0 }},
-                        seller_id: parseInt(sellerId),
-                        status: 'pending',
-                        total_price: 0,
-                        order_details: []
-                    };
-                }
-
-                ordersPerSeller[sellerId].order_details.push({
-                    product_id: parseInt(productId),
-                    quantity: qty,
-                    price: pricePerItem
-                });
-
-                ordersPerSeller[sellerId].total_price += subtotal;
-            }
-        });
-
-        // Update tombol dan list
-        if (Object.keys(ordersPerSeller).length === 0) {
-            checkoutList.innerHTML = '<p class="empty-message">Belum ada barang dipilih.</p>';
-            checkoutBtn.disabled = true;
-        } else {
-            checkoutBtn.disabled = false;
-        }
-
-        // Update total
-        checkoutTotalElement.textContent = formatRupiah(total);
-
-        // Set hidden input
-        checkoutDataInput.value = JSON.stringify(Object.values(ordersPerSeller));
-    }
-
-    // Pilih semua
-    selectAll.addEventListener('change', () => {
-        document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = selectAll.checked);
-        updateCheckout();
-    });
-
-    // Checkbox individu
     document.querySelectorAll('.product-checkbox').forEach(cb => {
-        cb.addEventListener('change', updateCheckout);
-    });
+        if (cb.checked) {
+            const productId = cb.dataset.id;
+            const productName = cb.dataset.name;
+            const pricePerItem = parseInt(cb.dataset.price);
+            const qty = productQuantities[productId] || 1;
+            const subtotal = pricePerItem * qty;
+            const cartItem = document.querySelector(`.product-item[data-id="${productId}"]`);
+            const sellerId = cartItem.closest('.cart-store-group').dataset.sellerId;
 
-    // Kontrol kuantitas
-    document.querySelectorAll('.product-item').forEach(item => {
-        const decreaseBtn = item.querySelector('.decrease');
-        const increaseBtn = item.querySelector('.increase');
-        const qtySpan = item.querySelector('.qty');
-        const productId = qtySpan.dataset.id;
-        const checkbox = item.querySelector(`.product-checkbox[data-id="${productId}"]`);
+            total += subtotal;
 
-        decreaseBtn?.addEventListener('click', () => {
-            let currentQty = productQuantities[productId] || 1;
-            if (currentQty > 1) currentQty--;
-            productQuantities[productId] = currentQty;
-            qtySpan.textContent = currentQty;
-            if (checkbox.checked) updateCheckout();
-        });
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('checkout-item');
+            itemDiv.innerHTML = `<span>${productName}</span><span><span class="qty-summary">${qty}x</span> ${formatRupiah(subtotal)}</span>`;
+            checkoutList.appendChild(itemDiv);
 
-        increaseBtn?.addEventListener('click', () => {
-            let currentQty = productQuantities[productId] || 1;
-            if (currentQty < 99) currentQty++;
-            productQuantities[productId] = currentQty;
-            qtySpan.textContent = currentQty;
-            if (checkbox.checked) updateCheckout();
-        });
-    });
-
-    // Tombol hapus
-    document.querySelectorAll('.icon-btn.delete').forEach(deleteBtn => {
-        deleteBtn.addEventListener('click', () => {
-            const productId = deleteBtn.dataset.id;
-            const productItem = document.querySelector(`.product-item[data-id="${productId}"]`);
-            if (confirm('Yakin ingin menghapus produk ini dari keranjang?')) {
-                productItem.remove();
-                // Hapus dari kuantitas
-                delete productQuantities[productId];
-                updateCheckout();
+            if (!ordersPerSeller[sellerId]) {
+                ordersPerSeller[sellerId] = {
+                    buyer_id: {{ auth()->user()->buyer->id ?? 0 }},
+                    seller_id: parseInt(sellerId),
+                    status: 'pending',
+                    total_price: 0,
+                    details: []
+                };
             }
-        });
-    });
 
-    // Submit form: pastikan hidden input terisi
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        updateCheckout();
-        if (!checkoutDataInput.value || checkoutDataInput.value === '[]') {
-            e.preventDefault();
-            alert('Silakan pilih produk terlebih dahulu.');
+            ordersPerSeller[sellerId].details.push({
+                product_id: parseInt(productId),
+                quantity: qty,
+                price: pricePerItem
+            });
+
+            ordersPerSeller[sellerId].total_price += subtotal;
         }
     });
 
-    // Panggil saat halaman pertama kali load
+    if (Object.keys(ordersPerSeller).length === 0) {
+        checkoutList.innerHTML = '<p class="empty-message">Belum ada barang dipilih.</p>';
+        checkoutBtn.disabled = true;
+    } else {
+        checkoutBtn.disabled = false;
+    }
+
+    checkoutTotalElement.textContent = formatRupiah(total);
+    checkoutDataInput.value = JSON.stringify(Object.values(ordersPerSeller));
+}
+
+selectAll.addEventListener('change', () => {
+    document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = selectAll.checked);
     updateCheckout();
+});
+
+document.querySelectorAll('.product-checkbox').forEach(cb => {
+    cb.addEventListener('change', updateCheckout);
+});
+
+document.querySelectorAll('.product-item').forEach(item => {
+    const decreaseBtn = item.querySelector('.decrease');
+    const increaseBtn = item.querySelector('.increase');
+    const qtySpan = item.querySelector('.qty');
+    const productId = qtySpan.dataset.id;
+    const checkbox = item.querySelector(`.product-checkbox[data-id="${productId}"]`);
+
+    const maxStock = parseInt(item.dataset.stock); // ⬅️ batas stok
+     
+    decreaseBtn?.addEventListener('click', () => {
+        let currentQty = productQuantities[productId] || 1;
+        if (currentQty > 1) currentQty--;
+        productQuantities[productId] = currentQty;
+        qtySpan.textContent = currentQty;
+        if (checkbox.checked) updateCheckout();
+    });
+
+    increaseBtn?.addEventListener('click', () => {
+        let currentQty = productQuantities[productId] || 1;
+
+        // ⛔ Batasi berdasarkan stok
+        if (currentQty >= maxStock) {
+            alert("Jumlah melebihi stok tersedia (" + maxStock + ")");
+            return;
+        }
+
+        currentQty++;
+        productQuantities[productId] = currentQty;
+        qtySpan.textContent = currentQty;
+        if (checkbox.checked) updateCheckout();
+    });
+});
+
+
+document.querySelectorAll('.icon-btn.delete').forEach(deleteBtn => {
+    deleteBtn.addEventListener('click', () => {
+        const productId = deleteBtn.dataset.id;
+        const productItem = document.querySelector(`.product-item[data-id="${productId}"]`);
+        if (confirm('Yakin ingin menghapus produk ini dari keranjang?')) {
+            productItem.remove();
+            delete productQuantities[productId];
+            updateCheckout();
+        }
+    });
+});
+
+// =========================
+// Checkout & Midtrans AJAX
+// =========================
+checkoutBtn.addEventListener('click', function(e){
+    e.preventDefault();
+    updateCheckout();
+
+    if (!checkoutDataInput.value || checkoutDataInput.value === '[]') {
+        alert('Silakan pilih produk terlebih dahulu.');
+        return;
+    }
+
+    const ordersToSend = JSON.parse(checkoutDataInput.value);
+
+    fetch("{{ route('order.store') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({ orders_data: JSON.stringify(ordersToSend) })
+    })
+    .then(res => res.json())
+    .then(res => {
+    if (!res.snap_token) {
+        alert('Gagal membuat pembayaran. Silakan coba lagi.');
+        return;
+    }
+
+    snap.pay(res.snap_token, {
+        onSuccess: function(result){
+            // Popup Midtrans tetap muncul
+            alert('Pembayaran berhasil!'); // Optional, popup tambahan
+            window.location.href = '/home'; // Redirect ke home setelah popup
+        },
+        onPending: function(result){
+            alert('Pembayaran menunggu konfirmasi.');
+            window.location.href = '/home'; // Redirect ke home setelah popup
+        },
+        onError: function(result){
+            alert('Terjadi kesalahan pembayaran.');
+            window.location.href = '/home'; // Redirect ke home setelah popup
+        },
+        onClose: function(){
+            // Jika user menutup popup tanpa membayar
+            window.location.href = '/home'; // Redirect ke home
+        }
+    });
+})
+.catch(err => {
+    console.error(err);
+    alert('Terjadi kesalahan server.');
+    window.location.href = '/'; // Redirect ke home jika ada error server
+});
+
+});
+
+updateCheckout();
 </script>
+
+
 
     @endsection

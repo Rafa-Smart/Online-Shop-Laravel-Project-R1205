@@ -566,11 +566,12 @@
                                     <div class="card-body">
 
                                         <h5 class="card-title">
-                                            {{ $wishlist->product->product_name }}
+                                            {{-- {{ dd($wishlist) }} --}}
+                                            {{ $namaXdescriptionWishlistCategory->name ?? 'Kategori Tidak Ditemukan' }}
                                         </h5>
 
                                         <p class="card-text">
-                                            {{ $wishlist->product->description ?? '' }}
+                                            {{ $namaXdescriptionWishlistCategory ?? 'belum ada description' }}
                                         </p>
 
                                     </div>

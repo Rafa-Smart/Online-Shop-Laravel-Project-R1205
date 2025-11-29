@@ -685,24 +685,21 @@
 
                         {{-- Tombol Aksi --}}
                         <div class="d-grid gap-2">
-                            {{-- Tombol Beli Langsung --}}
                             <button id="buyNowBtn" class="btn btn-secondary-action py-2 w-100">Beli Langsung</button>
 
-
-                            {{-- Tombol + Keranjang --}}
                             <button class="btn btn-secondary-action py-2 w-100">
                                 <a href="{{ route('addCart', $product->id) }}" style="color: white;">
                                     Tambah Keranjang
                                 </a>
                             </button>
+
+                            {{-- Form Tersembunyi --}}
                             <form id="buyNowForm" action="{{ route('order.store') }}" method="POST"
                                 style="display:none;">
                                 @csrf
                                 <input type="hidden" name="orders_data" id="orders_data">
                             </form>
-
                         </div>
-
 
                         {{-- Link Aksi Bawah --}}
                         <div class="d-flex justify-content-around mt-3 text-muted">
@@ -711,13 +708,14 @@
                             <small><i class="bi bi-share"></i> Share</small>
                         </div>
                     </div>
-
-                    {{-- Tombol Beli Lokal --}}
-                    <div class="mt-3">
-                        <button class="btn btn-success w-100 py-2">Langsung Order</button>
-                    </div>
                 </div>
             </div>
+
+            {{-- Include Midtrans Snap JS --}}
+            <script
+                src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+                data-client-key="{{ config('midtrans.client_key') }}"></script>
+
 
         </div>
 
@@ -725,78 +723,95 @@
 
 
 
+    <div class="modal fade" id="paymentChoiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3">
+
+                <h5 class="fw-bold text-center mb-3">Pilih Metode Pembelian</h5>
+
+                <button id="payWithGateway" class="btn btn-primary w-100 mb-2">
+                    Bayar dengan Payment Gateway
+                </button>
+
+                <button id="payWithWhatsapp" class="btn btn-success w-100">
+                    Pesan via WhatsApp
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+
+
     {{-- 🔢 Script subtotal & Waktu Relatif (TETAP SAMA) --}}
     <script>
-        document.getElementById('buyNowBtn').addEventListener('click', function() {
-            const qty = parseInt(document.getElementById('qty').value);
-            const price = {{ $product->price }};
-            const buyerId = {{ Auth::user()->buyer->id }};
-            const sellerId = {{ $product->seller_id }};
-            const productId = {{ $product->id }};
-
-            // Data sesuai format controller
-            const dataToSend = [{
-                buyer_id: buyerId,
-                seller_id: sellerId,
-                status: "pending",
-                total_price: qty * price,
-                order_details: [{
-                    product_id: productId,
-                    quantity: qty,
-                    price: price
-                }]
-            }];
-
-            // Masukkan JSON ke hidden input
-            document.getElementById('orders_data').value = JSON.stringify(dataToSend);
-
-            // Submit form otomatis
-            document.getElementById('buyNowForm').submit();
-        });
-
-
         document.addEventListener("DOMContentLoaded", function() {
 
-            // Semua review yang punya gallery
-            document.querySelectorAll('[id^="review-gallery-"]').forEach(el => {
-                lightGallery(el, {
-                    selector: ".review-media-item",
-                    plugins: [lgThumbnail, lgVideo],
-                    licenseKey: "0000-0000-000-0000", // versi gratis tetap full fitur
-                    speed: 400,
-                    thumbnail: true,
-                    videojs: true,
+            // =========================
+            // Variabel utama
+            // =========================
+            const buyNowBtn = document.getElementById('buyNowBtn');
+            const buyNowForm = document.getElementById('buyNowForm');
+            const ordersDataInput = document.getElementById('orders_data');
+
+            const price = {{ $product->price }};
+            const stock = {{ $product->stock }};
+            const qtyInput = document.getElementById('qty');
+            const subtotalEl = document.getElementById('subtotal');
+
+            // =========================
+            // Fungsi format Rupiah
+            // =========================
+            function formatRupiah(number) {
+                return number.toLocaleString('id-ID', {
+                    minimumFractionDigits: 0
+                });
+            }
+
+            function updateSubtotal() {
+                let qty = parseInt(qtyInput.value) || 1;
+                qty = Math.min(Math.max(qty, 1), stock);
+                qtyInput.value = qty;
+                subtotalEl.textContent = 'Rp' + formatRupiah(qty * price);
+            }
+
+            // =========================
+            // Quantity Control
+            // =========================
+            document.getElementById('minusBtn').addEventListener('click', () => {
+                if (parseInt(qtyInput.value) > 1) {
+                    qtyInput.value--;
+                    updateSubtotal();
+                }
+            });
+
+            document.getElementById('plusBtn').addEventListener('click', () => {
+                if (parseInt(qtyInput.value) < stock) {
+                    qtyInput.value++;
+                    updateSubtotal();
+                }
+            });
+
+            qtyInput.addEventListener('input', updateSubtotal);
+            updateSubtotal();
+
+            // =========================
+            // Thumbnail Swap
+            // =========================
+            const mainImg = document.getElementById('mainProductImg');
+            const thumbnails = document.querySelectorAll('.thumb-img');
+
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    mainImg.src = thumb.dataset.large;
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
                 });
             });
 
-        });
-
-
-
-
-
-
-        // --- Swap foto utama saat klik thumbnail ---
-        const mainImg = document.getElementById('mainProductImg');
-        const thumbnails = document.querySelectorAll('.thumb-img');
-
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                // Ganti src gambar utama
-                mainImg.src = thumb.dataset.large;
-
-                // Hapus class active dari semua thumbnail
-                thumbnails.forEach(t => t.classList.remove('active'));
-
-                // Tambahkan class active ke thumbnail yang diklik
-                thumb.classList.add('active');
-            });
-        });
-
-
-
-        // ... (Kode JavaScript untuk Waktu Relatif dan Subtotal) ...
-        (function() {
+            // =========================
+            // Waktu Relatif
+            // =========================
             function formatRelativeTime(seconds) {
                 const s = Math.abs(seconds);
                 if (s < 1) return 'baru saja';
@@ -832,43 +847,156 @@
 
             updateTimes();
             setInterval(updateTimes, 60000);
-        })();
 
-        const price = {{ $product->price }};
-        const stock = {{ $product->stock }};
-        const qtyInput = document.getElementById('qty');
-        const subtotal = document.getElementById('subtotal');
-        const minusBtn = document.getElementById('minusBtn');
-        const plusBtn = document.getElementById('plusBtn');
 
-        function formatRupiah(number) {
-            return number.toLocaleString('id-ID', {
-                minimumFractionDigits: 0
+            // ==========================================================
+            // 🔥 BUY NOW — MODAL PEMILIHAN METODE (Gateway / WhatsApp)
+            // ==========================================================
+
+            const gatewayBtn = document.getElementById('payWithGateway');
+            const whatsappBtn = document.getElementById('payWithWhatsapp');
+
+            // Klik BELI → munculkan modal
+            buyNowBtn.addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('paymentChoiceModal'));
+                modal.show();
             });
-        }
 
-        function updateSubtotal() {
-            let qty = parseInt(qtyInput.value) || 1;
-            qty = Math.min(Math.max(qty, 1), stock);
-            qtyInput.value = qty;
-            subtotal.textContent = 'Rp' + formatRupiah(qty * price);
-        }
+            // =========================
+            // 1️⃣ Bayar via Payment Gateway (MIDTRANS)
+            // =========================
+            gatewayBtn.addEventListener('click', function() {
 
-        minusBtn.addEventListener('click', () => {
-            if (parseInt(qtyInput.value) > 1) {
-                qtyInput.value--;
-                updateSubtotal();
-            }
+                const qty = parseInt(qtyInput.value);
+                const buyerId = {{ Auth::user()->buyer->id }};
+                const sellerId = {{ $product->seller_id }};
+                const productId = {{ $product->id }};
+                const productName = @json($product->product_name);
+
+                const dataToSend = [{
+                    buyer_id: buyerId,
+                    seller_id: sellerId,
+                    status: "pending",
+                    total_price: qty * price,
+                    details: [{
+                        product_id: productId,
+                        quantity: qty,
+                        price: price
+                    }]
+                }];
+
+                fetch("{{ route('order.store') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            orders_data: JSON.stringify(dataToSend)
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (!res.snap_token) {
+                            alert('Gagal membuat pembayaran. Silakan coba lagi.');
+                            return;
+                        }
+
+                        snap.pay(res.snap_token, {
+                            onSuccess: () => window.location.href = '/home',
+                            onPending: () => window.location.href = '/home',
+                            onError: () => window.location.href = '/home',
+                            onClose: () => window.location.href = '/home'
+                        });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Terjadi kesalahan server.');
+                        window.location.href = '/';
+                    });
+            });
+
+
+            // =========================
+            // 2️⃣ Beli via WhatsApp (Auto Redirect)
+            const qty = parseInt(qtyInput.value);
+            // =========================
+whatsappBtn.addEventListener('click', function() {
+
+    const qty = parseInt(qtyInput.value);
+    const buyerId = {{ Auth::user()->buyer->id }};
+    const sellerId = {{ $product->seller_id }};
+    const productId = {{ $product->id }};
+    const productName = @json($product->name);
+
+    let sellerPhone = "{{ $product->seller->phone_number ?? '628xxxx' }}";
+    sellerPhone = sellerPhone.replace(/^\+?0/, "62");
+
+    const total = qty * price;
+
+    const message = `
+🧾 *ORDER RECEIPT*
+
+────────────────────────
+📦 Produk: ${productName}
+🔢 Jumlah: ${qty}
+💳 Harga: Rp${price.toLocaleString('id-ID')}
+────────────────────────
+💵 *TOTAL: Rp${total.toLocaleString('id-ID')}*
+────────────────────────
+
+📅 Tanggal: ${new Date().toLocaleDateString('id-ID')}
+⏰ Waktu: ${new Date().toLocaleTimeString('id-ID')}
+
+Terima kasih kak 🙏✨
+`;
+
+    const dataToSend = [{
+        buyer_id: buyerId,
+        seller_id: sellerId,
+        status: "pending",
+        total_price: total,
+        details: [{
+            product_id: productId,
+            quantity: qty,
+            price: price
+        }]
+    }];
+
+    // 🔥 STEP 1 — SIMPAN ORDER KE DATABASE
+    fetch("{{ route('order.store') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            orders_data: JSON.stringify(dataToSend)
+        })
+    })
+    .then(res => res.json())
+    .then(res => {
+        // 🔥 STEP 2 — SETELAH ORDER DISIMPAN → buka WhatsApp
+        const encoded = encodeURIComponent(message);
+        const url = `https://api.whatsapp.com/send?phone=${sellerPhone}&text=${encoded}`;
+        window.location.href = url;
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Terjadi kesalahan. Order tidak tersimpan.");
+    });
+
+});
+
+
+
         });
-
-        plusBtn.addEventListener('click', () => {
-            if (parseInt(qtyInput.value) < stock) {
-                qtyInput.value++;
-                updateSubtotal();
-            }
-        });
-
-        qtyInput.addEventListener('input', updateSubtotal);
-        updateSubtotal();
     </script>
+
+
+    <script
+        src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}"
+        data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+
 @endsection
