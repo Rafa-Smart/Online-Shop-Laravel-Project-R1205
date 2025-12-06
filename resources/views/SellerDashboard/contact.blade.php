@@ -34,7 +34,7 @@
                             <h5 class="fw-bold mb-2">Email Address</h5>
                             <p class="text-muted small mb-2">Drop us a line anytime</p>
                             <a href="mailto:hello@yourstore.com" class="contact-link">
-                                hello@yourstore.com
+                                rafaoffice@gmail.com
                                 <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -69,7 +69,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <!-- Social Media -->
                     <div class="social-section glass-effect slide-in" style="animation-delay: 0.4s;">
                         <h5 class="fw-bold mb-3">
@@ -136,6 +136,7 @@
                                         Full Name
                                     </label>
                                     <input 
+                                     style="color:black;"   
                                         type="text" 
                                         class="form-control-modern @error('name') is-invalid @enderror" 
                                         id="name" 
@@ -157,6 +158,7 @@
                                         Email Address
                                     </label>
                                     <input 
+                                     style="color:black;"
                                         type="email" 
                                         class="form-control-modern @error('email') is-invalid @enderror" 
                                         id="email" 
@@ -178,6 +180,7 @@
                                         Subject
                                     </label>
                                     <input 
+                                        style="color:black;"
                                         type="text" 
                                         class="form-control-modern @error('subject') is-invalid @enderror" 
                                         id="subject" 
@@ -199,6 +202,7 @@
                                         Your Message
                                     </label>
                                     <textarea 
+                                     style="color:black;"
                                         class="form-control-modern @error('message') is-invalid @enderror" 
                                         id="message" 
                                         name="message" 
@@ -566,6 +570,10 @@
 /* Modern Form */
 .form-group-modern {
     margin-bottom: 0;
+}
+
+.form-grop-modern input {
+    color: #374151;
 }
 
 .form-label-modern {

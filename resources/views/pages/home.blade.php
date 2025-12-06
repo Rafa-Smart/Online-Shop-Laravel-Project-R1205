@@ -1,2219 +1,1554 @@
-<style>
-    /* Badge "New" */
-    .product-new {
-        background-color: #19253d !important;
-        color: #fff !important;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 12px;
-        position: absolute;
-        top: 10px;
-        left: 10px;
-    }
-
-    .product-details {
-        background-color: red;
-    }
-
-    .product-details a i {
-        color: #19253d !important;
-        transition: all 0.3s ease;
-    }
-
-    /* ✨ Efek hover agar lebih interaktif */
-    .product-details a:hover i {
-        color: #22345a !important;
-        /* sedikit lebih terang */
-        transform: scale(1.1);
-    }
-
-    /* 🎨 Warna dasar untuk teks dalam card produk */
-    .product-item .text-center {
-        color: #19253d !important;
-    }
-
-    /* 🔹 Warna link kategori (teks kecil di atas nama produk) */
-    .product-item .text-center a.d-block.mb-2 {
-        color: #19253d !important;
-        font-weight: 600;
-        opacity: 0.85;
-        transition: all 0.3s ease;
-    }
-
-    .product-item .text-center a.d-block.mb-2:hover {
-        opacity: 1;
-        text-decoration: underline;
-    }
-
-    /* 🔹 Warna nama produk (judul besar) */
-    .product-item .text-center a.d-block.h4 {
-        color: #19253d !important;
-        font-weight: 700;
-        transition: all 0.3s ease;
-    }
-
-    .product-item .text-center a.d-block.h4:hover {
-        color: #22345a !important;
-    }
-
-    /* 🔹 Harga coret (harga lama) */
-    .product-item .text-center del {
-        color: #6c757d !important;
-        /* abu-abu lembut agar tetap kontras */
-    }
-
-    /* 🔹 Harga utama (harga sekarang) */
-    .product-item .text-center {
-        color: #19253d !important;
-        font-weight: 700;
-    }
-
-    .pagination-wrapper nav {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.7);
-        padding: 10px 25px;
-        border-radius: 60px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .pagination-wrapper nav:hover {
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    /* 🌿 Pagination List */
-    .pagination-wrapper .pagination {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-    }
-
-    /* 🎨 Tombol Pagination */
-    .pagination-wrapper .page-link {
-        border: none;
-        color: #444;
-        font-weight: 500;
-        font-size: 15px;
-        background-color: rgba(255, 255, 255, 0.85);
-        border-radius: 50%;
-        width: 44px;
-        height: 44px;
-        line-height: 44px;
-        text-align: center;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-    }
-
-    /* 🌟 Hover Effect */
-    .pagination-wrapper .page-link:hover {
-        background: linear-gradient(135deg, #007bff, #00bcd4);
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-    }
-
-    /* 💎 Tombol Aktif */
-    .pagination-wrapper .active .page-link {
-        background: linear-gradient(135deg, #007bff, #00bcd4);
-        color: #fff;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
-        transform: scale(1.1);
-    }
-
-    /* 🚫 Tombol Disabled */
-    .pagination-wrapper .disabled .page-link {
-        opacity: 0.5;
-        cursor: not-allowed;
-        box-shadow: none;
-    }
-
-    /* ✨ Efek Transition Halus */
-    .pagination-wrapper .page-item {
-        transition: transform 0.2s ease;
-    }
-
-    .pagination-wrapper .page-item:hover:not(.active):not(.disabled) {
-        transform: scale(1.05);
-    }
-
-    /* 📱 Responsive Mobile */
-    @media (max-width: 576px) {
-        .pagination-wrapper nav {
-            padding: 6px 16px;
-            border-radius: 40px;
-        }
-
-        .pagination-wrapper .page-link {
-            width: 36px;
-            height: 36px;
-            line-height: 36px;
-            font-size: 13px;
-        }
-    }
-
-
-
-    .product-heading {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #19253d;
-        position: relative;
-    }
-
-    .product-heading::after {
-        content: "";
-        display: block;
-        width: 50px;
-        height: 4px;
-        background-color: #19253d;
-        margin-top: 8px;
-        border-radius: 2px;
-    }
-
-    /* 🔹 Custom Tab Navigation */
-    .custom-nav {
-        list-style: none;
-        display: flex;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .costume-tab {
-        cursor: pointer;
-        padding: 0.6rem 1.4rem;
-        border: 2px solid #19253d;
-        border-radius: 30px;
-        background-color: #ffffff;
-        color: #19253d;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        transition: all 0.3s ease;
-    }
-
-    .costume-tab:hover {
-        background-color: #19253d;
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(25, 37, 61, 0.25);
-    }
-
-    .costume-tab.active {
-        background-color: #19253d;
-        color: #fff;
-        box-shadow: 0 3px 8px rgba(25, 37, 61, 0.3);
-    }
-
-    /* 🔹 Konten Tab */
-    .tab-content {
-        margin-top: 2rem;
-    }
-
-    .tab-pane {
-        display: none;
-        animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .tab-pane.active {
-        display: block;
-    }
-
-    /* 🔹 Animasi transisi */
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(8px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* 🔹 Responsif */
-    @media (max-width: 768px) {
-        .custom-nav {
-            justify-content: flex-start;
-        }
-
-        .costume-tab {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-    }
-
-
-
-    .product-card {
-        background: #ffffff;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 8px 20px rgba(25, 37, 61, 0.08);
-        transition: all 0.3s ease;
-        position: relative;
-        border: 1px solid rgba(25, 37, 61, 0.1);
-    }
-
-    .product-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 24px rgba(25, 37, 61, 0.18);
-    }
-
-    /* ===========================
-   IMAGE AREA
-   =========================== */
-    .product-image {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .product-image img {
-        width: 100%;
-        border-radius: 16px 16px 0 0;
-        transition: transform 0.4s ease;
-    }
-
-    .product-card:hover .product-image img {
-        transform: scale(1.07);
-    }
-
-    /* Badge */
-    .product-badge {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background-color: #3282b8;
-        color: #fff;
-        font-size: 0.8rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 12px;
-        letter-spacing: 0.3px;
-        box-shadow: 0 3px 8px rgba(50, 130, 184, 0.3);
-    }
-
-    /* Hover action buttons */
-    .product-hover {
-        position: absolute;
-        bottom: -60px;
-        right: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .product-card:hover .product-hover {
-        bottom: 12px;
-        opacity: 1;
-    }
-
-    .btn-add,
-    .btn-fav {
-        background: #19253d;
-        color: #fff;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 8px rgba(25, 37, 61, 0.25);
-    }
-
-    .btn-add:hover,
-    .btn-fav:hover {
-        background: #3282b8;
-        transform: scale(1.1);
-    }
-
-    /* ===========================
-   PRODUCT INFO AREA
-   =========================== */
-    .product-info {
-        padding: 1rem 1.2rem 1.5rem;
-        text-align: center;
-    }
-
-    .product-category {
-        color: #3282b8;
-        font-weight: 500;
-        font-size: 0.9rem;
-        display: inline-block;
-        margin-bottom: 4px;
-        text-decoration: none;
-    }
-
-    .product-name {
-        color: #19253d;
-        font-weight: 700;
-        font-size: 1.05rem;
-        margin-bottom: 8px;
-        transition: color 0.3s ease;
-    }
-
-    .product-name:hover {
-        color: #3282b8;
-    }
-
-    /* Pricing */
-    .product-pricing {
-        margin-bottom: 10px;
-    }
-
-    .price-old {
-        color: #777;
-        font-size: 0.9rem;
-        margin-right: 6px;
-    }
-
-    .price-new {
-        color: #19253d;
-        font-weight: 700;
-        font-size: 1.1rem;
-    }
-
-    /* Rating */
-    .product-rating i {
-        color: #fbbf24;
-        font-size: 0.9rem;
-    }
-
-    .header-carousel-item {
-        padding-top: -90px;
-        position: relative;
-        top: -48px;
-    }
-
-    .tulisan-gede {
-        font-size: 2rem;
-    }
-
-    /* ===========================
-   AD SLIDER WRAPPER
-   =========================== */
-    .ad-slider-wrapper {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        overflow: hidden;
-        position: relative;
-        padding: 20px 0;
-    }
-
-    /* ===========================
-   TRACK
-   =========================== */
-    .ad-slider-track {
-        display: flex;
-        transition: transform 0.45s ease;
-        gap: 20px;
-    }
-
-    /* ===========================
-   EACH SLIDE
-   =========================== */
-    .ad-slide {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    /* ===========================
-   SLIDE INNER CARD
-   =========================== */
-    .slide-inner {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 30px;
-        padding: 30px;
-        width: 95%;
-        border-radius: 16px;
-        background: linear-gradient(135deg, #e8f1ff, #ffffff);
-        box-shadow: 0 10px 25px rgba(0, 75, 200, 0.1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* ===========================
-   DISCOUNT BADGE
-   =========================== */
-    .discount-badge {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: #ff3b3b;
-        color: #fff;
-        font-weight: 700;
-        padding: 8px 16px;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
-    }
-
-    /* ===========================
-   LEFT IMAGE
-   =========================== */
-    .slide-left {
-        flex: 0 0 40%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .slide-left img {
-        width: 100%;
-        height: auto;
-        max-width: 350px;
-        border-radius: 12px;
-        object-fit: contain;
-        box-shadow: 0 8px 20px rgba(0, 75, 200, 0.15);
-        background: #f3f6ff;
-        padding: 10px;
-    }
-
-    /* ===========================
-   RIGHT TEXT
-   =========================== */
-    .slide-right {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 50%;
-        min-width: 0;
-        word-wrap: break-word;
-    }
-
-    .slide-sub {
-        color: #0d6efd;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-    }
-
-    .slide-headline {
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: #042f67;
-        line-height: 1.25;
-        margin-bottom: 10px;
-    }
-
-    .slide-desc {
-        color: #555;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin-bottom: 15px;
-    }
-
-    /* ===========================
-   PRICE AREA
-   =========================== */
-    .price-box {
-        display: flex;
-        align-items: baseline;
-        gap: 12px;
-        margin-bottom: 15px;
-    }
-
-    .price-now {
-        font-size: 1.5rem;
-        font-weight: 900;
-        color: #007bff;
-    }
-
-    .price-old {
-        font-size: 1.1rem;
-        color: #777;
-        text-decoration: line-through;
-    }
-
-    /* ===========================
-   BUTTON
-   =========================== */
-    .btn-slide {
-        display: inline-block;
-        background: linear-gradient(135deg, #0d6efd, #3c8dff);
-        color: #fff;
-        width:50%;
-        text-align: center;
-        padding: 10px 20px;
-        border-radius: 12px;
-        font-weight: 700;
-        text-decoration: none;
-        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
-        transition: 0.25s ease;
-    }
-
-    .btn-slide:hover {
-        background: #084dc9;
-        transform: translateY(-2px);
-    }
-
-    /* ===========================
-   NAV BUTTONS
-   =========================== */
-    .slider-buttons {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .nav-btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: none;
-        background: #0d6efd;
-        color: #fff;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
-        transition: 0.2s ease;
-    }
-
-    .nav-btn:hover {
-        background: #084dc9;
-        transform: scale(1.1);
-    }
-
-    /* ===========================
-   RESPONSIVE
-   =========================== */
-    @media (max-width: 992px) {
-        .slide-inner {
-            flex-direction: column;
-            text-align: center;
-            gap: 20px;
-        }
-
-        .slide-left {
-            flex: 0 0 auto;
-        }
-
-        .slide-left img {
-            max-width: 260px;
-            height: auto;
-        }
-
-        .slide-right {
-            max-width: 100%;
-        }
-
-        .slide-headline {
-            font-size: 1.5rem;
-        }
-
-        .dua,
-        .satulagi {
-            display: none;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .slide-left img {
-            max-width: 120px;
-        }
-
-        .slide-headline {
-            font-size: 1.3rem;
-        }
-
-        .slide-desc {
-            font-size: 0.9rem;
-        }
-
-        .btn-slide {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-
-        .slider-buttons {
-            bottom: 15px;
-            right: 15px;
-            gap: 8px;
-        }
-
-        .dua,
-        .satulagi {
-            display: none;
-        }
-
-        .ad-slider-wrapper {
-            width: 100%;
-            height: 40%;
-            padding-top: 45px;
-            padding-right: 30px;
-        }
-
-        .ad-slider-track {
-            height: 60%;
-            padding: 0;
-        }
-    }
-
-    .dua {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 40px;
-        margin-top: -50px;
-        background-color: #19253d;
-        /* height */
-
-    }
-</style>
-
-
 @extends('layouts.head')
 
 @section('title', 'Home - Electro Laravel')
 
 @section('content')
-    <div class="content-section">
-
-        <!-- Carousel Start -->
-        <div class="dua">
-            <div class="ad-slider-wrapper" style="margin-bottom:20px; margin-top: -40px;">
-                <div class="ad-slider-track" id="adSliderTrack">
-                    @foreach ($ads as $ad)
-                        @php
-                            $price = $ad->product->price;
-                            $start = $ad->product->starting_price;
-                            $discount = 0;
-                            if ($start > $price) {
-                                $discount = round((($start - $price) / $start) * 100);
-                            }
-                        @endphp <div class="ad-slide">
-                            <div class="slide-inner"> <!-- BADGE DISKON -->
-                                @if ($discount > 0)
-                                    <div class="discount-badge"> -{{ $discount }}% </div>
-                                @endif <!-- LEFT IMAGE -->
-                                <div class="slide-left"> <img src="{{ asset('storage/' . $ad->bg_image) }}" alt="Ad Image">
-                                </div> <!-- RIGHT -->
-                                <div class="slide-right">
-                                    <h4 class="slide-sub">{{ $ad->product->product_name }}</h4>
-                                    <h1 class="slide-headline">{{ $ad->headline }}</h1>
-                                    <p class="slide-desc">{{ $ad->description }}</p> <!-- PRICING -->
-                                    <div class="price-box"> <span class="price-now">Rp
-                                            {{ number_format($price, 0, ',', '.') }}</span>
-                                        @if ($start > $price)
-                                            <span class="price-old">Rp {{ number_format($start, 0, ',', '.') }}</span>
-                                        @endif
-                                    </div> <!-- BUTTON --> <a href="{{ $ad->button_link }}" class="btn-slide">
-                                        {{ $ad->button_text }} </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="slider-buttons"> <button id="prevBtn" class="nav-btn">❮</button> <button id="nextBtn"
-                        class="nav-btn">❯</button> </div>
-            </div>
-            
-            <div class="satulagi">
-                <img src="{{ asset('img/carousel-2.png') }}" alt="" width="'100%">
-            </div>
-        </div>
-
-
-
-
-
-
-        <!-- Carousel End -->
-        <!-- Searvices Start -->
-        {{-- <div class="container-fluid px-0">
-        <div class="row g-0">
-            <div class="col-6 col-md-4 col-lg-2 border-start border-end wow fadeInUp" data-wow-delay="0.1s">
-                <div class="p-4">
-                    <div class="d-inline-flex align-items-center">
-                        <i class="fa fa-sync-alt fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Free Return</h6>
-                            <p class="mb-0">30 days money back guarantee!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.2s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fab fa-telegram-plane fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Free Shipping</h6>
-                            <p class="mb-0">Free shipping on all order</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.3s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-life-ring fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Support 24/7</h6>
-                            <p class="mb-0">We support online 24 hrs a day</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.4s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-credit-card fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Receive Gift Card</h6>
-                            <p class="mb-0">Recieve gift all over oder $50</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.5s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-lock fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Secure Payment</h6>
-                            <p class="mb-0">We Value Your Security</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.6s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-blog fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Online Service</h6>
-                            <p class="mb-0">Free return products in 30 days</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div> --}}
-        <!-- Searvices End -->
-        <!-- Products Offer Start -->
-        {{-- <div class="container-fluid bg-light py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
-                    <a href="#" class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
-                        <div>
-                            <p class="text-muted mb-3">Find The Best Camera for You!</p>
-                            <h3 class="text-primary">Smart Camera</h3>
-                            <h1 class="display-3 text-secondary mb-0">40% <span
-                                    class="text-primary fw-normal">Off</span></h1>
-                        </div>
-                        <img src="img/product-1.png" class="img-fluid" alt="">
-                    </a>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
-                    <a href="#" class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
-                        <div>
-                            <p class="text-muted mb-3">Find The Best Whatches for You!</p>
-                            <h3 class="text-primary">Smart Whatch</h3>
-                            <h1 class="display-3 text-secondary mb-0">20% <span
-                                    class="text-primary fw-normal">Off</span></h1>
-                        </div>
-                        <img src="img/product-2.png" class="img-fluid" alt="">
-                    </a>
-                </div>
-            </div>
-        </div>
-        </div> --}}
-        <!-- Products Offer End -->
-        <!-- Our Products Start -->
-
-
-
-        <div class="container-fluid product ">
-            <div class="container ">
-                <div class="tab-class">
-                    <div class="row align-items-center mb-5">
-                        <!-- Judul -->
-                        <div class="col-lg-4 text-start wow fadeInLeft" data-wow-delay="0.1s">
-                            <h1 class="product-heading">Our Products</h1>
-                        </div>
-
-                        <!-- Navigasi Tabs -->
-                        <div class="col-lg-8 text-end wow fadeInRight" data-wow-delay="0.1s">
-                            <ul class="custom-nav">
-                                <li class="costume-tab active" data-tab="tab-1">All Products</li>
-                                <li class="costume-tab" data-tab="tab-2">New Arrivals</li>
-                                <li class="costume-tab" data-tab="tab-3">Featured</li>
-                                <li class="costume-tab" data-tab="tab-4">Top Selling</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="tab-content">
-                        <div id="tab-1" class="tab-pane fade show p-0 active">
-
-                            {{-- ini buat laptop --}}
-                            <div class="row g-4">
-
-                                @foreach ($products as $product)
-                                    {{-- {{ dd($product) }} --}}
-
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="product-card">
-                                            <div class="product-image">
-                                                <a href="{{ route('product.detail', $product->id) }}">
-                                                    <img src="{{ asset('storage/' . $product->img) }}"
-                                                        onerror="this.onerror=null; this.src='{{ asset('img/product-3.png') }}'">
-                                                </a>
-                                                <span class="product-badge">{{ $product->condition }}</span>
-                                                <div class="product-hover">
-                                                    <a href="{{ route('addCart', $product->id) }}" class="btn-add">
-                                                        <i class="fas fa-shopping-cart"></i>
-                                                    </a>
-                                                    <a href="#" class="btn-fav" data-bs-toggle="modal"
-                                                        data-bs-target="#wishlistModal"
-                                                        data-product-id="{{ $product->id }}">
-                                                        <i class="fas fa-heart"></i>
-                                                    </a>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="product-info">
-
-
-
-
-
-
-
-
-
-                                                <h5 class="product-name">{{ $product->product_name }}</h5>
-
-                                                <div class="product-sales-info mt-1 mb-2">
-
-                                                    @if (isset($product->monthly_sales) && $product->monthly_sales > 0)
-                                                        <p class="text-success mb-0" style="font-size: 0.85rem;">
-                                                            <i class="fas fa-fire"></i> Terjual
-                                                            {{ number_format((int) $product->monthly_sales) }} kali bulan
-                                                            ini
-                                                        </p>
-                                                    @endif
-
-                                                    @if (isset($product->total_sales) && $product->total_sales > 0)
-                                                        <p class="text-muted mb-0" style="font-size: 0.75rem;">
-                                                            Total terjual: {{ number_format((int) $product->total_sales) }}
-                                                        </p>
-                                                    @endif
-                                                </div>
-                                                <div class="product-pricing">
-                                                    @php
-                                                        // Ambil harga yang sudah disiapkan di Controller
-                                                        $originalPrice = (int) $product->starting_price;
-                                                        $currentPrice = (int) $product->price;
-                                                        $isDiscounted = $originalPrice > $currentPrice;
-                                                        $discountPercentage = $isDiscounted
-                                                            ? round(
-                                                                (($originalPrice - $currentPrice) / $originalPrice) *
-                                                                    100,
-                                                            )
-                                                            : 0;
-                                                    @endphp
-
-                                                    @if ($isDiscounted)
-                                                        <del class="price-old">
-                                                            Rp.{{ number_format($originalPrice, 0, ',', '.') }}
-                                                        </del>
-                                                        <span class="badge bg-danger ms-2">{{ $discountPercentage }}%
-                                                            OFF</span>
-                                                    @else
-                                                        <span class="price-old" style="visibility: hidden;">&nbsp;</span>
-                                                    @endif
-
-                                                    <span class="price-new">
-                                                        Rp.{{ number_format($currentPrice, 0, ',', '.') }}
-                                                    </span>
-                                                </div>
-
-                                                <div class="product-rating">
-                                                    <i class="fas fa-star text-warning"></i>
-                                                    <i class="fas fa-star text-warning"></i>
-                                                    <i class="fas fa-star text-warning"></i>
-                                                    <i class="fas fa-star text-warning"></i>
-                                                    <i class="far fa-star text-warning"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <!-- Pagination -->
-                                <div class="mt-5 d-flex justify-content-center">
-                                    <div class="pagination-wrapper">
-                                        {{ $products->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                        {{-- ini buat tablet --}}
-                        {{-- <div id="tab-2" class="tab-pane fade  p-0">
-                            <div class="row g-4">
-
-
-                                @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="product-item rounded wow fadeInUp" data-wow-delay="0.1s">
-                                            <div class="product-item-inner border rounded">
-                                                <div class="product-item-inner-item">
-                                                    <a href="{{ route('product.detail',  $product->id) }}">
-                                                        <img src="img/product-3.png" class="img-fluid w-100 rounded-top"
-                                                            alt="">
-                                                    </a>
-                                                    <div class="product-new">New</div>
-                                                </div>
-                                                <div class="text-center rounded-bottom p-4">
-                                                    <a href="#"
-                                                        class="d-block mb-2">{{ $product->category->category_name ?? 'test' }}</a>
-                                                    <a href="#" class="d-block h4">{{ $product->product_name }}</a>
-                                                    <del
-                                                        class="me-2 fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</del>
-                                                    <span
-                                                        class="text-primary fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
-                                                <a href="#"
-                                                    class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i
-                                                        class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex">
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-random"></i></i></a>
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-
-                            </div>
-                        </div> --}}
-
-
-                        {{-- buat hp --}}
-
-                        {{-- <div id="tab-3" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-
-
-                                @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="product-item rounded wow fadeInUp" data-wow-delay="0.1s">
-                                            <div class="product-item-inner border rounded">
-                                                <div class="product-item-inner-item">
-                                                    <a href="{{ route('product.detail', $product->id) }}">
-                                                        <img src="img/product-3.png" class="img-fluid w-100 rounded-top"
-                                                            alt="">
-                                                    </a>
-
-                                                </div>
-                                                <div class="text-center rounded-bottom p-4">
-                                                    <a href="#"
-                                                        class="d-block mb-2">{{ $product->category->category_name ?? 'test' }}</a>
-                                                    <a href="#" class="d-block h4">{{ $product->product_name }}</a>
-                                                    <del
-                                                        class="me-2 fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</del>
-                                                    <span
-                                                        class="text-primary fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
-                                                <a href="#"
-                                                    class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i
-                                                        class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex">
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-random"></i></i></a>
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-
-
-                            </div>
-                        </div> --}}
-
-
-                        {{-- buat apa dah tau hp kli --}}
-
-                        {{-- <div id="tab-4" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-
-
-
-                                @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="product-item rounded wow fadeInUp" data-wow-delay="0.1s">
-                                            <div class="product-item-inner border rounded">
-                                                <div class="product-item-inner-item">
-                                                    <a href="{{ route('product.detail', $product->id) }}">
-                                                        <img src="img/product-3.png" class="img-fluid w-100 rounded-top"
-                                                            alt="">
-                                                    </a>
-
-                                                </div>
-                                                <div class="text-center rounded-bottom p-4">
-                                                    <a href="#"
-                                                        class="d-block mb-2">{{ $product->category->category_name ?? 'test' }}</a>
-                                                    <a href="#" class="d-block h4">{{ $product->product_name }}</a>
-                                                    <del
-                                                        class="me-2 fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</del>
-                                                    <span
-                                                        class="text-primary fs-5">Rp.{{ number_format($product->price, 2, '.', ',') }}</span>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
-                                                <a href="#"
-                                                    class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i
-                                                        class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex">
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star text-primary"></i>
-                                                        <i class="fas fa-star"></i>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-random"></i></i></a>
-                                                        <a href="#"
-                                                            class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                                                class="rounded-circle btn-sm-square border"><i
-                                                                    class="fas fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-
-
-                            </div>
-                        </div> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <!-- Our Products End -->
-        <!-- Product Banner Start -->
-        {{-- <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-                    <a href="#">
-                        <div class="bg-primary rounded position-relative">
-                            <img src="img/product-banner.jpg" class="img-fluid w-100 rounded" alt="">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center rounded p-4"
-                                style="background: rgba(255, 255, 255, 0.5);">
-                                <h3 class="display-5 text-primary">EOS Rebel <br> <span>T7i Kit</span></h3>
-                                <p class="fs-4 text-muted">$899.99</p>
-                                <a href="#" class="btn btn-primary rounded-pill align-self-start py-2 px-4">Shop Now</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <a href="#">
-                        <div class="text-center bg-primary rounded position-relative">
-                            <img src="img/product-banner-2.jpg" class="img-fluid w-100" alt="">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center rounded p-4"
-                                style="background: rgba(242, 139, 0, 0.5);">
-                                <h2 class="display-2 text-secondary">SALE</h2>
-                                <h4 class="display-5 text-white mb-4">Get UP To 50% Off</h4>
-                                <a href="#" class="btn btn-secondary rounded-pill align-self-center py-2 px-4">Shop
-                                    Now</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-        <!-- Product Banner End -->
-        <!-- Product List Satrt -->
-        {{-- <div class="container-fluid products productList overflow-hidden">
-        <div class="container products-mini py-5">
-            <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-                <h4 class="text-primary border-bottom border-primary border-2 d-inline-block p-2 title-border-radius wow fadeInUp"
-                    data-wow-delay="0.1s">Products</h4>
-                <h1 class="mb-0 display-3 wow fadeInUp" data-wow-delay="0.3s">All Product Items</h1>
-            </div>
-            <div class="productList-carousel owl-carousel pt-4 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="productImg-carousel owl-carousel productList-item">
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-4.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-4.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-6.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-7.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="productImg-carousel owl-carousel productList-item">
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-8.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-9.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-10.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-11.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="productImg-carousel owl-carousel productList-item">
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-12.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-13.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-14.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-15.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="productImg-carousel owl-carousel productList-item">
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-16.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-17.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productImg-item products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-3.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-        <!-- Product List End -->
-        <!-- Bestseller Products Start -->
-        {{-- <div class="container-fluid products pb-5">
-        <div class="container products-mini py-5">
-            <div class="mx-auto text-center mb-5" style="max-width: 700px;">
-                <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius wow fadeInUp"
-                    data-wow-delay="0.1s">Bestseller Products</h4>
-                <p class="mb-0 wow fadeInUp" data-wow-delay="0.2s">Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Modi, asperiores ducimus sint quos tempore officia similique quia? Libero, pariatur
-                    consectetur?</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-3.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-4.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-5.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-6.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-7.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="products-mini-item border">
-                        <div class="row g-0">
-                            <div class="col-5">
-                                <div class="products-mini-img border-end h-100">
-                                    <img src="img/product-11.png" class="img-fluid w-100 h-100" alt="Image">
-                                    <div class="products-mini-icon rounded-circle bg-primary">
-                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-7">
-                                <div class="products-mini-content p-3">
-                                    <a href="#" class="d-block mb-2">SmartPhone</a>
-                                    <a href="#" class="d-block h4">Apple iPad Mini <br> G2356</a>
-                                    <del class="me-2 fs-5">$1,250.00</del>
-                                    <span class="text-primary fs-5">$1,050.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="products-mini-add border p-3">
-                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                                    class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
-                            <div class="d-flex">
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                                        class="rounded-circle btn-sm-square border"><i
-                                            class="fas fa-random"></i></i></a>
-                                <a href="#"
-                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                                        class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-        <!-- Bestseller Products End -->
-    </div>
-
-    <!-- Modal Wishlist -->
-    <div class="modal fade" id="wishlistModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
+<style>
+    /* ===========================
+   RESET & BASE STYLES
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content-section {
+    width: 100%;
+    overflow-x: hidden;
+    background: #f8f9fa;
+    /* padding-top:-20px; */
+    padding: 0px 0px 0px 0px;
+}
+
+/* ===========================
+   CAROUSEL SECTION
+=========================== *//* ===========================
+   CAROUSEL SECTION (PREMIUM)
+=========================== */
+
+.ad-slider-wrapper {
+    position: relative;
+    top:-10;
+    overflow: hidden;
+    margin-bottom: 40px;
+    background: #ffffff;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.ad-slider-track {
+    display: flex;
+    transition: transform 0.6s ease;
+}
+
+.ad-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.slide-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 70px 80px;
+    background: linear-gradient(135deg, #1a2536 0%, #2d3e50 100%);
+    /* border-radius: 16px; */
+    color: white;
+    min-height: 480px;
+    position: relative;
+}
+
+/* Diskon Badge Premium */
+.discount-badge {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: #ff4757;
+    padding: 13px 26px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(255, 71, 87, 0.45);
+}
+
+/* GAMBAR PREMIUM */
+.slide-left img {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 20px;
+    object-fit: cover;
+
+    /* Glow effect */
+    box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.slide-left img:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 28px 55px rgba(0,0,0,0.48);
+}
+
+/* TEXT PREMIUM */
+.slide-sub {
+    font-size: 1rem;
+    text-transform: uppercase;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #c0d1e2;
+}
+
+.slide-headline {
+    font-size: 3.1rem;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.slide-desc {
+    font-size: 1.1rem;
+    color: #e6eef5;
+    opacity: 0.92;
+    margin-bottom: 30px;
+    line-height: 1.55;
+}
+
+/* HARGA PREMIUM */
+.price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.price-now {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.price-old {
+    font-size: 1.2rem;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* TOMBOL STYLISH */
+.btn-slide {
+    display: inline-block;
+    padding: 14px 42px;
+    background: #ffffff;
+    color: #1a2536;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 20px rgba(255,255,255,0.25);
+}
+
+.btn-slide:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(255,255,255,0.35);
+}
+
+/* NAV BUTTON PREMIUM */
+.slider-buttons {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.95);
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #1a2536;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    transition: 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* ===========================
+   FILTERS SECTION
+=========================== *//* ======================================================
+      PREMIUM FILTER BAR — ULTRA MODERN EDITION
+====================================================== */
+
+.filters-section {
+    background: #f5f7fa;
+    padding: 35px 0 45px;
+    margin-bottom: 40px;
+}
+
+.filters-container {
+    max-width: 1350px;
+    margin: auto;
+    padding: 0 25px;
+}
+
+/* FLOATING CARD WRAPPER */
+.filters-inner-box {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    border: 1px solid #eef1f5;
+}
+
+/* HEADER */
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.filter-title {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #1d2635;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.filter-title i {
+    font-size: 1.4rem;
+    color: #3b82f6;
+}
+
+/* GRID */
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 25px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.filter-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4d5c72;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* INPUT & SELECT — SUPER PREMIUM */
+.filter-input,
+.filter-select {
+    padding: 14px 16px;
+    border: 1px solid #d8e0ea;
+    background: #fbfcfe;
+    border-radius: 12px;
+    font-size: 0.95rem;
+
+    transition: 0.25s ease;
+    width: 100%;
+    color: #1d2635;
+
+    box-shadow: 0 3px 10px rgba(100, 116, 139, 0.08);
+}
+
+.filter-input:hover,
+.filter-select:hover {
+    background: #ffffff;
+    border-color: #b5c4d5;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    background: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+    outline: none;
+}
+
+/* IOS STYLE SELECT */
+.filter-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg stroke='gray' fill='none' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 18px;
+}
+
+/* PRICE RANGE SLIDER - LUXURY */
+.price-range-container {
+    padding: 8px 2px;
+}
+
+.price-range-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1d2635;
+    margin-bottom: 14px;
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: #d8e0ea;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    background: #3b82f6;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 6px 14px rgba(59, 130, 246, 0.45);
+    transition: 0.2s;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+}
+
+/* BUTTONS */
+.filter-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.btn-filter {
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    font-size: 0.95rem;
+}
+
+.btn-apply {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 5px 14px rgba(59, 130, 246, 0.35);
+}
+
+.btn-apply:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.btn-reset {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #d8e0ea;
+}
+
+.btn-reset:hover {
+    background: #e2e8f0;
+}
+
+/* ACTIVE FILTER TAGS — ELEGANT */
+.active-filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #e8edf3;
+}
+
+.filter-tag {
+    padding: 8px 16px;
+    background: #e8f1ff;
+    color: #1d2635;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid #cbdffb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-tag-remove {
+    width: 18px;
+    height: 18px;
+    background: #3b82f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-tag-remove:hover {
+    background: #ef4444;
+    transform: rotate(90deg);
+}
+
+
+/* ===========================
+   RESULTS INFO
+=========================== */
+.results-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 18px 20px;
+    background: white;
+    border-radius: 8px;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.results-count {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.view-options {
+    display: flex;
+    gap: 8px;
+}
+
+.view-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #555;
+}
+
+.view-btn.active,
+.view-btn:hover {
+    background: #2c3e50;
+    color: white;
+    border-color: #2c3e50;
+}
+
+/* ===========================
+   PRODUCT CARDS
+=========================== */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.product-card-enhanced {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e8e8e8;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card-enhanced:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: #2c3e50;
+}
+
+.product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background: #fafafa;
+    aspect-ratio: 1 / 1;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card-enhanced:hover .product-image-wrapper img {
+    transform: scale(1.05);
+}
+
+.badge-group {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 2;
+}
+
+.product-badge-enhanced {
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.badge-new {
+    background: #2c3e50;
+    color: white;
+}
+
+.badge-used {
+    background: #7f8c8d;
+    color: white;
+}
+
+.badge-discount {
+    background: #e74c3c;
+    color: white;
+}
+
+.badge-trending {
+    background: #f39c12;
+    color: white;
+}
+
+.quick-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.product-card-enhanced:hover .quick-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.quick-action-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2c3e50;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.quick-action-btn:hover {
+    background: #2c3e50;
+    color: white;
+    transform: scale(1.05);
+}
+
+.product-info-enhanced {
+    padding: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-category-link {
+    color: #7f8c8d;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.product-category-link:hover {
+    color: #2c3e50;
+}
+
+.product-title-enhanced {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+    min-height: 2.6em;
+}
+
+.product-title-enhanced:hover {
+    color: #34495e;
+}
+
+.sales-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: #27ae60;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    align-self: flex-start;
+}
+
+.rating-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.stars i {
+    color: #f39c12;
+    font-size: 0.8rem;
+}
+
+.stars i.text-muted {
+    color: #ddd;
+}
+
+.rating-text {
+    font-size: 0.75rem;
+    color: #7f8c8d;
+}
+
+.price-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.price-current {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.price-original {
+    font-size: 0.9rem;
+    color: #95a5a6;
+    text-decoration: line-through;
+}
+
+.discount-percent {
+    padding: 3px 8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.stock-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 0.75rem;
+}
+
+.stock-bar {
+    flex: 1;
+    height: 4px;
+    background: #ecf0f1;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.stock-fill {
+    height: 100%;
+    background: #27ae60;
+    transition: width 0.3s ease;
+}
+
+.stock-fill.low {
+    background: #e74c3c;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 11px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: auto;
+}
+
+.add-to-cart-btn:hover {
+    background: #34495e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+    color: white;
+}
+
+/* ===========================
+   EMPTY STATE
+=========================== */
+.empty-products {
+    text-align: center;
+    padding: 80px 20px;
+    grid-column: 1 / -1;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.empty-text {
+    color: #7f8c8d;
+    font-size: 1rem;
+}
+
+/* ===========================
+   PAGINATION
+=========================== */
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+    .slide-inner {
+        grid-template-columns: 1fr;
+        padding: 40px 30px;
+        min-height: auto;
+    }
+
+    .slide-headline {
+        font-size: 2rem;
+    }
+
+    .slide-left img {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .btn-filter {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .results-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+</style>
+<div class="content-section">
+    <!-- Carousel Section -->
+    <div class="ad-slider-wrapper">
+        <div class="ad-slider-track" id="adSliderTrack">
+            @foreach ($ads as $ad)
                 @php
-                    $categories = auth()->user()->buyer->wishlistCategories;
+                    $price = $ad->product->price;
+                    $start = $ad->product->starting_price;
+                    $discount = 0;
+                    if ($start > $price) {
+                        $discount = round((($start - $price) / $start) * 100);
+                    }
                 @endphp
-
-                <!-- Jika belum punya category -->
-                @if ($categories->count() == 0)
-                    <div class="modal-header">
-                        <h5 class="modal-title">Buat Kategori Wishlist</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <p>Kamu belum mempunyai kategori wishlist. Buat dulu ya!</p>
-
-                        <form action="{{ route('wishlist.category.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label>Nama Kategori</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Deskripsi</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-
-                            <button class="btn btn-primary w-100" type="submit">
-                                Buat Kategori
-                            </button>
-                        </form>
-                    </div>
-                @else
-                    <!-- Jika sudah ada category -->
-                    <div class="modal-header">
-                        <h5 class="modal-title">Pilih Kategori Wishlist</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-
-                    <form id="wishlistForm" method="POST" action="{{ route('wishlist.category.store') }}">
-                        @csrf
-                        <div class="modal-body">
-
-                            <input type="hidden" id="wishlistProductId">
-
-                            <label>Pilih kategori:</label>
-                            <select name="wishlist_category_id" class="form-control" required>
-                                @foreach ($categories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                @endforeach
-                            </select>
+                <div class="ad-slide">
+                    <div class="slide-inner">
+                        @if ($discount > 0)
+                            <div class="discount-badge">-{{ $discount }}%</div>
+                        @endif
+                        <div class="slide-left">
+                            <img src="{{ asset('storage/' . $ad->bg_image) }}" alt="Ad Image">
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary w-100">Tambahkan ke Wishlist</button>
+                        <div class="slide-right">
+                            <h4 class="slide-sub">{{ $ad->product->product_name }}</h4>
+                            <h1 class="slide-headline">{{ $ad->headline }}</h1>
+                            <p class="slide-desc">{{ $ad->description }}</p>
+                            <div class="price-box">
+                                <span class="price-now">Rp {{ number_format($price, 0, ',', '.') }}</span>
+                                @if ($start > $price)
+                                    <span class="price-old">Rp {{ number_format($start, 0, ',', '.') }}</span>
+                                @endif
+                            </div>
+                            <a href="{{ $ad->button_link }}" class="btn-slide">{{ $ad->button_text }}</a>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="slider-buttons">
+            <button id="prevBtn" class="nav-btn">❮</button>
+            <button id="nextBtn" class="nav-btn">❯</button>
+        </div>
+    </div>
 
-                @endif
+    <!-- Advanced Filters Section -->
+    <div class="filters-section">
+        <div class="filters-container">
+            <div class="filter-header">
+                <h2 class="filter-title">
+                    <i class="fas fa-filter"></i> Filter Produk
+                </h2>
+                <div class="filter-actions">
+                    <button class="btn-filter btn-apply" id="applyFilters">
+                        <i class="fas fa-check"></i> Terapkan
+                    </button>
+                    <button class="btn-filter btn-reset" id="resetFilters">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
 
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-search"></i> Cari Produk
+                    </label>
+                    <input type="text" id="searchInput" class="filter-input" placeholder="Nama produk...">
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-tag"></i> Kondisi
+                    </label>
+                    <select id="conditionFilter" class="filter-select">
+                        <option value="">Semua Kondisi</option>
+                        <option value="new">Baru</option>
+                        <option value="used">Bekas</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-box"></i> Ketersediaan
+                    </label>
+                    <select id="stockFilter" class="filter-select">
+                        <option value="">Semua</option>
+                        <option value="in-stock">Tersedia</option>
+                        <option value="low-stock">Stok Menipis</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="fas fa-sort"></i> Urutkan
+                    </label>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="newest">Terbaru</option>
+                        <option value="popular">Terpopuler</option>
+                        <option value="price-low">Harga Terendah</option>
+                        <option value="price-high">Harga Tertinggi</option>
+                        <option value="rating">Rating Tertinggi</option>
+                        <option value="name-az">Nama A-Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">
+                    <i class="fas fa-dollar-sign"></i> Rentang Harga
+                </label>
+                <div class="price-range-container">
+                    <div class="price-range-values">
+                        <span id="minPriceDisplay">Rp 0</span>
+                        <span id="maxPriceDisplay">Rp 10.000.000</span>
+                    </div>
+                    <input type="range" id="minPrice" class="filter-input" min="0" max="10000000" step="100000" value="0">
+                    <input type="range" id="maxPrice" class="filter-input" min="0" max="10000000" step="100000" value="10000000">
+                </div>
+            </div>
+
+            <div class="active-filters" id="activeFilters"></div>
+        </div>
+    </div>
+
+    <!-- Results Info -->
+    <div class="container">
+        <div class="results-info">
+            <div class="results-count">
+                Menampilkan <strong id="productCount">{{ $products->total() }}</strong> produk
+            </div>
+            <div class="view-options">
+                <button class="view-btn active" data-view="grid" title="Grid View">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list" title="List View">
+                    <i class="fas fa-list"></i>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Products Section -->
+    <div class="container">
+        <div class="product-grid" id="productsGrid">
+            @forelse ($products as $product)
+                <div class="product-item" 
+                     data-name="{{ strtolower($product->product_name) }}"
+                     data-condition="{{ $product->condition }}"
+                     data-price="{{ $product->price }}"
+                     data-stock="{{ $product->stock }}"
+                     data-rating="{{ $product->average_rating ?? 0 }}"
+                     data-sales="{{ $product->monthly_sales ?? 0 }}">
+                    
+                    <div class="product-card-enhanced">
+                        <!-- Image Section -->
+                        <div class="product-image-wrapper">
+                            <a href="{{ route('product.detail', $product->id) }}">
+                                <img src="{{ asset('storage/' . $product->img) }}" 
+                                     alt="{{ $product->product_name }}"
+                                     onerror="this.src='{{ asset('img/product-3.png') }}'">
+                            </a>
 
+                            <!-- Badges -->
+                            <div class="badge-group">
+                                <span class="product-badge-enhanced {{ $product->condition == 'new' ? 'badge-new' : 'badge-used' }}">
+                                    {{ $product->condition == 'new' ? 'Baru' : 'Bekas' }}
+                                </span>
+                                
+                                @php
+                                    $originalPrice = (int) $product->starting_price;
+                                    $currentPrice = (int) $product->price;
+                                    $discount = $originalPrice > $currentPrice ? round((($originalPrice - $currentPrice) / $originalPrice) * 100) : 0;
+                                @endphp
+                                
+                                @if($discount > 0)
+                                    <span class="product-badge-enhanced badge-discount">
+                                        -{{ $discount }}%
+                                    </span>
+                                @endif
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const track = document.getElementById("adSliderTrack");
-            const slides = Array.from(track.children);
-            const slideWidth = slides[0].clientWidth;
+                                @if(isset($product->monthly_sales) && $product->monthly_sales > 50)
+                                    <span class="product-badge-enhanced badge-trending">
+                                        🔥 Trending
+                                    </span>
+                                @endif
+                            </div>
 
+                            <!-- Quick Actions -->
+                            <div class="quick-actions">
+                                <button class="quick-action-btn" 
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#wishlistModal"
+                                        data-product-id="{{ $product->id }}"
+                                        title="Tambah ke Wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="quick-action-btn" title="Quick View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="product-info-enhanced">
+                            <a href="#" class="product-category-link">
+                                {{ $product->category->name ?? 'Uncategorized' }}
+                            </a>
+
+                            <a href="{{ route('product.detail', $product->id) }}" class="product-title-enhanced">
+                                {{ $product->product_name }}
+                            </a>
+
+                            <!-- Sales Info -->
+                            @if(isset($product->monthly_sales) && $product->monthly_sales > 0)
+                                <div class="sales-badge">
+                                    <i class="fas fa-fire"></i>
+                                    Terjual {{ number_format($product->monthly_sales) }}
+                                </div>
+                            @endif
+
+                            <!-- Rating -->
+                            <div class="rating-section">
+                                <div class="stars">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star {{ $i <= ($product->average_rating ?? 0) ? '' : 'text-muted' }}"></i>
+                                    @endfor
+                                </div>
+                                <span class="rating-text">
+                                    {{ number_format($product->average_rating ?? 0, 1) }} 
+                                    ({{ $product->rating_count ?? 0 }} ulasan)
+                                </span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="price-section">
+                                <span class="price-current">
+                                    Rp {{ number_format($currentPrice, 0, ',', '.') }}
+                                </span>
+                                @if($discount > 0)
+                                    <span class="price-original">
+                                        Rp {{ number_format($originalPrice, 0, ',', '.') }}
+                                    </span>
+                                    <span class="discount-percent">-{{ $discount }}%</span>
+                                @endif
+                            </div>
+
+                            <!-- Stock Indicator -->
+                            @php
+                                $stockPercentage = min(100, ($product->stock / 100) * 100);
+                                $stockClass = $product->stock <= 10 ? 'low' : '';
+                            @endphp
+                            <div class="stock-indicator">
+                                <span style="font-weight: 600; color: {{ $product->stock <= 10 ? '#e74c3c' : '#27ae60' }}">
+                                    {{ $product->stock }} tersisa
+                                </span>
+                                <div class="stock-bar">
+                                    <div class="stock-fill {{ $stockClass }}" style="width: {{ $stockPercentage }}%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Add to Cart Button -->
+                            <a href="{{ route('addCart', $product->id) }}" class="add-to-cart-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                Tambah ke Keranjang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="empty-products">
+                    <div class="empty-icon">📦</div>
+                    <h2 class="empty-title">Produk Tidak Ditemukan</h2>
+                    <p class="empty-text">Coba ubah filter pencarian Anda</p>
+                </div>
+            @endforelse
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrapper">
+            {{ $products->onEachSide(1)->links('vendor.pagination.bootstrap-4') }}
+        </div>
+    </div>
+</div>
+
+<!-- Modal Wishlist -->
+<div class="modal fade" id="wishlistModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @php
+                $categories = auth()->check() ? (auth()->user()->buyer->wishlistCategories ?? collect()) : collect();
+            @endphp
+
+            @if ($categories->count() == 0)
+                <div class="modal-header">
+                    <h5 class="modal-title">Buat Kategori Wishlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Kamu belum mempunyai kategori wishlist. Buat dulu ya!</p>
+                    <form action="{{ route('wishlist.category.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label>Nama Kategori</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Deskripsi</label>
+                            <textarea name="description" class="form-control" required></textarea>
+                        </div>
+                        <button class="btn btn-primary w-100" type="submit">Buat Kategori</button>
+                    </form>
+                </div>
+            @else
+                <div class="modal-header">
+                    <h5 class="modal-title">Pilih Kategori Wishlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="wishlistForm" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" id="wishlistProductId">
+                        <label>Pilih kategori:</label>
+                        <select name="wishlist_category_id" class="form-control" required>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary w-100">Tambahkan ke Wishlist</button>
+                    </div>
+                </form>
+            @endif
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    
+    // ===========================
+    // AD SLIDER
+    // ===========================
+    const track = document.getElementById("adSliderTrack");
+    if (track) {
+        const slides = Array.from(track.children);
+        if (slides.length > 0) {
+            const slideWidth = slides[0].offsetWidth;
             let index = 1;
-            let isDragging = false;
-            let startX = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
 
-            // CLONE FIRST & LAST SLIDE
             const firstClone = slides[0].cloneNode(true);
             const lastClone = slides[slides.length - 1].cloneNode(true);
-
             track.appendChild(firstClone);
             track.insertBefore(lastClone, slides[0]);
 
             const totalSlides = track.children.length;
-
-            // Set start position
             track.style.transform = `translateX(-${slideWidth * index}px)`;
 
+            const nextBtn = document.getElementById("nextBtn");
+            const prevBtn = document.getElementById("prevBtn");
 
-            // NEXT BUTTON
-            document.getElementById("nextBtn").addEventListener("click", () => {
-                if (index >= totalSlides - 1) return;
-                index++;
-                track.style.transition = ".45s ease";
-                track.style.transform = `translateX(-${slideWidth * index}px)`;
-            });
+            if (nextBtn) {
+                nextBtn.addEventListener("click", () => {
+                    if (index >= totalSlides - 1) return;
+                    index++;
+                    track.style.transition = "transform 0.5s ease";
+                    track.style.transform = `translateX(-${slideWidth * index}px)`;
+                });
+            }
 
-            // PREV BUTTON
-            document.getElementById("prevBtn").addEventListener("click", () => {
-                if (index <= 0) return;
-                index--;
-                track.style.transition = ".45s ease";
-                track.style.transform = `translateX(-${slideWidth * index}px)`;
-            });
+            if (prevBtn) {
+                prevBtn.addEventListener("click", () => {
+                    if (index <= 0) return;
+                    index--;
+                    track.style.transition = "transform 0.5s ease";
+                    track.style.transform = `translateX(-${slideWidth * index}px)`;
+                });
+            }
 
-            // LOOPING FIX
             track.addEventListener("transitionend", () => {
-                if (track.children[index].isEqualNode(firstClone)) {
+                const currentSlide = track.children[index];
+                if (currentSlide && currentSlide.isEqualNode(firstClone)) {
                     track.style.transition = "none";
                     index = 1;
                     track.style.transform = `translateX(-${slideWidth * index}px)`;
                 }
-                if (track.children[index].isEqualNode(lastClone)) {
+                if (currentSlide && currentSlide.isEqualNode(lastClone)) {
                     track.style.transition = "none";
                     index = totalSlides - 2;
                     track.style.transform = `translateX(-${slideWidth * index}px)`;
                 }
             });
 
-            /* DRAG / SWIPE */
-            track.addEventListener("mousedown", dragStart);
-            track.addEventListener("touchstart", dragStart);
+            // Auto slide every 5 seconds
+            setInterval(() => {
+                if (nextBtn) nextBtn.click();
+            }, 5000);
+        }
+    }
 
-            track.addEventListener("mousemove", dragging);
-            track.addEventListener("touchmove", dragging);
+    // ===========================
+    // ADVANCED FILTERS
+    // ===========================
+    const filterState = {
+        search: '',
+        condition: '',
+        stock: '',
+        sort: 'newest',
+        minPrice: 0,
+        maxPrice: 10000000
+    };
 
-            track.addEventListener("mouseup", dragEnd);
-            track.addEventListener("mouseleave", dragEnd);
-            track.addEventListener("touchend", dragEnd);
+    function formatRupiah(amount) {
+        return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
 
-            function dragStart(e) {
-                isDragging = true;
-                startX = e.pageX || e.touches[0].clientX;
-                prevTranslate = -slideWidth * index;
+    // Price range inputs
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+    const minPriceDisplay = document.getElementById('minPriceDisplay');
+    const maxPriceDisplay = document.getElementById('maxPriceDisplay');
+
+    if (minPriceInput && minPriceDisplay) {
+        minPriceInput.addEventListener('input', function() {
+            filterState.minPrice = parseInt(this.value);
+            minPriceDisplay.textContent = formatRupiah(filterState.minPrice);
+        });
+    }
+
+    if (maxPriceInput && maxPriceDisplay) {
+        maxPriceInput.addEventListener('input', function() {
+            filterState.maxPrice = parseInt(this.value);
+            maxPriceDisplay.textContent = formatRupiah(filterState.maxPrice);
+        });
+    }
+
+    // Collect filter values
+    function collectFilters() {
+        const searchInput = document.getElementById('searchInput');
+        const conditionFilter = document.getElementById('conditionFilter');
+        const stockFilter = document.getElementById('stockFilter');
+        const sortFilter = document.getElementById('sortFilter');
+
+        if (searchInput) filterState.search = searchInput.value.toLowerCase();
+        if (conditionFilter) filterState.condition = conditionFilter.value;
+        if (stockFilter) filterState.stock = stockFilter.value;
+        if (sortFilter) filterState.sort = sortFilter.value;
+    }
+
+    // Apply filters
+    function applyFilters() {
+        collectFilters();
+        
+        const products = Array.from(document.querySelectorAll('.product-item'));
+        let visibleCount = 0;
+
+        products.forEach(product => {
+            const name = product.dataset.name || '';
+            const condition = product.dataset.condition || '';
+            const price = parseInt(product.dataset.price) || 0;
+            const stock = parseInt(product.dataset.stock) || 0;
+
+            let show = true;
+
+            // Search filter
+            if (filterState.search && !name.includes(filterState.search)) {
+                show = false;
             }
 
-            function dragging(e) {
-                if (!isDragging) return;
-                const x = e.pageX || e.touches[0].clientX;
-                const diff = x - startX;
-                currentTranslate = prevTranslate + diff;
-                track.style.transform = `translateX(${currentTranslate}px)`;
+            // Condition filter
+            if (filterState.condition && condition !== filterState.condition) {
+                show = false;
             }
 
-            function dragEnd() {
-                isDragging = false;
+            // Stock filter
+            if (filterState.stock === 'in-stock' && stock <= 0) {
+                show = false;
+            } else if (filterState.stock === 'low-stock' && stock > 10) {
+                show = false;
+            }
 
-                const moved = currentTranslate - prevTranslate;
+            // Price filter
+            if (price < filterState.minPrice || price > filterState.maxPrice) {
+                show = false;
+            }
 
-                if (moved < -80) {
-                    index++;
-                } else if (moved > 80) {
-                    index--;
-                }
+            product.style.display = show ? '' : 'none';
+            if (show) visibleCount++;
+        });
 
-                track.style.transition = ".45s ease";
-                track.style.transform = `translateX(-${slideWidth * index}px)`;
+        // Sort products
+        sortProducts(products.filter(p => p.style.display !== 'none'));
+
+        // Update count
+        const productCount = document.getElementById('productCount');
+        if (productCount) {
+            productCount.textContent = visibleCount;
+        }
+
+        // Show active filters
+        updateActiveFilters();
+    }
+
+    // Sort products
+    function sortProducts(visibleProducts) {
+        const container = document.getElementById('productsGrid');
+        if (!container) return;
+        
+        visibleProducts.sort((a, b) => {
+            const priceA = parseInt(a.dataset.price) || 0;
+            const priceB = parseInt(b.dataset.price) || 0;
+            const ratingA = parseFloat(a.dataset.rating) || 0;
+            const ratingB = parseFloat(b.dataset.rating) || 0;
+            const salesA = parseInt(a.dataset.sales) || 0;
+            const salesB = parseInt(b.dataset.sales) || 0;
+            const nameA = a.dataset.name || '';
+            const nameB = b.dataset.name || '';
+
+            switch(filterState.sort) {
+                case 'popular':
+                    return salesB - salesA;
+                case 'price-low':
+                    return priceA - priceB;
+                case 'price-high':
+                    return priceB - priceA;
+                case 'rating':
+                    return ratingB - ratingA;
+                case 'name-az':
+                    return nameA.localeCompare(nameB);
+                default:
+                    return 0;
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('wishlistModal');
+        visibleProducts.forEach(product => {
+            container.appendChild(product);
+        });
+    }
 
-            modal.addEventListener('show.bs.modal', function(event) {
-                const button = event.relatedTarget;
+    // Update active filters display
+    function updateActiveFilters() {
+        const activeFiltersDiv = document.getElementById('activeFilters');
+        if (!activeFiltersDiv) return;
+
+        const filters = [];
+
+        if (filterState.search) {
+            filters.push({ label: `Pencarian: "${filterState.search}"`, key: 'search' });
+        }
+        if (filterState.condition) {
+            const condLabel = filterState.condition === 'new' ? 'Baru' : 'Bekas';
+            filters.push({ label: `Kondisi: ${condLabel}`, key: 'condition' });
+        }
+        if (filterState.stock) {
+            const stockLabel = filterState.stock === 'in-stock' ? 'Tersedia' : 'Stok Menipis';
+            filters.push({ label: `Stok: ${stockLabel}`, key: 'stock' });
+        }
+        if (filterState.minPrice > 0 || filterState.maxPrice < 10000000) {
+            filters.push({ 
+                label: `Harga: ${formatRupiah(filterState.minPrice)} - ${formatRupiah(filterState.maxPrice)}`, 
+                key: 'price' 
+            });
+        }
+
+        if (filters.length > 0) {
+            activeFiltersDiv.style.display = 'flex';
+            activeFiltersDiv.innerHTML = filters.map(f => `
+                <div class="filter-tag">
+                    ${f.label}
+                    <span class="filter-tag-remove" data-filter-key="${f.key}">×</span>
+                </div>
+            `).join('');
+
+            // Add event listeners to remove buttons
+            activeFiltersDiv.querySelectorAll('.filter-tag-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    removeFilter(this.dataset.filterKey);
+                });
+            });
+        } else {
+            activeFiltersDiv.style.display = 'none';
+        }
+    }
+
+    // Remove individual filter
+    function removeFilter(key) {
+        const searchInput = document.getElementById('searchInput');
+        const conditionFilter = document.getElementById('conditionFilter');
+        const stockFilter = document.getElementById('stockFilter');
+
+        switch(key) {
+            case 'search':
+                if (searchInput) searchInput.value = '';
+                break;
+            case 'condition':
+                if (conditionFilter) conditionFilter.value = '';
+                break;
+            case 'stock':
+                if (stockFilter) stockFilter.value = '';
+                break;
+            case 'price':
+                if (minPriceInput) {
+                    minPriceInput.value = 0;
+                    minPriceDisplay.textContent = 'Rp 0';
+                }
+                if (maxPriceInput) {
+                    maxPriceInput.value = 10000000;
+                    maxPriceDisplay.textContent = 'Rp 10.000.000';
+                }
+                filterState.minPrice = 0;
+                filterState.maxPrice = 10000000;
+                break;
+        }
+        applyFilters();
+    }
+
+    // Reset all filters
+    function resetFilters() {
+        const searchInput = document.getElementById('searchInput');
+        const conditionFilter = document.getElementById('conditionFilter');
+        const stockFilter = document.getElementById('stockFilter');
+        const sortFilter = document.getElementById('sortFilter');
+
+        if (searchInput) searchInput.value = '';
+        if (conditionFilter) conditionFilter.value = '';
+        if (stockFilter) stockFilter.value = '';
+        if (sortFilter) sortFilter.value = 'newest';
+        if (minPriceInput) {
+            minPriceInput.value = 0;
+            minPriceDisplay.textContent = 'Rp 0';
+        }
+        if (maxPriceInput) {
+            maxPriceInput.value = 10000000;
+            maxPriceDisplay.textContent = 'Rp 10.000.000';
+        }
+        
+        filterState.search = '';
+        filterState.condition = '';
+        filterState.stock = '';
+        filterState.sort = 'newest';
+        filterState.minPrice = 0;
+        filterState.maxPrice = 10000000;
+        
+        applyFilters();
+    }
+
+    // Event listeners for filters
+    const applyFiltersBtn = document.getElementById('applyFilters');
+    const resetFiltersBtn = document.getElementById('resetFilters');
+    const searchInput = document.getElementById('searchInput');
+    const sortFilter = document.getElementById('sortFilter');
+
+    if (applyFiltersBtn) {
+        applyFiltersBtn.addEventListener('click', applyFilters);
+    }
+
+    if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener('click', resetFilters);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+    }
+
+    if (sortFilter) {
+        sortFilter.addEventListener('change', applyFilters);
+    }
+
+    // View toggle (Grid/List)
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const view = this.dataset.view;
+            const grid = document.getElementById('productsGrid');
+            
+            if (grid) {
+                if (view === 'list') {
+                    grid.style.gridTemplateColumns = '1fr';
+                } else {
+                    grid.style.gridTemplateColumns = '';
+                }
+            }
+        });
+    });
+
+    // Wishlist modal
+    const wishlistModal = document.getElementById('wishlistModal');
+    if (wishlistModal) {
+        wishlistModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            if (button) {
                 const productId = button.getAttribute('data-product-id');
-
                 const form = document.getElementById('wishlistForm');
-
-                if (form) {
+                if (form && productId) {
                     form.action = "/wishlist/store/" + productId;
                 }
-            });
-        });
-
-        let selectedProductId = null;
-
-        function openWishlistModal(productId) {
-            selectedProductId = productId;
-
-            const categories = @json(auth()->user()->buyer->wishlistCategories);
-
-            document.querySelector('#choose-category-box').classList.add('d-none');
-            document.querySelector('#no-category-box').classList.add('d-none');
-            document.querySelector('#add-category-box').classList.add('d-none');
-
-            // Jika kategori kosong
-            if (categories.length === 0) {
-                document.querySelector('#no-category-box').classList.remove('d-none');
-            } else {
-                let html = "";
-                categories.forEach(cat => {
-                    html += `
-                <div class="form-check mb-2">
-                    <input type="radio" name="wishlist_category_id" class="form-check-input" value="${cat.id}">
-                    <label class="form-check-label">${cat.name}</label>
-                </div>
-            `;
-                });
-
-                document.querySelector('#category-list').innerHTML = html;
-
-                let form = document.querySelector('#choose-category-box');
-                form.action = "/wishlist/store/" + selectedProductId;
-
-                form.classList.remove('d-none');
             }
-
-            new bootstrap.Modal(document.getElementById('wishlistModal')).show();
-        }
-
-        function showCategoryForm() {
-            document.querySelector('#choose-category-box').classList.add('d-none');
-            document.querySelector('#no-category-box').classList.add('d-none');
-            document.querySelector('#add-category-box').classList.remove('d-none');
-        }
-
-        function showCategoryChoose() {
-            openWishlistModal(selectedProductId);
-        }
-    </script>
-
+        });
+    }
+});
+</script>
 
 @endsection
-
-<script>
-    // HORIZONTAL SLIDER
-    const horizontalSlider = document.getElementById('horizontalSlider');
-    let hIndex = 0;
-
-    document.getElementById('prevHorizontal').addEventListener('click', () => {
-        const slides = horizontalSlider.children.length;
-        hIndex = (hIndex - 1 + slides) % slides;
-        horizontalSlider.style.transform = `translateX(-${hIndex * 100}%)`;
-    });
-
-    document.getElementById('nextHorizontal').addEventListener('click', () => {
-        const slides = horizontalSlider.children.length;
-        hIndex = (hIndex + 1) % slides;
-        horizontalSlider.style.transform = `translateX(-${hIndex * 100}%)`;
-    });
-
-    // VERTICAL SLIDER
-    const verticalSlider = document.getElementById('verticalSlider');
-    let vIndex = 0;
-
-    document.getElementById('prevVertical').addEventListener('click', () => {
-        const slides = verticalSlider.children.length;
-        vIndex = (vIndex - 1 + slides) % slides;
-        verticalSlider.style.transform = `translateY(-${vIndex * 270}px)`; // 250px tinggi + 20 margin
-    });
-
-    document.getElementById('nextVertical').addEventListener('click', () => {
-        const slides = verticalSlider.children.length;
-        vIndex = (vIndex + 1) % slides;
-        verticalSlider.style.transform = `translateY(-${vIndex * 270}px)`;
-    });
-
-
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const tabs = document.querySelectorAll(".costume-tab");
-        console.log(tabs);
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                tabs.forEach((t) => t.classList.remove("active"));
-                tab.classList.add("active");
-            });
-        });
-    });
-</script>

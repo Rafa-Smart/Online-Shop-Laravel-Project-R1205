@@ -1,26 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CustomerInsightsController;
+use App\Http\Controllers\DashboardSellerController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MidtransCallbackController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerProfileController;
-use App\Http\Controllers\DashboardSellerController;
 use App\Http\Controllers\StockManagementController;
-use App\Http\Controllers\CustomerInsightsController;
-use App\Http\Controllers\MidtransCallbackController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -171,40 +170,59 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('wishlist-category/{id}/update', [WishlistController::class, 'updateCategory'])
         ->name('wishlist.category.update');
 
-    
-Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])->name('seller.logout');
+    Route::get('/seller/logout', [SellerProfileController::class, 'deleteAccount'])->name('seller.logout');
 
-//  Route::resource('ads', AdController::class);
- Route::get('/seller/ads', [AdController::class, 'index'])->name('ads.index');
- Route::get('/seller/ads/create', [AdController::class, 'create'])->name('ads.create');
- Route::post('/seller/ads/store', [AdController::class, 'store'])->name('ads.store');
-
+    //  Route::resource('/ads', AdController::class);
+    Route::get('/seller/ads', [AdController::class, 'index'])->name('ads.index');
+    Route::get('/seller/ads/create', [AdController::class, 'create'])->name('ads.create');
+    Route::post('/seller/ads/store', [AdController::class, 'store'])->name('ads.store');
 
     // midtrans
 
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store'); // sesuai form mu
-Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']); // callback endpoint
-Route::get('/payment/finish', [\App\Http\Controllers\PaymentController::class, 'finish'])
-    ->name('payment.finish');
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store'); // sesuai form mu
+    Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']); // callback endpoint
+    Route::get('/payment/finish', [\App\Http\Controllers\PaymentController::class, 'finish'])
+        ->name('payment.finish');
 
-Route::get('/payment/error', [\App\Http\Controllers\PaymentController::class, 'error'])
-    ->name('payment.error');
+    Route::get('/payment/error', [\App\Http\Controllers\PaymentController::class, 'error'])
+        ->name('payment.error');
 
-Route::get('/payment/pending', function () {
-    return view('payment.pending');
-})->name('payment.pending');
+    Route::get('/payment/pending', function () {
+        return view('payment.pending');
+    })->name('payment.pending');
 
-Route::get('/seller/customer-insights', [CustomerInsightsController::class, 'index'])
+    Route::get('/seller/customer-insights', [CustomerInsightsController::class, 'index'])
         ->name('seller.customer.insights');
 
-        Route::get('/seller/stock-management', [StockManagementController::class, 'index'])
-    ->name('seller.stock.management');
+    Route::get('/seller/stock-management', [StockManagementController::class, 'index'])
+        ->name('seller.stock.management');
 
-Route::post('/seller/stock-management/update/{product}', [StockManagementController::class, 'updateStock'])
-    ->name('seller.stock.update');
+    Route::post('/seller/stock-management/update/{product}', [StockManagementController::class, 'updateStock'])
+        ->name('seller.stock.update');
 
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+    Route::post('products/bulk-update-stock', [ProductController::class, 'bulkUpdateStock'])
+        ->name('products.bulk-update-stock');
 
-Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+    Route::post('products/bulk-delete', [ProductController::class, 'bulkDelete'])
+        ->name('products.bulk-delete');
+
+    Route::get('products-export', [ProductController::class, 'export'])
+        ->name('products.export');
+
+    Route::get('products-analytics', [ProductController::class, 'analytics'])
+        ->name('products.analytics');
+    Route::get('/products/filter', [HomeController::class, 'filterProducts'])->name('products.filter');
+    Route::get('/products/search-autocomplete', [HomeController::class, 'searchAutocomplete'])->name('products.search.autocomplete');
+    Route::get('/products/trending', [HomeController::class, 'getTrendingProducts'])->name('products.trending');
+    Route::get('/products/new-arrivals', [HomeController::class, 'getNewArrivals'])->name('products.new-arrivals');
+    Route::get('/products/featured', [HomeController::class, 'getFeaturedProducts'])->name('products.featured');
+    Route::get('/category/{id}/products', [HomeController::class, 'getProductsByCategory'])->name('category.products');
+    Route::get('/products/{id}/quick-view', [HomeController::class, 'quickView'])->name('products.quick-view');
+    Route::get('/filter-options', [HomeController::class, 'getFilterOptions'])->name('filter.options');
+    Route::get('/ads/edit/{id}', [AdController::class, 'edit'])->name('ads.edit');
+    Route::post('/ads/update/{id}', [AdController::class, 'update'])->name('ads.update');
+    Route::post('/ads/delete/{id}', [AdController::class, 'destroy'])->name('ads.destroy');
 });

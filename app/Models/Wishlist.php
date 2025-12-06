@@ -13,10 +13,11 @@ class Wishlist extends Model
         return $this->belongsTo(Buyer::class);
     }
 
-    public function category()
-    {
-        return $this->belongsTo(WishlistCategory::class, 'wishlist_category_id');
-    }
+public function wishlistCategory()
+{
+    return $this->belongsTo(WishlistCategory::class, 'wishlist_category_id');
+}
+
 
 
     public function product()

@@ -531,11 +531,7 @@
                 <div class="top-tab active" data-tab="all">All Wishlist</div>
                 
                 
-                @foreach($categories as $category)
-                <div class="top-tab" data-tab="{{ $category->id }}">
-                    {{ $category->name }}
-                </div>
-                @endforeach
+
                 
 
 
@@ -556,32 +552,7 @@
 </div>
 
             {{-- ================= CATEGORY WISHLIST TABS ================= --}}
-            @foreach($categories as $category)
-                <div id="content-{{ $category->id }}" class="tab-content">
-
-                    <div class="row">
-                        @foreach($category->wishlists as $wishlist)
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <div class="card-body">
-
-                                        <h5 class="card-title">
-                                            {{-- {{ dd($wishlist) }} --}}
-                                            {{ $namaXdescriptionWishlistCategory->name ?? 'Kategori Tidak Ditemukan' }}
-                                        </h5>
-
-                                        <p class="card-text">
-                                            {{ $namaXdescriptionWishlistCategory ?? 'belum ada description' }}
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
-            @endforeach
+          
 
 
         </div>

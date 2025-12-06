@@ -551,12 +551,10 @@
                 </div>
 
                 {{-- ================= TAB ATAS ================= --}}
-                <?php
-                $nameWishlistCategory = \App\Models\WishlistCategory::where('buyer_id', auth()->user()->buyer->id)->first()->name ?? 'Kategori Tidak Ditemukan';
-                ?>
+
 
                 <div class="top-tabs">
-                    <div class="top-tab active" data-tab="all">Wishlist -> {{ $nameWishlistCategory }}</div>
+                    <div class="top-tab active" data-tab="all">Category Wishlist | {{ $namaCategory->name}}</div>
 
                     @foreach ($categories as $category)
                         <div class="top-tab" data-tab="{{ $category->id }}">
@@ -686,15 +684,9 @@
                             @foreach ($categoryWishlist as $index => $category)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $category->category->name }}</td>
-                                    <td>{{ $category->category->description }}</td>
+                                    <td>{{ $category->wishlistCategory->name }}</td>
+                                    <td>{{ $category->wishlistCategory->description }}</td>
                                     <td>
-                                        <!-- EDIT BUTTON -->
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#editCategoryModal{{ $category->id }}">
-                                            Edit
-                                        </button>
-
                                         <!-- DELETE FORM -->
                                         <form action="{{ route('wishlist.category.destroy', $category->id) }}"
                                             method="POST" class="d-inline">
