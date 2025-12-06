@@ -51,7 +51,7 @@
 
         .login-title {
             font-weight: 800;
-            color: #0e1624;
+            color: #b7d2ff;
             font-size: 1.8rem;
             margin-bottom: 30px;
             display: flex;
@@ -65,7 +65,7 @@
             background: #f3f4f6;
             border-radius: 12px 0 0 12px;
             border: 1px solid #d1d5db;
-            color: #0e1624;
+            color: #f0f5fe;
         }
 
         .form-control {
@@ -157,6 +157,178 @@
                 font-size: 1.5rem;
             }
         }
+        body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #0e1624 0%, #132035 50%, #0e1624 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ===== LOGIN CARD ===== */
+.login-card {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(20px);
+    padding: 60px 40px 40px;
+    border-radius: 25px;
+    max-width: 410px;
+    width: 100%;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    animation: fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== LOGO ===== */
+.login-logo {
+    width: 85px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    letter-spacing: -0.5px;
+    margin-bottom: 30px;
+}
+
+/* ===== INPUT FIELD ===== */
+.input-group-text {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #dee6f0;
+    border-radius: 14px 0 0 14px;
+    padding: 14px;
+}
+
+.form-control {
+    background: rgba(255,255,255,0.05);
+    border: none;
+    border-radius: 0 14px 14px 0;
+    color: white;
+    padding: 14px;
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 0 0 2px #3b82f6;
+    color: white;
+}
+
+.password-toggle {
+    background: rgba(255,255,255,0.15) !important;
+    border-radius: 0 14px 14px 0 !important;
+    border: none;
+    cursor: pointer;
+    color: #cbd5e1;
+}
+
+/* ===== BUTTON GOOGLE ===== */
+.btn-google {
+    background: white;
+    color: black;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+.btn-google:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255,255,255,0.25);
+}
+
+/* ===== LOGIN BUTTON ===== */
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: 0.3s ease;
+    box-shadow: 0 6px 18px rgba(59,130,246,0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(59,130,246,0.5);
+}
+
+/* ===== ALERT ===== */
+.alert-success, .alert-error {
+    border-radius: 12px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ===== LINK ===== */
+.forgot-password {
+    color: #dbeafe;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.forgot-password:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.login-card a {
+    color: #60a5fa;
+}
+
+.login-card a:hover {
+    text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width: 500px) {
+    .login-card {
+        padding: 45px 25px 30px;
+    }
+    .login-title {
+        font-size: 1.6rem;
+    }
+}
+.form-control::placeholder {
+    color: #cbd5e1;
+}
+
+.form-control:focus {
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 0 0 2px #3b82f6;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -195,13 +367,13 @@
                 </span>
             </div>
 
-            <a href="#" class="forgot-password">Lupa password?</a>
-
+            
             <a href="{{ route('google.redirect') }}" class="btn-google">
                 <i class="fab fa-google"></i> Login dengan Google
             </a>
-
+            
             <button type="submit" class="btn btn-primary">Login</button>
+            <a href="#" class="forgot-password" style="margin-top: 16px;margin-bottom:-6px;">Lupa password?</a>
         </form>
 
         <p class="mt-4">Belum punya akun? <a href="{{ route('register') }}" style="color:#3b82f6; font-weight:600;">Daftar Sekarang</a></p>

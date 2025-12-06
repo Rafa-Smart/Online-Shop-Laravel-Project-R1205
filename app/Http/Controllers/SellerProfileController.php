@@ -127,12 +127,12 @@ class SellerProfileController extends Controller
         }
 
         // Hapus seller
-        if ($seller) {
-            $seller->delete();
-        }
+        // if ($seller) {
+        //     $seller->delete();
+        // }
 
         // Hapus user
-        $user->delete();
+        // $user->delete();
         Auth::logout();
 
         return redirect('/')->with('success', 'Akun berhasil dihapus.');

@@ -25,9 +25,8 @@
            @else
                 @foreach($ads as $ad)
             <tr>
-                ddd
-                <td><img src="{{ asset('storage/'.$ad->bg_image) }}" width="150"></td>
-                <td>{{ $ad->product->name }}</td>
+                <td><img src="{{ asset('storage/'.$ad->bg_image) }}" width="50"></td>
+                <td>{{ $ad->product->product_name }}</td>
                 <td>{{ $ad->headline }}</td>
                 <td>{{ $ad->is_active ? 'Active' : 'Inactive' }}</td>
             </tr>

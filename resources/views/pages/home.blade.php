@@ -396,490 +396,137 @@
         font-size: 2rem;
     }
 
-    .ad-slider-wrapper {
-        width: 60%;
-        overflow: hidden;
-        position: relative;
-        padding: 20px 0;
-        border-radius: 16px;
-        /* margin-top:40px; */
-        top:40px;
-    }
-
-    .ad-slider-track {
-        display: flex;
-        transition: transform .45s ease;
-        will-change: transform;
-    }
-
-    .ad-slide {
-        min-width: 60%;
-        display: flex;
-        justify-content: center;
-        padding: 10px;
-    }
-
-    .slide-inner {
-        background: linear-gradient(135deg, #e8f1ff, #ffffff);
-        border-radius: 22px;
-        display: flex;
-        align-items: center;
-        padding: 40px;
-    }
-
-    .slide-left img {
-        width: 380px;
-        border-radius: 22px;
-        filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
-    }
-
-    .slide-right {
-        padding-left: 40px;
-    }
-
-    .slide-sub {
-        color: #0d6efd;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-
-    .slide-headline {
-        font-size: 3rem;
-        font-weight: 800;
-        color: #042f67;
-    }
-
-    .slide-desc {
-        color: #555;
-        max-width: 420px;
-    }
-
-    .btn-slide {
-        background: #0d6efd;
-        color: white;
-        padding: 12px 26px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
-        transition: 0.25s ease;
-    }
-
-    .btn-slide:hover {
-        background: #084dc9;
-        transform: translateY(-3px);
-    }
-
-    /* BUTTONS */
-    .slider-buttons {
-        position: absolute;
-        bottom: 25px;
-        right: 35px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .nav-btn {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: none;
-        background: #0d6efd;
-        color: white;
-        font-size: 20px;
-        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.25);
-        cursor: pointer;
-        transition: .2s ease;
-    }
-
-    .nav-btn:hover {
-        transform: scale(1.1);
-        background: #084dc9;
-    }
-
-    /* WRAPPER */
-    .slide-inner {
-        background: linear-gradient(135deg, #e8f1ff, #ffffff);
-        border-radius: 22px;
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        padding: 40px;
-        width: 60%;
-        min-height: 320px;
-        /* biar card lebih stabil */
-    }
-
-    /* IMAGE FIX + RESPONSIVE */
-    .image-box {
-        width: 350px;
-        /* ukuran fix */
-        height: 320px;
-        /* tinggi fix */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        /* penting agar gambar tidak keluar */
-        border-radius: 20px;
-        background: #f3f7ff;
-        /* warna background lembut */
-    }
-
-    .image-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        /* inti: gambar tidak rusak, tidak terpotong */
-        object-position: center;
-        filter: drop-shadow(0 15px 30px rgba(0, 121, 255, 0.2));
-    }
-
-    /* TEXT AREA */
-    .slide-right {
-        flex: 1;
-        max-width: 550px;
-        /* batasi lebar biar tidak terlalu panjang */
-        word-wrap: break-word;
-        /* biar teks panjang tidak keluar card */
-    }
-
-    .slide-headline {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #042f67;
-        line-height: 1.2;
-        word-wrap: break-word;
-        /* WRAP otomatis */
-    }
-
-    .slide-desc {
-        color: #555;
-        font-size: 1rem;
-        line-height: 1.5;
-        word-wrap: break-word;
-        /* WRAP otomatis */
-        overflow-wrap: break-word;
-    }
-
-    /* RESPONSIVE (HP / Tablet) */
-    @media (max-width: 992px) {
-        .slide-inner {
-            flex-direction: column;
-            text-align: center;
-            gap: 25px;
-            padding: 35px;
-        }
-
-        .image-box {
-            width: 260px;
-            height: 260px;
-        }
-
-        .slide-right {
-            max-width: 90%;
-        }
-
-        .slide-headline {
-            font-size: 2rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .image-box {
-            width: 220px;
-            height: 220px;
-        }
-
-        .slide-inner {
-            padding: 25px;
-        }
-    }
-
-    /* WRAPPER */
+    /* ===========================
+   AD SLIDER WRAPPER
+   =========================== */
     .ad-slider-wrapper {
         width: 100%;
-        overflow: hidden;
-        position: relative;
-        padding: 10px 0;
-    }
-
-    .ad-slider-track {
-        display: flex;
-        transition: transform .45s ease;
-    }
-
-    /* SLIDE */
-    .ad-slide {
-        min-width: 50%;
-        display: flex;
-        justify-content: center;
-        padding: 5px;
-    }
-
-    /* --- CARD BARU, LEBIH KECIL & COMPACT --- */
-    .slide-inner {
-        background: #ffffff;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        gap: 25px;
-        padding: 25px 30px;
-        width: 100%;
-        min-height: 210px;
-        /* HEIGHT BARU — lebih kecil */
-    }
-
-    /* --- IMAGE AREA --- */
-    .slide-left img {
-        width: 230px;
-        /* lebih kecil */
-        height: 160px;
-        object-fit: contain;
-        border-radius: 12px;
-        background: #f3f6ff;
-        padding: 10px;
-        box-shadow: 0 5px 18px rgba(0, 75, 200, 0.15);
-    }
-
-    /* --- RIGHT TEXT AREA --- */
-    .slide-right {
-        flex: 1;
-        max-width: 450px;
-    }
-
-    .slide-sub {
-        color: #0d6efd;
-        font-weight: 700;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        letter-spacing: .5px;
-    }
-
-    .slide-headline {
-        font-size: 1.6rem;
-        /* lebih kecil */
-        font-weight: 800;
-        color: #042f67;
-        line-height: 1.25;
-        margin-bottom: 10px;
-    }
-
-    .slide-desc {
-        color: #444;
-        font-size: .95rem;
-        margin-bottom: 14px;
-        max-width: 380px;
-    }
-
-    /* --- CTA BUTTON --- */
-    .btn-slide {
-        background: #0d6efd;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: 600;
-        text-decoration: none;
-        font-size: .9rem;
-        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
-    }
-
-    .btn-slide:hover {
-        background: #084dc9;
-    }
-
-    /* --- NAV BUTTONS --- */
-    .slider-buttons {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .nav-btn {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        border: none;
-        background: #0d6efd;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        transition: .2s ease;
-    }
-
-    .nav-btn:hover {
-        transform: scale(1.1);
-        background: #084dc9;
-    }
-
-    /* --- RESPONSIVE --- */
-    @media (max-width: 992px) {
-        .slide-inner {
-            flex-direction: column;
-            text-align: center;
-            min-height: 350px;
-        }
-
-        .slide-left img {
-            width: 220px;
-            height: 170px;
-        }
-
-        .slide-right {
-            max-width: 90%;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .slide-inner {
-            padding: 20px;
-            min-height: 330px;
-        }
-
-        .slide-left img {
-            width: 180px;
-            height: 140px;
-        }
-    }
-
-    /* RIGHT TEXT AREA — FIX WRAPPING */
-    .slide-right {
-        flex: 1;
-        max-width: 450px;
-        min-width: 0;
-        /* FIX PALING PENTING */
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-        /* pastikan teks boleh turun */
-    }
-
-    /* HEADLINE – WRAP FIX */
-    .slide-headline {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #042f67;
-        line-height: 1.25;
-        margin-bottom: 10px;
-        word-break: break-word;
-        /* kalau kata panjang, tetap patah */
-        overflow-wrap: break-word;
-        white-space: normal;
-    }
-
-    /* DESCRIPTION – WRAP FIX */
-    .slide-desc {
-        color: #444;
-        font-size: .95rem;
-        margin-bottom: 14px;
-        max-width: 100%;
-        /* biar ikut ukuran card */
-        word-break: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-    }
-
-    /* WRAPPER */
-    .ad-slider-wrapper {
-        width: 60%;
+        max-width: 1200px;
+        margin: 0 auto;
         overflow: hidden;
         position: relative;
         padding: 20px 0;
     }
 
-    /* TRACK */
+    /* ===========================
+   TRACK
+   =========================== */
     .ad-slider-track {
         display: flex;
-        transition: transform .45s ease;
+        transition: transform 0.45s ease;
+        gap: 20px;
     }
 
-    /* EACH SLIDE */
+    /* ===========================
+   EACH SLIDE
+   =========================== */
     .ad-slide {
         min-width: 100%;
         display: flex;
         justify-content: center;
     }
 
-    /* CARD */
+    /* ===========================
+   SLIDE INNER CARD
+   =========================== */
     .slide-inner {
-        position: relative;
-        background: linear-gradient(135deg, #e8f1ff, #e4f0ff, #ffffff);
-        border-radius: 18px;
         display: flex;
+        flex-direction: row;
         align-items: center;
-        gap: 35px;
-        padding: 40px;
-        width: 91%;
-        /* min-height: 220px; */
-        height: 90%;
-        border: 1px solid rgba(0, 123, 255, 0.1);
+        gap: 30px;
+        padding: 30px;
+        width: 95%;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #e8f1ff, #ffffff);
+        box-shadow: 0 10px 25px rgba(0, 75, 200, 0.1);
+        position: relative;
+        overflow: hidden;
     }
 
-    /* DISCOUNT BADGE */
+    /* ===========================
+   DISCOUNT BADGE
+   =========================== */
     .discount-badge {
         position: absolute;
-        top: -12px;
-        left: -12px;
+        top: 15px;
+        left: 15px;
         background: #ff3b3b;
-        color: white;
-        padding: 10px 18px;
-        font-size: 1rem;
-        border-radius: 14px;
+        color: #fff;
         font-weight: 700;
-        box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+        padding: 8px 16px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
     }
 
-    /* LEFT IMAGE */
+    /* ===========================
+   LEFT IMAGE
+   =========================== */
+    .slide-left {
+        flex: 0 0 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .slide-left img {
-        width: 350px;
-        height: 250px;
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+        border-radius: 12px;
         object-fit: contain;
-        background: #f5f8ff;
-        padding: 18px;
-        border-radius: 18px;
-        box-shadow: 0 12px 28px rgba(0, 75, 255, 0.15);
+        box-shadow: 0 8px 20px rgba(0, 75, 200, 0.15);
+        background: #f3f6ff;
+        padding: 10px;
     }
 
-    /* RIGHT TEXT */
+    /* ===========================
+   RIGHT TEXT
+   =========================== */
     .slide-right {
         flex: 1;
-        max-width: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 50%;
         min-width: 0;
+        word-wrap: break-word;
     }
 
     .slide-sub {
         color: #0d6efd;
-        font-weight: 800;
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: .9rem;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
     }
 
     .slide-headline {
-        font-size: 2.3rem;
+        font-size: 1.8rem;
         font-weight: 800;
-        line-height: 1.2;
         color: #042f67;
+        line-height: 1.25;
+        margin-bottom: 10px;
     }
 
     .slide-desc {
         color: #555;
-        margin: 10px 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
     }
 
-    /* PRICE AREA */
+    /* ===========================
+   PRICE AREA
+   =========================== */
     .price-box {
-        margin-top: 10px;
         display: flex;
         align-items: baseline;
         gap: 12px;
+        margin-bottom: 15px;
     }
 
     .price-now {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: 900;
         color: #007bff;
     }
@@ -890,46 +537,50 @@
         text-decoration: line-through;
     }
 
-    /* BUTTON */
+    /* ===========================
+   BUTTON
+   =========================== */
     .btn-slide {
-        /* margin-top: 15px; */
         display: inline-block;
         background: linear-gradient(135deg, #0d6efd, #3c8dff);
-        color: white;
-        padding: 12px 26px;
+        color: #fff;
+        width:50%;
+        text-align: center;
+        padding: 10px 20px;
         border-radius: 12px;
-        text-decoration: none;
         font-weight: 700;
-        box-shadow: 0 10px 25px rgba(0, 93, 255, 0.35);
-        transition: .25s ease;
+        text-decoration: none;
+        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
+        transition: 0.25s ease;
     }
 
     .btn-slide:hover {
-        transform: translateY(-3px);
-        background: #0a54d6;
+        background: #084dc9;
+        transform: translateY(-2px);
     }
 
-    /* NAV BUTTONS */
+    /* ===========================
+   NAV BUTTONS
+   =========================== */
     .slider-buttons {
         position: absolute;
-        top:74%;
         bottom: 20px;
-        right: 68px;
+        right: 20px;
         display: flex;
         gap: 10px;
     }
 
     .nav-btn {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         border: none;
         background: #0d6efd;
-        color: white;
+        color: #fff;
         font-size: 18px;
         cursor: pointer;
-        box-shadow: 0 8px 20px rgba(0, 93, 255, 0.3);
-        transition: .2s ease;
+        box-shadow: 0 6px 18px rgba(0, 75, 200, 0.25);
+        transition: 0.2s ease;
     }
 
     .nav-btn:hover {
@@ -937,18 +588,78 @@
         transform: scale(1.1);
     }
 
-    /* RESPONSIVE */
+    /* ===========================
+   RESPONSIVE
+   =========================== */
     @media (max-width: 992px) {
         .slide-inner {
             flex-direction: column;
             text-align: center;
-            gap: 25px;
-            padding: 30px;
+            gap: 20px;
+        }
+
+        .slide-left {
+            flex: 0 0 auto;
         }
 
         .slide-left img {
-            width: 260px;
-            height: 200px;
+            max-width: 260px;
+            height: auto;
+        }
+
+        .slide-right {
+            max-width: 100%;
+        }
+
+        .slide-headline {
+            font-size: 1.5rem;
+        }
+
+        .dua,
+        .satulagi {
+            display: none;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .slide-left img {
+            max-width: 120px;
+        }
+
+        .slide-headline {
+            font-size: 1.3rem;
+        }
+
+        .slide-desc {
+            font-size: 0.9rem;
+        }
+
+        .btn-slide {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .slider-buttons {
+            bottom: 15px;
+            right: 15px;
+            gap: 8px;
+        }
+
+        .dua,
+        .satulagi {
+            display: none;
+        }
+
+        .ad-slider-wrapper {
+            width: 100%;
+            height: 40%;
+            padding-top: 45px;
+            padding-right: 30px;
+        }
+
+        .ad-slider-track {
+            height: 60%;
+            padding: 0;
         }
     }
 
@@ -956,17 +667,12 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        background-color: #19253d;
-        position: relative;
-        margin-top: -50px;
-        margin-bottom: 40px;
-    }
-
-
-    .satulagi {
-        display: flex;
         justify-content: center;
-        align-items: center;
+        margin-bottom: 40px;
+        margin-top: -50px;
+        background-color: #19253d;
+        /* height */
+
     }
 </style>
 
@@ -1016,7 +722,7 @@
                 <div class="slider-buttons"> <button id="prevBtn" class="nav-btn">❮</button> <button id="nextBtn"
                         class="nav-btn">❯</button> </div>
             </div>
-
+            
             <div class="satulagi">
                 <img src="{{ asset('img/carousel-2.png') }}" alt="" width="'100%">
             </div>

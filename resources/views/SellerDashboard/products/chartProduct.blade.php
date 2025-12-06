@@ -13,28 +13,43 @@
     </div>
 
     <h4 class="mt-4">Detail Penjualan Produk</h4>
+    <form method="GET" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <select name="filter" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Urutkan Berdasarkan --</option>
+                <option value="top" {{ $filter == 'top' ? 'selected' : '' }}>Penjualan Terbanyak</option>
+                <option value="low" {{ $filter == 'low' ? 'selected' : '' }}>Penjualan Terdikit</option>
+                <option value="expensive" {{ $filter == 'expensive' ? 'selected' : '' }}>Harga Termahal</option>
+                <option value="cheap" {{ $filter == 'cheap' ? 'selected' : '' }}>Harga Termurah</option>
+            </select>
+        </div>
+    </div>
+</form>
 
-    <table class="table table-bordered">
-        <thead class="table-dark">
+
+   <table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nama Produk</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th>Total Terjual</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach ($products as $product)
             <tr>
-                <th>Nama Produk</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Total Terjual</th>
+                <td>{{ $product->product_name }}</td>
+                <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                <td>{{ $product->stock }}</td>
+                <td class="fw-bold text-success">{{ $product->total_sold }}</td>
             </tr>
-        </thead>
+        @endforeach
+    </tbody>
+</table>
 
-        <tbody>
-            @foreach ($products as $product)
-                <tr>
-                    <td>{{ $product->product_name }}</td>
-                    <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-                    <td>{{ $product->stock }}</td>
-                    <td class="text-success fw-bold">{{ $product->total_sold }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
 
 </div>
 

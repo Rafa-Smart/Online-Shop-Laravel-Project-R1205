@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CheckoutController;
@@ -201,4 +202,9 @@ Route::get('/seller/customer-insights', [CustomerInsightsController::class, 'ind
 
 Route::post('/seller/stock-management/update/{product}', [StockManagementController::class, 'updateStock'])
     ->name('seller.stock.update');
+
+
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 });

@@ -492,7 +492,7 @@
 
 
                             <div class="d-flex align-items-center mb-3">
-                                <small class="text-muted">Terjual **2**</small>
+                                <small class="text-muted">{{ $order->count() }}</small>
                                 <span class="mx-2 text-muted">|</span>
                                 @for ($i = 1; $i <= 5; $i++)
                                     <span class="{{ $i <= $avg ? 'text-warning' : 'text-secondary' }}">★</span>

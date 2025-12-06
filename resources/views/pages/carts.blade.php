@@ -561,6 +561,42 @@
 </div>
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 <script>
+
+document.querySelectorAll('.product-item').forEach(item => {
+    const decreaseBtn = item.querySelector('.decrease');
+    const increaseBtn = item.querySelector('.increase');
+    const qtySpan = item.querySelector('.qty');
+    const productId = qtySpan.dataset.id;
+    const checkbox = item.querySelector(`.product-checkbox[data-id="${productId}"]`);
+
+    const maxStock = parseInt(item.dataset.stock); // ⬅️ batas stok
+     
+    decreaseBtn?.addEventListener('click', () => {
+        let currentQty = productQuantities[productId] || 1;
+        if (currentQty > 1) currentQty--;
+        productQuantities[productId] = currentQty;
+        qtySpan.textContent = currentQty;
+        if (checkbox.checked) updateCheckout();
+    });
+
+    increaseBtn?.addEventListener('click', () => {
+        let currentQty = productQuantities[productId] || 1;
+
+        // ⛔ Batasi berdasarkan stok
+        if (currentQty >= maxStock) {
+            alert("Jumlah melebihi stok tersedia (" + maxStock + ")");
+            return;
+        }
+
+        currentQty++;
+        productQuantities[productId] = currentQty;
+        qtySpan.textContent = currentQty;
+        if (checkbox.checked) updateCheckout();
+    });
+});
+
+
+
 const dataProduct = document.querySelectorAll(".product-item");
 
 if (dataProduct.length == 0) {

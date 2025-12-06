@@ -13,32 +13,45 @@ class ProductController extends Controller
     /**
      * Menampilkan semua produk milik seller
      */
-    public function show()
-    {
-        $sellerId = auth()->user()->seller->id;
+    public function show(Request $request)
+{
+    $sellerId = auth()->user()->seller->id;
 
-        // Ambil semua produk milik seller
-        $products = Product::where('seller_id', $sellerId)->get();
+    // --- FILTER QUERY ---
+    $filter = $request->get('filter'); // top, low, expensive, cheap
 
-        $labels = [];
-        $soldData = [];
+    // Ambil produk beserta total terjual dalam 1 query
+    $products = Product::where('seller_id', $sellerId)
+        ->withSum('orderDetails as total_sold', 'quantity')
+        ->get();
 
-        foreach ($products as $product) {
-            $labels[] = $product->product_name;
-
-            $sold = OrderDetail::where('product_id', $product->id)
-                ->sum('quantity');
-
-            $soldData[] = $sold;
-            $product->total_sold = $sold;
-        }
-
-        return view('SellerDashboard.products.chartProduct', [
-            'products' => $products,
-            'labels' => json_encode($labels),
-            'soldData' => json_encode($soldData),
-        ]);
+    // Isi default 0 jika null
+    foreach ($products as $product) {
+        $product->total_sold = $product->total_sold ?? 0;
     }
+
+    // --- APPLY FILTER ---
+    if ($filter === 'top') {
+        $products = $products->sortByDesc('total_sold');
+    } elseif ($filter === 'low') {
+        $products = $products->sortBy('total_sold');
+    } elseif ($filter === 'expensive') {
+        $products = $products->sortByDesc('price');
+    } elseif ($filter === 'cheap') {
+        $products = $products->sortBy('price');
+    }
+
+    // Data untuk Chart
+    $labels = $products->pluck('product_name');
+    $soldData = $products->pluck('total_sold');
+
+    return view('SellerDashboard.products.chartProduct', [
+        'products' => $products,
+        'labels' => json_encode($labels),
+        'soldData' => json_encode($soldData),
+        'filter' => $filter
+    ]);
+}
 
     public function index()
     {

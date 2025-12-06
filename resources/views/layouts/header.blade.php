@@ -898,6 +898,111 @@
         border-radius: 10px;
     }
 
+
+    /* WRAPPER UTAMA */.whiteblue-dropdown {
+    width: 280px !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 30px rgba(14, 22, 36, 0.12) !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(14, 22, 36, 0.08) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* PROFILE AREA */
+.whiteblue-profile {
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%) !important;
+    border-bottom: 1px solid rgba(14, 22, 36, 0.06) !important;
+}
+
+.whiteblue-photo {
+    width: 88px !important;
+    height: 88px !important;
+    object-fit: cover !important;
+    border: 3px solid #2563eb !important;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.whiteblue-photo:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35) !important;
+}
+
+.whiteblue-name {
+    font-size: 16px !important;
+    color: #0e1624 !important;
+    letter-spacing: -0.2px !important;
+}
+
+.whiteblue-email {
+    color: #5a6b82 !important;
+    font-size: 13px !important;
+}
+
+/* DIVIDER */
+.divider {
+    height: 1px !important;
+    background: rgba(14, 22, 36, 0.08) !important;
+    margin: 0 !important;
+}
+
+/* MENU */
+.whiteblue-menu {
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+/* MENU ITEM */
+.whiteblue-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 13px 16px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 14px !important;
+    color: #0e1624 !important;
+    text-decoration: none !important;
+    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    width: 100% !important;
+    background: transparent !important;
+    text-align: center !important;
+}
+
+.whiteblue-item i {
+    color: #2563eb !important;
+    font-size: 16px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+/* HOVER EFFECT */
+.whiteblue-item:hover {
+    background: #eef5ff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(14, 22, 36, 0.08) !important;
+}
+
+/* LOGOUT BUTTON */
+.logout {
+    color: #dc2626 !important;
+    font-weight: 600 !important;
+}
+
+.logout i {
+    color: #dc2626 !important;
+}
+
+.logout:hover {
+    background: #ffebee !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.12) !important;
+}
+
+
     
 </style>
 
@@ -1095,6 +1200,93 @@
 }
 
 
+/* DROPDOWN WRAPPER */
+.whiteblue-dropdown {
+    width: 300px !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+}
+
+/* PROFILE AREA */
+.whiteblue-profile {
+    background: #f7f9fc !important;
+}
+
+.whiteblue-photo {
+    width: 95px !important;
+    height: 95px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 3px solid #e4ecf5 !important;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1) !important;
+    transition: transform .25s ease !important;
+}
+
+.whiteblue-photo:hover {
+    transform: scale(1.05) !important;
+}
+
+.whiteblue-name {
+    font-size: 16px !important;
+    color: #0e1624 !important;
+}
+
+/* DIVIDER */
+.divider {
+    height: 1px !important;
+    background: #e4e8ef !important;
+    margin: 0 !important;
+}
+
+/* MENU */
+.whiteblue-menu {
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+/* ITEM */
+.whiteblue-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-radius: 10px !important;
+    color: #0e1624 !important;
+    text-decoration: none !important;
+    transition: 0.22s ease !important;
+}
+
+.whiteblue-item i {
+    color: #0e5cff !important;
+    font-size: 16px !important;
+}
+
+/* HOVER */
+.whiteblue-item:hover {
+    background: #eaf2ff !important;
+    transform: translateX(6px) !important;
+}
+
+/* LOGOUT */
+.logout {
+    color: #d62828 !important;
+}
+
+.logout i {
+    color: #d62828 !important;
+}
+
+.logout:hover {
+    background: #ffe8e8 !important;
+    transform: translateX(6px) !important;
+}
+
+
 </style>
 
 <div class="notif-dropdown" id="notifDropdown">
@@ -1240,38 +1432,43 @@
                         </div>
                     </a>
 
-                    <!-- 📂 Dropdown Menu -->
-                    <div class="dropdown-menu dropdown-menu-end mt-3 border-0 shadow-lg rounded-4 p-3 elegant-dropdown">
-                        <div class="d-flex align-items-center mb-3">
+<!-- 📂 Dropdown Menu Column Elegant -->
+<!-- 📂 Premium Dropdown White-Blue -->
+<div class="dropdown-menu dropdown-menu-end border-0 p-0 whiteblue-dropdown">
+    <!-- PROFILE AREA -->
+    <div class="whiteblue-profile text-center py-5 px-4">
+        <img src="{{ asset('storage/profile_photos/' . auth()->user()->buyer->img) }}" class="whiteblue-photo mb-3 rounded-circle border-3 border-primary shadow-sm">
+        <h6 class="fw-bold mb-1 whiteblue-name">
+            {{ auth()->user()->buyer->fullname }}
+        </h6>
+        <small class="text-muted whiteblue-email">{{ auth()->user()->email }}</small>
+    </div>
 
-                            <img src="{{ asset('storage/profile_photos/' . auth()->user()->buyer->img) }}"
-                                class="rounded-circle me-2" width="50" height="50">
-                            <div>
-                                <h6 class="fw-semibold mb-0 text-dark">{{ auth()->user()->buyer->fullname }}</h6>
-                                <small class="text-muted">rafa@example.com</small>
-                            </div>
-                        </div>
-                        <hr class="my-2">
-                        <a href="{{ route('profile') }}"
-                            class="dropdown-item py-2 rounded d-flex align-items-center hover-blue">
-                            <i class="fa fa-user text-primary me-3"></i> My Profile
-                        </a>
-                        <a href="#" class="dropdown-item py-2 rounded d-flex align-items-center hover-blue">
-                            <i class="fa fa-cog text-primary me-3"></i> Settings
-                        </a>
-                        <a href="#" class="dropdown-item py-2 rounded d-flex align-items-center hover-blue">
-                            <i class="fa fa-heart text-primary me-3"></i> Wishlist
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <form action="{{ route('logout') }}" method="POST" class="m-0 p-0">
-                            @csrf
-                            <button type="submit"
-                                class="dropdown-item py-2 rounded d-flex align-items-center text-danger hover-red"
-                                style="border: none; background: none; width: 100%;">
-                                <i class="fa fa-sign-out-alt me-3"></i> Logout
-                            </button>
-                        </form>
-                    </div>
+    <div class="divider"></div>
+
+    <!-- MENU -->
+    <div class="whiteblue-menu p-2">
+        <a href="{{ route('profile') }}" class="whiteblue-item d-flex align-items-center justify-content-center w-100 px-4 py-3 text-decoration-none">
+            <i class="fa fa-user me-2"></i> Profile
+        </a>
+
+        <a href="#" class="whiteblue-item d-flex align-items-center justify-content-center w-100 px-4 py-3 text-decoration-none">
+            <i class="fa fa-heart me-2"></i> Wishlist
+        </a>
+
+        <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 w-100">
+            @csrf
+            <button type="submit" class="whiteblue-item logout w-100 d-flex align-items-center justify-content-center px-4 py-3 border-0 bg-transparent text-start">
+                <i class="fa fa-sign-out-alt me-2"></i> Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
                 </div>
             </div>
         </div>

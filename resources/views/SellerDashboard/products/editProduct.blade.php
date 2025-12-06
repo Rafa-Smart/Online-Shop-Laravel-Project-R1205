@@ -30,11 +30,7 @@
                value="{{ old('product_name', $product->product_name) }}" required>
     </div>
 
-    {{-- DESKRIPSI PRODUK --}}
-    <div class="mb-3">
-        <label class="form-label fw-bold">Deskripsi Produk</label>
-        <textarea name="description" class="form-control" rows="4" required>{{ old('description', $product->description) }}</textarea>
-    </div>
+
 
     {{-- HARGA
     <div class="mb-3">
@@ -57,7 +53,7 @@
             @foreach($categories as $category)
                 <option value="{{ $category->id }}" 
                     {{ $product->category_id == $category->id ? 'selected':'' }}>
-                    {{ $category->name }}
+                    {{ $category->category_name }}
                 </option>
             @endforeach
         </select>

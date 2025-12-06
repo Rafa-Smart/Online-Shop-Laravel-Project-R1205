@@ -33,7 +33,7 @@
         <label class="form-label">Kategori</label>
         <select name="category_id" class="form-select" required>
             @foreach($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
             @endforeach
         </select>
     </div>
