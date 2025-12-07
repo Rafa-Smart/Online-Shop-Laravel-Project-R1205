@@ -265,7 +265,7 @@
         @endforeach
     </div>
 
-    <button class="btn btn-secondary mt-2" id="add-spec">+ Tambah Spesifikasi</button>
+    <button class="btn btn-secondary mt-2" id="add-spec" type="button">+ Tambah Spesifikasi</button>
 
     <button class="btn btn-primary w-100 mt-4">
         💾 Update Produk

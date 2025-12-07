@@ -247,7 +247,6 @@ public function update(Request $request, $id)
 
 $request->validate([
     'product_name' => 'required|string|max:255',
-    'description' => 'required|string',
     'starting_price' => 'nullable|integer',
     'price' => 'required|integer',
     'stock' => 'required|integer',
@@ -270,7 +269,6 @@ $request->validate([
     // === UPDATE DATA UTAMA ===
 $product->update([
     'product_name' => $request->product_name,
-    'description' => $request->description,
     'category_id' => $request->category_id,
     'starting_price' => $request->starting_price,
     'price' => $request->price,

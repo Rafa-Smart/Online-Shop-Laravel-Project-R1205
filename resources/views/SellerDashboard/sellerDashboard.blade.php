@@ -41,7 +41,7 @@
         line-height: 1.6;
         /* background: linear-gradient(135deg, #24378e 0%, #446998 100%); */
         min-height: 100vh;
-        padding: 2rem 0;
+        /* padding: 2rem 0; */
     }
 
     /* ============================================

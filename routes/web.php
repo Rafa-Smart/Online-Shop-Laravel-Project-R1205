@@ -26,25 +26,25 @@ Route::get('/', function () {
 })->name('landingPage');
 
 // --- Rute untuk Pengguna Belum Terautentikasi (Guest) ---
-Route::middleware(['guest'])->group(function () {
-    // Route Dashboard hanya jika tidak ada Auth, mungkin hanya untuk contoh
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+// Route::middleware(['guest'])->group(function () {
+// Route Dashboard hanya jika tidak ada Auth, mungkin hanya untuk contoh
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
-    // REGISTER
-    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
-    Route::get('/verify-email/{token}', [RegisteredUserController::class, 'verifyEmail'])->name('email.verify');
+// REGISTER
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/verify-email/{token}', [RegisteredUserController::class, 'verifyEmail'])->name('email.verify');
 
-    // LOGIN
-    Route::get('/login', [LoginController::class, 'create'])->name('login');
-    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+// LOGIN
 
-    // GOOGLE AUTH
-    Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
-    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
-});
+// GOOGLE AUTH
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
+// });
 
 // --- Rute untuk Pengguna Terautentikasi dan Terverifikasi (Auth & Verified) ---
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -223,6 +223,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/products/{id}/quick-view', [HomeController::class, 'quickView'])->name('products.quick-view');
     Route::get('/filter-options', [HomeController::class, 'getFilterOptions'])->name('filter.options');
     Route::get('/ads/edit/{id}', [AdController::class, 'edit'])->name('ads.edit');
-    Route::post('/ads/update/{id}', [AdController::class, 'update'])->name('ads.update');
-    Route::post('/ads/delete/{id}', [AdController::class, 'destroy'])->name('ads.destroy');
+    Route::put('/ads/update/{id}', [AdController::class, 'update'])->name('ads.update');
+    Route::delete('/ads/delete/{id}', [AdController::class, 'destroy'])->name('ads.destroy');
+
 });

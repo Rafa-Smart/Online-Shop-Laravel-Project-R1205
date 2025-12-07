@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             ['category_name' => 'Makanan', 'description' => 'Makanan dan minuman'],
             ['category_name' => 'Olahraga', 'description' => 'Perlengkapan olahraga'],
             ['category_name' => 'Buku', 'description' => 'Buku dan alat tulis'],
+            ['category_name' => 'game', 'description' => 'peralatan game dan lain-lain'],
+
         ];
 
         foreach ($categories as $cat) {
@@ -42,6 +44,7 @@ class DatabaseSeeder extends Seeder
             ['seller_id' => 1, 'category_id' => 4, 'product_name' => 'Matras Yoga Premium', 'price' => 250000, 'stock' => 80, 'condition' => 'new', 'description' => 'Matras yoga anti slip', 'img' => 'https://via.placeholder.com/640x480', 'average_rating' => 4.2, 'rating_count' => 110],
             ['seller_id' => 1, 'category_id' => 5, 'product_name' => 'Novel Best Seller', 'price' => 95000, 'stock' => 120, 'condition' => 'new', 'description' => 'Novel terlaris tahun ini', 'img' => 'https://via.placeholder.com/640x480', 'average_rating' => 4.7, 'rating_count' => 250],
             ['seller_id' => 1, 'category_id' => 5, 'product_name' => 'Set Alat Tulis Lengkap', 'price' => 175000, 'stock' => 90, 'condition' => 'new', 'description' => 'Set alat tulis premium', 'img' => 'https://via.placeholder.com/640x480', 'average_rating' => 4.5, 'rating_count' => 160],
+            ['seller_id' => 1, 'category_id' => 6, 'product_name' => 'Playstation 5 High Quality', 'price' => 175000, 'stock' => 90, 'condition' => 'new', 'description' => 'ps 5 terbaru', 'img' => 'https://via.placeholder.com/640x480', 'average_rating' => 4.5, 'rating_count' => 160],
         ];
 
         foreach ($products as $prod) {
@@ -129,6 +132,7 @@ class DatabaseSeeder extends Seeder
             ['date' => '2025-02-12', 'products' => [7 => 1], 'status' => 'completed'],
             ['date' => '2025-02-18', 'products' => [5 => 2, 6 => 1], 'status' => 'shipped'],
             ['date' => '2025-02-25', 'products' => [1 => 1], 'status' => 'completed'],
+            ['date' => '2025-02-25', 'products' => [11 => 11], 'status' => 'completed'],
         ];
 
         foreach ($orders as $index => $orderData) {

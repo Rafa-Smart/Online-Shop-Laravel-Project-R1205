@@ -126,15 +126,17 @@
 
                                     {{-- DELETE --}}
                                     <form action="{{ route('ads.destroy', $ad->id) }}" 
-                                          method="POST"
-                                          onsubmit="return confirm('Delete this advertisement?')">
-                                        @csrf
-                                        @method('DELETE')
+      method="POST"
+      onsubmit="return confirm('Delete this advertisement?')">
 
-                                        <button class="btn btn-danger btn-action">
-                                            Delete
-                                        </button>
-                                    </form>
+    @csrf
+    @method('DELETE')
+
+    <button class="btn btn-danger btn-action">
+        Delete
+    </button>
+</form>
+
 
                                 </div>
                             </td>

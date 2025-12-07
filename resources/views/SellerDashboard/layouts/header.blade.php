@@ -69,9 +69,15 @@
       crossorigin="anonymous"
     />
   </head>
+  <style>
+    body {
+      padding:0 !important;
+      margin:0 !important;
+    }
+  </style>
   <!--end::Head-->
   <!--begin::Body-->
-  <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+  <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary ">
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
       <!--begin::Header-->
