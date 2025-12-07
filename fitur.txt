@@ -1,3 +1,7 @@
+
+semua data yang di tampilakan ini sudah sesuai dengan metode atau arsitecture multi user
+dan datanya nya juga sudah di kalkulasikan
+
 1. landing page dengan reeview pelanggan
 
 2. halaman login 
@@ -145,6 +149,7 @@
         - email pengirim
         - message
     - langsung kekirim otomatis ke email admin
+    
 
 9. Profile buyer
     - ada tiga tab yaitu biodata diri, riwayat pesanan, dan pengaturan
@@ -496,10 +501,40 @@
     - menampilkan card total berapa user yang melakukan order berulang
     - menampilkan grafik pie untuk buyer baru dan buyer yang order berulang
     - menampilkan tabel top buyer dengn badge yang menarik
-    - dengan data nama buyer, total order, total spend
+    - dengan data tabel nama buyer, total order, total spend
 
+17. Contact page
+    - ada email admin
+    - ada no telepon admin
+    - ada office location admin
+    - ada media social (instagram, facebook, twitter, linkldn, whatsapp)
+    - form kritik dan saran
+        - subject
+        - fullname pengirim
+        - email pengirim
+        - message
+    - langsung kekirim otomatis ke email admin
 
+18. Profile seller
+    - ada tiga tab yaitu biodata diri, riwayat pesanan, dan pengaturan
+    - biodata diri
+        - fitur ganti dan tambah profile picture
+        - fitur ganti nama toko
+        - fitur ganti nama pemilik toko
+        - fitur ganti / buat description toko
+        - fitur ganti no hp toko
+        - fitur emngganti theashold minimal untuk stock produk yang idjadikan default di 
+          halmaan manajement stock
+        - fitur ganti password dan buat password (jika sebelumnya login pake google)
+    - riwayat order
+        - card card berisi data order yang di pesan oleh buyer
+        - data data seperti harga bayar, waktu pemesanan, dan lain lain
+    - pengaturan akun
+        - fitur ganti password dan buat password (jika sebelumnya login pake google)
+        - fitur logout dan hapus akun
 
-10. payment gateway
-11. fitur wa
+19. payment gateway
+    - menggunakan midtrans
+20. fitur payment lewat whatsapp
+
 
