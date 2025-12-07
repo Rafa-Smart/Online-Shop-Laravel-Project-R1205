@@ -113,6 +113,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn-google:hover {

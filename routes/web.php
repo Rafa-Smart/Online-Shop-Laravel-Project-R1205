@@ -226,4 +226,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/ads/update/{id}', [AdController::class, 'update'])->name('ads.update');
     Route::delete('/ads/delete/{id}', [AdController::class, 'destroy'])->name('ads.destroy');
 
+    Route::get('/contact/buyer', [ContactController::class, 'indexForBuyer'])->name('contact.indexForBuyer');
+
 });

@@ -12,6 +12,10 @@ class ContactController extends Controller
     {
         return view('SellerDashboard.contact'); // sesuaikan dengan nama file kamu
     }
+    public function indexForBuyer()
+    {
+        return view('pages.contact'); // sesuaikan dengan nama file kamu
+    }
 
     public function send(Request $request)
     {
@@ -29,5 +33,5 @@ class ContactController extends Controller
         Mail::to($adminEmail)->send(new ContactMail($validated));
 
         return back()->with('success', 'Pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.');
-    }
+    }  
 }

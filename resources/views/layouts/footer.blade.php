@@ -166,7 +166,7 @@
         <div class="info-box p-4 text-center text-lg-start">
           <div class="info-icon mb-4"><i class="fas fa-map-marker-alt fa-2x"></i></div>
           <h4>Address</h4>
-          <p>123 Street, New York, USA</p>
+          <p>SukaBumi Indonesia</p>
         </div>
       </div>
 
@@ -174,7 +174,7 @@
         <div class="info-box p-4 text-center text-lg-start">
           <div class="info-icon mb-4"><i class="fas fa-envelope fa-2x"></i></div>
           <h4>Mail Us</h4>
-          <p>info@example.com</p>
+          <p>rafaoffice1205@gmail.com</p>
         </div>
       </div>
 
@@ -182,7 +182,7 @@
         <div class="info-box p-4 text-center text-lg-start">
           <div class="info-icon mb-4"><i class="fa fa-phone-alt fa-2x"></i></div>
           <h4>Telephone</h4>
-          <p>(+012) 3456 7890</p>
+          <p>(+62) 858 6135 5042</p>
         </div>
       </div>
 
@@ -190,7 +190,7 @@
         <div class="info-box p-4 text-center text-lg-start">
           <div class="info-icon mb-4"><i class="fab fa-firefox-browser fa-2x"></i></div>
           <h4>Website</h4>
-          <p>yoursite@example.com</p>
+          <p>rafaKhadafi.com</p>
         </div>
       </div>
     </div>
@@ -253,7 +253,7 @@
       </div>
       <div class="col-md-6 text-center text-md-end">
         Designed by 
-        <a href="https://htmlcodex.com" class="text-brand-white">HTML Codex</a> | 
+        <a href="https://htmlcodex.com" class="text-brand-white">Rafa Khadafi</a> | 
         Distributed by 
         <a href="https://themewagon.com" class="text-brand-white">ThemeWagon</a>
       </div>

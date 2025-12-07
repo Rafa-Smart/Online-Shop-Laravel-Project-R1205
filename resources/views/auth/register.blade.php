@@ -118,6 +118,8 @@ body {
     gap: 10px;
     transition: 0.3s ease;
     box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+            text-decoration: none;
+
 }
 
 .btn-google:hover {

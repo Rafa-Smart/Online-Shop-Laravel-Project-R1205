@@ -233,6 +233,7 @@ public function store(Request $request)
         $product = Product::with('photos')->where('seller_id', auth()->user()->seller->id)
             ->findOrFail($id);
         $categories = Categorie::get();
+        // return $categories;
         // return $product;
 
         return view('SellerDashboard.products.editProduct', ['product' => $product, 'categories' => $categories]);
@@ -245,37 +246,47 @@ public function update(Request $request, $id)
 {
     $product = Product::findOrFail($id);
 
-$request->validate([
-    'product_name' => 'required|string|max:255',
-    'starting_price' => 'nullable|integer',
-    'price' => 'required|integer',
-    'stock' => 'required|integer',
-    'condition' => 'required|in:new,used',
-    'category_id' => 'required|integer',
-    'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-]);
+    // === VALIDASI INPUT ===
+    $request->validate([
+        'product_name' => 'required|string|max:255',
+        'starting_price' => 'nullable|integer',
+        'price' => 'required|integer',
+        'stock' => 'required|integer',
+        'condition' => 'required|in:new,used',
+        'category_id' => 'required|integer',
+        'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        'detail_photos.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        'specifications' => 'nullable|array',
+        'specifications.*.title' => 'nullable|string',
+        'specifications.*.value' => 'nullable|string',
+    ]);
 
     // === THUMBNAIL UPDATE ===
     if ($request->hasFile('thumbnail')) {
+        // Hapus thumbnail lama jika ada
+        if ($product->img && \Storage::disk('public')->exists($product->img)) {
+            \Storage::disk('public')->delete($product->img);
+        }
+
         $ext = $request->thumbnail->getClientOriginalExtension();
         $thumbnailName = $request->product_name . '_thumbnail.' . $ext;
 
         $path = $request->thumbnail->storeAs('products', $thumbnailName, 'public');
-        $thumbnailPath = 'storage/' . $path;
 
-        $product->img = $thumbnailPath;
+        $product->img = $path;
     }
 
     // === UPDATE DATA UTAMA ===
-$product->update([
-    'product_name' => $request->product_name,
-    'category_id' => $request->category_id,
-    'starting_price' => $request->starting_price,
-    'price' => $request->price,
-    'stock' => $request->stock,
-    'condition' => $request->condition,
-    'product_specifications' => $request->specifications,
-]);
+    $product->update([
+        'product_name' => $request->product_name,
+        'category_id' => $request->category_id,
+        'starting_price' => $request->starting_price,
+        'price' => $request->price,
+        'stock' => $request->stock,
+        'condition' => $request->condition,
+        'product_specifications' => $request->specifications,
+        // 'img' sudah di-set di atas jika ada file baru
+    ]);
 
     // === DETAIL PHOTOS UPDATE (TAMBAH BARU) ===
     if ($request->hasFile('detail_photos')) {
@@ -289,7 +300,7 @@ $product->update([
 
             ProductPhoto::create([
                 'product_id' => $product->id,
-                'photo_path' => 'storage/' . $path,
+                'photo_path' => $path, // jangan tambah "storage/", Laravel sudah handle lewat storage link
             ]);
 
             $index++;
@@ -299,6 +310,7 @@ $product->update([
     return redirect()->route('seller.products.index')
         ->with('success', 'Produk berhasil diperbarui!');
 }
+
 
 
     /**

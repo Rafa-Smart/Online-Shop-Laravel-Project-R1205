@@ -1053,7 +1053,7 @@ input[type="range"]:active::-webkit-slider-thumb {
                         <!-- Product Info -->
                         <div class="product-info-enhanced">
                             <a href="#" class="product-category-link">
-                                {{ $product->category->name ?? 'Uncategorized' }}
+                                {{ $product->category->category_name ?? 'Uncategorized' }}
                             </a>
 
                             <a href="{{ route('product.detail', $product->id) }}" class="product-title-enhanced">

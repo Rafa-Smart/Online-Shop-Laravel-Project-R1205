@@ -535,7 +535,7 @@
                 
 
 
-                <div class="top-tab" data-tab="horizontal">Horizontal View</div>
+                <div class="top-tab" data-tab="horizontal">Category Wishlist</div>
                 
                 
                 <div class="tab-indicator" id="indicator"></div>

@@ -1540,7 +1540,7 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link me-2">Contact</a>
+                        <a href="{{ route('contact.indexForBuyer') }}" class="nav-item nav-link me-2">Contact</a>
                         <div class="nav-item dropdown d-block d-lg-none mb-3">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">All
                                 Category</a>
@@ -1580,9 +1580,9 @@
                             </div>
                         </div>
                     </div>
-                    <a href=""
+                    <a href="{{route('contact.indexForBuyer')}}"
                         class="btn btn-blue-elegant rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0">
-                        <i class="fa fa-mobile-alt me-2"></i> +0123 456 7890
+                        <i class="fa fa-mobile-alt me-2"></i> 0812-3456-7890
                     </a>
 
                 </div>

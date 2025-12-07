@@ -287,6 +287,7 @@
     .btn-edit {
         background: #fbbf24;
         color: white;
+        text-decoration: none;
     }
 
     .btn-edit:hover {
@@ -504,7 +505,7 @@
                              data-price="{{ $product->price }}"
                              data-rating="{{ $product->average_rating }}"
                              data-created="{{ $product->created_at->timestamp }}">
-                            <img src="{{ asset($product->img) }}" alt="{{ $product->product_name }}" class="product-image" onerror="this.src='{{ asset('img/avatar.jpg') }}'">
+                            <img src="{{ asset('storage/'.$product->img) }}" alt="{{ $product->product_name }}" class="product-image" onerror="this.src='{{ asset('img/avatar.jpg') }}'">
                             <div class="product-body">
                                 <h3 class="product-name">{{ $product->product_name }}</h3>
                                 <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>

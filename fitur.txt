@@ -1,0 +1,505 @@
+1. landing page dengan reeview pelanggan
+
+2. halaman login 
+    - fitur error dan sucess handling
+    - fitur login manual
+    - fitur login with google
+
+3. halaman register 
+    - fitur error dan sucess handling
+    - fitur register manual
+    - fitur register with google
+
+4. home page
+    - fitur search bar per huruf
+    - fitur notifikasi order 
+        - dapat notifikasi otomatis dari seller ketika seller reject atau accept order
+        - menampilkan (dropdown max 5 item)
+        - indikasi merah dan jumlah notifikasi
+    - fitur notifikasi wishlist 
+        - dapat notifikasi dari buyer (diri sendiri) ketika klik button wishlist
+        - (dropdown max 5 item)
+        - indikasi merah dan jumlah notifikasi
+    - fitur notifikasi keranjang 
+        - dapat notifikasi dari buyer (diri sendiri) ketika klik button keranjang
+        - (dropdown max 5 item)
+        - indikasi merah dan jumlah notifikasi
+    - fitur tampilan iklan yg bisa di tambah dan hapus oleh seller
+    - tampilan iklan bisa di slide slide dan auto loop
+    - fitur contact
+    - fitur dashboard seller
+    - fitur buat seller
+    - fitur profile
+    - fitur card produk
+        - category produk
+        - tambah keranjang
+        - tambah wishlist
+        - judul produk
+        - rating produk plus tampilan bintang (yang sudah di kalkulasikan)
+        - keterngan jumlah tersisa dengan indikator garis
+        - keterangan jumlah ulasan
+        - harga awal produk
+        - harga diskon produk
+        - persenan diskon (semua ini sudah flexible sesuai dnegan data produk yg dimasukan seller dan rating
+          yg dimasukan oleh buyer)
+        - pilihan tampilan 
+            - grid
+            - list
+    - fitur filter produk by 
+        - seacrh nama produk
+        - kondisi (semua kondisi, baru, bekas)
+        - ketersediaan (tersedia, stok menipis)
+        - urutkan (terbaru, terpopular, harga terrendah, harga tertinggi, nama a-z, nama z-a)
+        - rentang harga lebih flexible milih harga karena pake slider, yang termurah dan termahal
+        - reset filter
+
+5. Detail produk page
+        - gambar thumbnail produk
+        - gambar detail produk (ketika di klik maka main gambarnya berubah sesuai yg di klik)
+        - judul produk
+        - category produk
+        - jumlah terjual
+        - rating produk (sudah di kalkulasikan)
+        - harga produk
+        - detail produk
+            - kondisi produk
+            - category produk
+            - min pesanan
+            - dan spesifikasi yang flexible dan bisa di tambah sendiri oleh seller
+            - fitur comment multi user
+            - nama buyer comment
+            - rating buyer
+            - comment text buyer
+            - keterangan waktu terakhir kali buyer comment
+            - gambar dna video buyer
+            - ketika di klik gambar dan video bisa muncul pop up box menggunakan package Lightbox
+            - fitur checkout
+                - jumlah beli produk
+                - jumlah produk tersisa
+                - handling pop up box ketika beli lebih banyak dari jumlah tersisa produk
+                - total produk di kali jumlah beli
+                - button beli langsung
+                - button tambah keranjang
+                - pop up box ketika di klik beli langusng, bisa pake payment gateway atau lewat whatssapp
+                - fitur bayar menggunakan paymen gateway
+                - fitur bayar atau pindah chat ke whastapp
+            - info seller
+                - jam kerja / online seller
+                
+6. Wishlist page
+    - ketika di klik icon wishlist ada 2 event :
+        - belum punya category wishlist
+            - otomatis muncul pop up box untuk membuat category wishlist : nama dan deskripsi category wishlist
+        - sudah punya category wishlist
+            - otomatis muncul pop up box untuk memilih memasukan produk ke wishlist mana
+    - ketika sudah masuk ke halaman wishlist:
+        - ada dua tab yaitu all wishlist dan category wishlist
+            - all wishlist : - menampilkan seluruh wishlist dengan card dan layout grid
+                             - nama produk
+                             - category produk
+                             - harga produk
+                             - harga diskon produk
+                             - rating produk
+                             - keterangan produk baru atau bekas
+                             - icon add keranjang untuk nambah ke keranjang
+                             - icon delete untuk delete produk dari category
+            - category wishlist : - card dengan layout row
+                                  - nama category
+                                  - deskripsi category wishlist
+                                  - keterangan jumlah produk dalam category / kerangan masih kosong
+                                  - ketika di klik card category wishlist :
+                                    - ada dua tab yaitu category wishlist | nama category dan settings category
+                                        - category wishlist | nama category : - menampilkan seluruh produk yg ad di 
+                                                                                category
+                                        - setting category : - button tambah category
+                                                             - tabel berisi no, nama, dan deskripsi category
+                                                             - button action delete untuk category
+
+7. keranjang page
+    - ada dua bagian yaitu produk dan juga checkout produk
+        - bagian produk
+            - checkbox -> ketika di klik maka akan terceklis dan terpilih seluruh produk dalam keranjang
+            - produk terpisah berdasarkan toko
+            - nama toko
+            - nama produk
+            - icon add to wishlist
+            - icon hapus dari keranjang
+            - checkbox per produk
+            - checkbox ketika di klik maka akan terbaca dan terdeteksi di bagian checkout
+        - bagian checkout
+            - nama produk yg di ceklis
+            - harga produk yg di ceklis
+            - total harga produk yg di ceklis
+            - pop up box ketika di klik beli langusng, bisa pake payment gateway atau lewat whatssapp
+            - fitur bayar menggunakan paymen gateway
+            - fitur bayar atau pindah chat ke whastapp
+
+8. Contact page
+    - ada email admin
+    - ada no telepon admin
+    - ada office location admin
+    - ada media social (instagram, facebook, twitter, linkldn, whatsapp)
+    - form kritik dan saran
+        - subject
+        - fullname pengirim
+        - email pengirim
+        - message
+    - langsung kekirim otomatis ke email admin
+
+9. Profile buyer
+    - ada tiga tab yaitu biodata diri, riwayat pesanan, dan pengaturan
+    - biodata diri
+        - fitur ganti dan tambah profile picture
+        - fitur ganti nama pengguna
+        - fitur ganti nama lengkap
+        - fitur ganti no hp
+        - fitur ganti password dan buat password (jika sebelumnya login pake google)
+    - riwayat pesanan
+        - card card berisi data order yang di pesan oleh buyer
+        - data data seperti harga bayar, waktu pemesanan, dan lain lain
+    - pengaturan akun
+        - fitur ganti password dan buat password (jika sebelumnya login pake google)
+        - fitur logout dan hapus akun
+
+10. Seller Dashboard
+    - ada fitur notif warna di side bar, jadi kalo ada notif di sub item maka nanti akan muncul notifnya
+      misla nanti akan ada notif dari sub item bar di stock maajement jika ada produk yang kurang dari theashold yg diatur di pengaturan profile seller, dan ada juga notif melakukan accept atau reject dari order buyer, etika ada buyer yang memesan maka akan muncul notif
+    - card total pendapatan (sudah di kalkulasikan berasarkan order yang sudah completed / di accept oleh si seller
+      dan juga sudah di lakukan pembayaran oleh user), dan keterangan turun atau naik dari pendapatan sebelumnya
+    - card produk terjual (sudah di kalkulasikan berasarkan order yang sudah completed / di accept oleh si seller
+      dan juga sudah di lakukan pembayaran oleh user), dan indikasi stabil atau tidak
+    - card total produk milik seller, dan indikasi apakah inventories aman atau tidak
+    - chart statistik penjualan
+        - ketika di hover pada titik tertentu, ada detail waktu dan juga pendapatannya
+        - ada filter statistik pendapatan per hari, bulan dan tahun
+    - card category apa saja yang masuk top 6 terbaik berdasarkan jumlah pendapatan
+    - chart grafik bar category terbaik
+        - ketika di hover pada bar tertentu, ada detail total pesanan dan juga nama categorynya
+    - tabel yang menampilkan top 5 produk terlaris
+
+11. Manajement Products
+    - fitur tambah product
+    - ada card total poducts (sudah dikalkulasikan)
+    - ada card total product aktif (belum habis) (sudah dikalkulasikan)
+    - ada card keterangan jumlah stock yg menipis 
+    - ada card keterangan rata rata rating pada product (sudah di kalkulasikan)
+    - fitur filter product by:
+        - search nama Product
+        - kondisi product (semua kondisi, baru, dan bekas)
+        - stock product (semua stock, menipis di bawah trheashold, tersedia, habis)
+        - urutan (terbaru, terlama, harga tertinggi, harga terendah, nama a-z, nama z-a, rating tertinggi)
+    - tampilan card 
+        - nama product
+        - harga product
+        - stock product
+        - keterngna menipis atau tidak
+        - ketergnan baru atau tidak
+        - button edit dan delete
+    - fitur ubah tmapilan card product
+        - menggunakan tampilan grid
+        - menggunakan tampilan list / tabel
+
+    - fitur halaman tambah product
+        - fitur untuk menambahkan produk baru ke dalam toko
+            - field nama produk (wajib diisi)
+            - field stok produk (wajib, berupa angka)
+        - fitur pilih kategori produk
+            - dropdown kategori
+            - otomatis menampilkan kategori seperti "Elektronik"
+        - fitur pilih kondisi produk
+            - pilihan: baru
+            - pilihan: bekas
+        - fitur input harga produk
+            - harga awal (opsional)
+            - harga setelah diskon (harga final yang digunakan)
+        - fitur upload thumbnail produk
+            - upload 1 file utama
+            - preview thumbnail setelah dipilih
+            - validasi jenis file dan ukuran
+        - fitur upload foto detail produk
+            - bisa upload banyak foto sekaligus
+            - preview foto baru yang diupload
+        - fitur hapus foto sebelum disimpan
+        - fitur input spesifikasi produk
+            - input judul spesifikasi
+            - input isi / deskripsi produk
+            - mendukung teks panjang
+            - bisa tambah spesifikasi sebanyaknya, jaid tidak terkait dnegna tabel, akrena di simpan dengan 
+              format json dan di simpan dalam bentuk objek dari judul spesifikasi dan deskripsi spesifikasi
+        - fitur validasi lengkap
+            - nama tidak boleh kosong
+            - stok harus angka
+            - harga setelah diskon wajib jika produk berbayar
+            - thumbnail wajib diisi
+        - fitur simpan produk
+            - menyimpan semua data ke database
+            - mengarahkan kembali ke halaman daftar produk setelah berhasil
+        - fitur halaman edit product
+        - fitur untuk mengubah data produk yang sudah ada di dalam toko
+            - field nama produk (bisa diubah)
+            - field stok produk (bisa diubah, berupa angka)
+        - fitur ubah kategori produk
+            - dropdown kategori
+            - otomatis menampilkan kategori saat ini seperti "Elektronik"
+        - fitur ubah kondisi produk
+            - pilihan: baru
+            - pilihan: bekas
+        - fitur ubah harga produk
+            - harga awal (opsional, bisa diubah atau dihapus)
+            - harga setelah diskon (harga final yang digunakan, bisa diubah)
+        - fitur ubah thumbnail produk
+            - upload 1 file utama baru (opsional)
+            - preview thumbnail baru setelah dipilih
+            - validasi jenis file dan ukuran
+        - fitur ubah foto detail produk
+            - bisa upload foto tambahan
+            - preview foto baru yang diupload
+        - fitur hapus foto lama sebelum disimpan
+        - fitur ubah spesifikasi produk
+            - input judul spesifikasi
+            - input isi / deskripsi spesifikasi
+            - mendukung teks panjang
+            - bisa tambah atau hapus spesifikasi sebanyaknya, karena disimpan dalam format JSON
+              dan berbentuk objek dari judul spesifikasi dan deskripsi spesifikasi
+        - fitur validasi lengkap
+            - nama tidak boleh kosong
+            - stok harus angka
+            - harga setelah diskon wajib jika produk berbayar
+            - thumbnail tidak wajib diubah (jika tidak diganti, gunakan data lama)
+        - fitur update produk
+            - menyimpan perubahan data produk ke database
+            - mengarahkan kembali ke halaman daftar produk setelah berhasil diperbarui
+12. Dashboard Product order
+    - tombol export:
+        - Export Excel (warna hijau)
+        - Export PDF   (warna merah)
+    - tombol export berfungsi untuk mengunduh laporan penjualan
+    - menampilkan 4 kartu informasi performa toko:
+        - CARD TOTAL PRODUK
+            - ikon box (produk)
+            - menampilkan jumlah total produk yang tersedia
+            - contoh: "11"
+            - badge kecil: "Produk Aktif"
+            - background warna purple
+        - CARD TOTAL TERJUAL
+            - ikon target
+            - menampilkan total produk yang telah terjual
+            - contoh: "123"
+            - badge kecil: "Total Penjualan"
+            - background warna hijau
+        - CARD PRODUK TERLARIS
+            - ikon bintang
+            - menampilkan nama produk terlaris
+            - contoh: "Kopi Arabica Premium 500g"
+            - badge: "Best Seller"
+            - background merah muda (pink)
+        - CARD RATA-RATA HARGA
+            - ikon uang (koin)
+            - menampilkan rata-rata harga seluruh produk
+            - contoh: "Rp 1.984.545"
+            - badge: "Average Price"
+            - background biru gradien
+        - grafik chart menggunakan Chart.js
+    - menampilkan jumlah penjualan tiap produk
+    - bisa memilih grafik yang tersedia yaitu
+    - jenis grafik yang tersedia:
+        - BAR (tombol aktif)
+        - LINE
+        - PIE
+    - fitur:
+        - tombol switch chart type
+        - animasi chart
+        - data ditampilkan berdasarkan produk di database
+        - tampilan nama produk miring (rotate text)
+     - form search:
+        - placeholder: "Ketik nama produk..."
+        - digunakan untuk mencari produk secara cepat
+    - fitur reset filter:
+        - tombol "Reset Filter"
+        - menghilangkan semua filter yang telah dipilih
+    - menampilkan daftar produk dalam bentuk list
+     - dropdown pilihan urutan:
+        - penjualan terbanyak
+        - penjualan terdikit
+        - Harga Tertinggi
+        - Harga Terendah
+    - setiap produk memiliki data:
+        - nomor urut
+        - nama produk
+        - SKU produk (contoh: PRD-00001)
+        - harga produk
+        - badge stok:
+            - warna kuning  = stok aman
+            - warna merah   = stok menipis
+            - warna hijau   = stok sangat aman
+        - badge rating atau skor penjualan (angka)
+        - icon api (🔥) menandakan produk laris
+        - tombol "Detail" untuk membuka halaman detail produk
+    - badge merah pada menu Products:
+        - menandakan ada produk bermasalah (misal stok menipis)
+    - badge merah pada Stock Management:
+        - menandakan ada produk yang stocknya kritis
+    - badge biru pada Orders:
+        - pesanan baru dari pelanggan
+
+13. Advertisements page
+    - fitur untuk membuat iklan/banner promosi baru untuk produk di toko
+    - digunakan untuk menampilkan promosi khusus pada halaman utama seller/customer
+    - terdapat tabel yang berisi :
+        - gambar iklan
+        - nama produk yg di iklankan
+        - headline iklan
+        - status active / tidak active 
+            - kalo aktif maka aakn muncul di halamana utama online shop
+            - kalo engga aktif maka enggga muncul (misalkan jika iklan tidak lagi mau di pake, 
+              tapi engga mau di hapus)
+        - action
+            - button edit
+            - button delete
+    - create advertisements page
+         - fitur select product
+            - dropdown daftar produk yang tersedia
+            - opsi default: "-- Choose Product --"
+            - penjual wajib memilih produk yang akan dipromosikan
+            - dropdown menampilkan nama produk yang sudah ada di database
+        - field title kecil
+            - digunakan untuk menampilkan teks kecil pada banner (seperti subheading)
+            - contoh penggunaan:
+                - "Diskon Besar!"
+                - "Promo Akhir Tahun"
+                - "New Arrival"
+        - field headline besar
+            - berfungsi untuk menampilkan tulisan utama berukuran besar
+            - headline akan menjadi fokus utama pada banner iklan
+            - contoh:
+                - "Hemat Hingga 50%"
+        - field deskripsi konten iklan
+            - digunakan untuk memberikan penjelasan detail singkat
+            - mendukung teks panjang dan multi-paragraf
+            - contoh:
+                - "Dapatkan promo terbatas selama persediaan masih ada."
+        - field teks tombol pada banner
+            - contoh default: "Shop Now"
+            - bisa diganti sesuai kebutuhan penjual, misalnya:
+                - "Beli Sekarang"
+        - fitur toggle / checkbox "Active?"
+            - jika aktif:
+                - iklan langsung tampil di halaman toko
+            - jika tidak aktif:
+                - iklan tersimpan tetapi tidak ditampilkan
+            - sangat berguna untuk preview draft iklan
+        - area preview:
+            - menampilkan tampilan background/banner
+            - langsung berubah saat PNG baru dipilih
+            - mendukung preview real-time
+        - digunakan agar penjual dapat melihat hasil iklan sebelum disimpan
+            - fitur upload file background iklan
+        - hanya menerima file PNG
+        - wajib PNG transparan
+        - alasan PNG transparan:
+            - agar teks/title/headline dapat tampil rapi di atas background
+            - menghindari cut-off atau kotak background putih
+        - fitur validasi upload:
+            - validasi jenis file (harus .png)
+            - validasi ukuran file
+            - menampilkan error jika tidak sesuai
+        - fitur preview:
+            - langsung menampilkan PNG di bagian "Background Preview"
+    - edit advertisements page
+        - fitur select product
+            - dropdown daftar produk yang tersedia
+            - opsi default tetap menampilkan produk yang sedang digunakan
+            - penjual dapat mengganti produk yang dipromosikan
+            - dropdown menampilkan semua nama produk dari database
+        - field title kecil
+            - digunakan untuk mengubah teks kecil pada banner (subheading)
+            - contoh penggunaan:
+                - "Diskon Besar!"
+                - "Promo Akhir Tahun"
+        - field headline besar
+            - berfungsi untuk mengubah tulisan utama berukuran besar
+            - headline tetap menjadi fokus utama pada banner iklan
+            - contoh:
+                - "Hemat Hingga 50%"
+        - field deskripsi konten iklan
+            - digunakan untuk mengubah penjelasan detail singkat pada iklan
+            - mendukung teks panjang dan multi-paragraf
+            - contoh:
+                - "Dapatkan promo terbatas selama persediaan masih ada."
+        - field teks tombol pada banner
+            - bisa mengubah teks tombol default seperti "Shop Now"
+            - dapat diganti sesuai kebutuhan penjual, misalnya:
+                - "Beli Sekarang"
+        - fitur toggle / checkbox "Active?"
+            - jika aktif:
+                - iklan ditampilkan di halaman toko
+            - jika tidak aktif:
+                - iklan disimpan sebagai draft dan tidak tampil
+            - berguna untuk mengatur status iklan lama
+        - area preview:
+            - menampilkan tampilan background/banner lama
+            - langsung berubah saat PNG baru dipilih
+            - mendukung preview real-time
+        - fitur upload file background iklan
+            - penjual dapat mengganti background lama dengan PNG baru
+            - hanya menerima file PNG
+            - wajib PNG transparan
+        - alasan PNG transparan:
+            - agar teks/title/headline tetap tampil rapi di atas background
+            - menghindari kotak putih atau elemen tidak serasi
+        - fitur validasi upload:
+            - validasi jenis file (harus .png)
+            - validasi ukuran file
+            - menampilkan error jika file tidak sesuai
+        - fitur preview:
+            - langsung menampilkan PNG baru di bagian "Background Preview"
+14. Stock Manajement page
+    - card total produk setelah filter
+    - menampilkan tabel yang berisi data :
+        - gambar produk
+        - nama produk
+        - stock tersedia
+        - action button update
+    - dan filter untuk menampilkan produk mana saja yang kurang dari trheashold
+      yg secara default di atur di profile seller
+    - button update untuk mengedit jumlah stock
+    - dan nanti in akan masuk ke notifikasi
+15. Order Pending Page
+    - tampilan card berisi
+        - data produk pending
+        - data produk completed / accepted
+        - data produk cancelled 
+    - tabel untuk seller jika ingin menerima atau menolak order dari buyer yang berisi
+        - order id
+        - nama buyer
+        - total price
+        - status = pending
+        - created at
+        - action
+            - button accepted
+            - button rejected
+    - tabel riwayat order yang sudah berlaku, baik pending, rejected, ataupun accepted
+    - dengan data tabel
+        - order id
+        - buyer name
+        - product name
+        - quantity
+        - total
+        - status = (pending, completed, cancelled)
+
+16. Customer Insight Page
+    - menampilkan card berisi :
+        - Total customer
+        - Repeat rate
+        - Avg orders/customer
+        - top spender
+    - menampilkan card total berapa user yang melakukan order berulang
+    - menampilkan grafik pie untuk buyer baru dan buyer yang order berulang
+    - menampilkan tabel top buyer dengn badge yang menarik
+    - dengan data nama buyer, total order, total spend
+
+
+
+10. payment gateway
+11. fitur wa
+
