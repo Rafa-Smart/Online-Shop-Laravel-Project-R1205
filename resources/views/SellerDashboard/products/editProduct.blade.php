@@ -211,8 +211,13 @@
         <div class="col-md-6">
             <label class="fw-bold">Thumbnail Saat Ini</label>
             <div>
-                <img src="{{ asset('storage/'.$product->img) }}"
-                     width="150" class="image-preview">
+                <img src="{{ $product->img 
+    ? (filter_var($product->img, FILTER_VALIDATE_URL) 
+        ? $product->img 
+        : asset('storage/' . $product->img)) 
+    : asset('img/product-3.png') }}"
+     alt="{{ $product->product_name }}"
+     onerror="this.src='{{ asset('img/product-3.png') }}'">
             </div>
 
             <p class="fw-bold mt-2">Preview Baru:</p>
@@ -237,6 +242,14 @@
             @foreach ($product->photos as $photo)
                 <img src="{{ asset('storage/'.$photo->photo_path) }}"
                      width="120" class="image-preview">
+
+                     <img src="{{ $photo->photo_path
+    ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
+        ? $photo->photo_path 
+        : asset('storage/' . $photo->photo_path)) 
+    : asset('img/product-3.png') }}"
+     alt="{{ $photo->photo_path }}"
+     onerror="this.src='{{ asset('img/product-3.png') }}'">
             @endforeach
         </div>
     </div>
