@@ -459,26 +459,31 @@
                         {{-- Sub-Kolom Gambar (col-md-6) --}}
                         <div class="col-md-6">
 
-                            <!-- Foto utama -->
-                            <img src="{{ asset('storage/' . $product->img) }}" alt="{{ $product->product_name }}"
-                                class="product-img mb-3" id="mainProductImg">
+    <!-- Foto utama -->
+    <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}"
+         alt="{{ $product->product_name }}"
+         class="product-img mb-3"
+         id="mainProductImg">
 
-                            <!-- Thumbnail grid -->
-                            <div class="thumb-grid">
+    <!-- Thumbnail grid -->
+    <div class="thumb-grid">
 
-                                <!-- Thumbnail utama -->
-                                <img src="{{ asset('storage/' . $product->img) }}" class="thumb-img"
-                                    data-large="{{ asset('storage/' . $product->img) }}">
+        <!-- Thumbnail utama -->
+        <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}"
+             class="thumb-img"
+             data-large="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}">
 
-                                <!-- Thumbnail tambahan -->
-                                @foreach ($productPhotos as $photo)
-                                    <img src="{{ asset('storage/' . $photo->photo_path) }}" class="thumb-img"
-                                        data-large="{{ asset('storage/' . $photo->photo_path) }}">
-                                @endforeach
+        <!-- Thumbnail tambahan -->
+        @foreach ($productPhotos as $photo)
+            <img src="{{ $photo->photo_path ? asset('storage/' . $photo->photo_path) : asset('images/default-product.png') }}"
+                 class="thumb-img"
+                 data-large="{{ $photo->photo_path ? asset('storage/' . $photo->photo_path) : asset('images/default-product.png') }}">
+        @endforeach
 
-                            </div>
+    </div>
 
-                        </div>
+</div>
+
 
                         {{-- Sub-Kolom Detail (col-md-6) --}}
                         <div class="col-md-6">
@@ -597,24 +602,26 @@
                                 <div id="review-gallery-{{ $review->id }}" class="d-flex gap-2 mt-2">
 
                                     @foreach ($review->medias as $media)
-                                        @if (str_contains($media->media_type, 'image'))
-                                            <!-- FOTO -->
-                                            <a href="{{ asset('storage/' . $media->media_path) }}"
-                                                class="review-media-item" data-lg-size="1600-900">
-                                                <img src="{{ asset('storage/' . $media->media_path) }}"
-                                                    style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
-                                            </a>
-                                        @else
-                                            <!-- VIDEO -->
-                                            <a href="{{ asset('storage/' . $media->media_path) }}"
-                                                class="review-media-item" data-lg-size="1280-720" data-lg-video="true">
-                                                <video
-                                                    style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
-                                                    <source src="{{ asset('storage/' . $media->media_path) }}">
-                                                </video>
-                                            </a>
-                                        @endif
-                                    @endforeach
+    @php
+        $mediaPath = $media->media_path ? asset('storage/' . $media->media_path) : asset('images/default-media.png');
+    @endphp
+
+    @if (str_contains($media->media_type, 'image'))
+        <!-- FOTO -->
+        <a href="{{ $mediaPath }}" class="review-media-item" data-lg-size="1600-900">
+            <img src="{{ $mediaPath }}"
+                 style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
+        </a>
+    @else
+        <!-- VIDEO -->
+        <a href="{{ $mediaPath }}" class="review-media-item" data-lg-size="1280-720" data-lg-video="true">
+            <video style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
+                <source src="{{ $mediaPath }}">
+            </video>
+        </a>
+    @endif
+@endforeach
+
 
                                 </div>
 
