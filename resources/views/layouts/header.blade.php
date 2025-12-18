@@ -2084,7 +2084,7 @@
 
 <script>
 // ============================================
-// FUNGSI UTAMA UNTUK MOBILE
+// FUNGSI UTAMA UNTUK SEMUA DROPDOWN
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2096,9 +2096,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function initializeDropdowns() {
         console.log('Closing all dropdowns on initialization...');
         
-        // Pastikan semua dropdown desktop tertutup
+        // Pastikan semua dropdown custom desktop tertutup
         const desktopDropdowns = [
-            '.whiteblue-dropdown',
             '.notif-dropdown', 
             '.favorite-dropdown', 
             '.cart-popup'
@@ -2126,13 +2125,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.style.overflow = 'auto';
         
-        // Hentikan Bootstrap dropdown yang mungkin terbuka
-        const bootstrapDropdowns = document.querySelectorAll('.dropdown-menu.show');
-        bootstrapDropdowns.forEach(dropdown => {
-            dropdown.classList.remove('show');
-        });
+        // HANYA tutup Bootstrap dropdown profile jika terbuka
+        // Jangan hapus class 'show' karena Bootstrap membutuhkannya
+        const bootstrapProfileDropdown = document.querySelector('.dropdown-menu.whiteblue-dropdown.show');
+        if (bootstrapProfileDropdown) {
+            // Biarkan Bootstrap menanganinya sendiri
+            console.log('Bootstrap profile dropdown is open, letting Bootstrap handle it');
+        }
         
-        console.log('All dropdowns initialized and closed');
+        console.log('All dropdowns initialized');
     }
     
     // Panggil fungsi inisialisasi
@@ -2144,8 +2145,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fungsi untuk membuka dropdown mobile
     function openMobileDropdown(overlayId, contentId) {
-        // Tutup semua dropdown terlebih dahulu
-        closeAllDesktopDropdowns();
+        // Tutup semua dropdown custom terlebih dahulu
+        closeAllCustomDropdowns();
         closeAllMobileDropdowns();
         
         const overlay = document.getElementById(overlayId);
@@ -2257,7 +2258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ============================================
-    // 4. FUNGSI UNTUK DESKTOP DROPDOWNS
+    // 4. INISIALISASI DROPDOWN CUSTOM DESKTOP
     // ============================================
     
     const notifContainer = document.getElementById('notifContainer');
@@ -2270,69 +2271,65 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartPopup = cartContainer ? cartContainer.querySelector('.cart-popup') : null;
     
     // ============================================
-    // 5. FUNGSI BANTUAN DESKTOP
+    // 5. FUNGSI BANTUAN UNTUK DROPDOWN CUSTOM
     // ============================================
     
-    function closeAllDesktopDropdowns() {
-        console.log('Closing all desktop dropdowns...');
+    function closeAllCustomDropdowns() {
+        console.log('Closing all custom dropdowns...');
         
-        if (notifDropdown) {
+        if (notifDropdown && notifDropdown.style.display === 'block') {
             notifDropdown.style.display = 'none';
         }
         
-        if (favoriteDropdown) {
+        if (favoriteDropdown && favoriteDropdown.style.display === 'block') {
             favoriteDropdown.style.display = 'none';
         }
         
-        if (cartPopup) {
+        if (cartPopup && cartPopup.style.display === 'block') {
             cartPopup.style.display = 'none';
         }
         
-        // Tutup Bootstrap profile dropdown
-        const profileDropdownMenu = document.querySelector('.whiteblue-dropdown');
-        if (profileDropdownMenu) {
-            profileDropdownMenu.style.display = 'none';
-        }
-        
-        // Tutup Bootstrap dropdown lainnya
-        const bootstrapDropdowns = document.querySelectorAll('.dropdown-menu.show');
-        bootstrapDropdowns.forEach(dropdown => {
-            dropdown.classList.remove('show');
-        });
-        
-        console.log('All desktop dropdowns closed');
+        console.log('All custom dropdowns closed');
     }
     
-    function toggleDesktopDropdown(event, container, dropdownElement) {
+    function toggleCustomDropdown(event, container, dropdownElement) {
         event.preventDefault();
         event.stopPropagation();
         
-        console.log(`Toggling dropdown for: ${container.id}`);
+        console.log(`Toggling custom dropdown for: ${container.id}`);
         
-        // Tutup semua dropdown lainnya
-        if (dropdownElement !== notifDropdown && notifDropdown) {
-            notifDropdown.style.display = 'none';
+        // Tutup semua dropdown custom lainnya
+        closeAllCustomDropdowns();
+        
+        // Tutup Bootstrap profile dropdown jika terbuka
+        const profileDropdown = document.querySelector('.dropdown-menu.whiteblue-dropdown.show');
+        if (profileDropdown) {
+            // Dapatkan instance Bootstrap dropdown
+            const dropdownToggle = document.querySelector('.dropdown .dropdown-toggle');
+            if (dropdownToggle) {
+                const bsDropdown = bootstrap.Dropdown.getInstance(dropdownToggle);
+                if (bsDropdown) {
+                    bsDropdown.hide();
+                }
+            }
         }
-        if (dropdownElement !== favoriteDropdown && favoriteDropdown) {
-            favoriteDropdown.style.display = 'none';
-        }
-        if (dropdownElement !== cartPopup && cartPopup) {
-            cartPopup.style.display = 'none';
-        }
+        
+        // Tutup semua mobile dropdowns
+        closeAllMobileDropdowns();
         
         // Toggle dropdown yang diklik
         const isCurrentlyOpen = dropdownElement.style.display === 'block';
         dropdownElement.style.display = isCurrentlyOpen ? 'none' : 'block';
         
         // Jika dropdown dibuka, atur positioning
-        if (!isCurrentlyOpen) {
-            positionDesktopDropdown(container, dropdownElement);
+        if (!isCurrentlyOpen && dropdownElement.style.display === 'block') {
+            positionCustomDropdown(container, dropdownElement);
         }
         
         console.log(`${container.id} dropdown is now: ${dropdownElement.style.display}`);
     }
     
-    function positionDesktopDropdown(container, dropdownElement) {
+    function positionCustomDropdown(container, dropdownElement) {
         const rect = container.getBoundingClientRect();
         dropdownElement.style.position = 'absolute';
         dropdownElement.style.top = (rect.bottom + window.scrollY + 10) + 'px';
@@ -2341,13 +2338,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // 6. EVENT LISTENERS UNTUK DESKTOP DROPDOWNS
+    // 6. EVENT LISTENERS UNTUK DROPDOWN CUSTOM DESKTOP
     // ============================================
     
     // Notifikasi
     if (notifContainer && notifDropdown) {
         notifContainer.addEventListener('click', function(event) {
-            toggleDesktopDropdown(event, notifContainer, notifDropdown);
+            toggleCustomDropdown(event, notifContainer, notifDropdown);
         });
         
         // Mencegah klik di dalam dropdown menutupnya
@@ -2359,7 +2356,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Wishlist
     if (favoriteContainer && favoriteDropdown) {
         favoriteContainer.addEventListener('click', function(event) {
-            toggleDesktopDropdown(event, favoriteContainer, favoriteDropdown);
+            toggleCustomDropdown(event, favoriteContainer, favoriteDropdown);
         });
         
         // Handler untuk klik item dalam wishlist dropdown
@@ -2391,7 +2388,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cart
     if (cartContainer && cartPopup) {
         cartContainer.addEventListener('click', function(event) {
-            toggleDesktopDropdown(event, cartContainer, cartPopup);
+            toggleCustomDropdown(event, cartContainer, cartPopup);
         });
         
         // Handler untuk klik item dalam cart dropdown
@@ -2429,70 +2426,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // 7. KLIK DI LUAR UNTUK MENUTUP SEMUA DROPDOWN
+    // 7. HANDLER UNTUK KLIK DI LUAR DROPDOWN
     // ============================================
     
     document.addEventListener('click', function(event) {
-        // Cek apakah klik berada di dalam salah satu dropdown atau containernya
-        let isClickInsideDropdown = false;
+        // Cek apakah klik berada di dalam custom dropdown atau containernya
+        let isClickInsideCustomDropdown = false;
         
-        // Cek desktop dropdowns
-        const desktopContainers = [
+        // Cek custom dropdowns
+        const customContainers = [
             { container: notifContainer, dropdown: notifDropdown },
             { container: favoriteContainer, dropdown: favoriteDropdown },
             { container: cartContainer, dropdown: cartPopup }
         ];
         
-        desktopContainers.forEach(item => {
+        customContainers.forEach(item => {
             if (item.container && item.container.contains(event.target)) {
-                isClickInsideDropdown = true;
+                isClickInsideCustomDropdown = true;
             }
             if (item.dropdown && item.dropdown.contains(event.target)) {
-                isClickInsideDropdown = true;
+                isClickInsideCustomDropdown = true;
             }
         });
-        
-        // Cek profile dropdown
-        const profileToggle = document.querySelector('.dropdown .dropdown-toggle');
-        const profileMenu = document.querySelector('.whiteblue-dropdown');
-        if (profileToggle && profileToggle.contains(event.target)) {
-            isClickInsideDropdown = true;
-        }
-        if (profileMenu && profileMenu.contains(event.target)) {
-            isClickInsideDropdown = true;
-        }
         
         // Cek mobile dropdowns
         const mobileIcons = document.querySelectorAll('.mobile-icon-item');
         mobileIcons.forEach(icon => {
             if (icon.contains(event.target)) {
-                isClickInsideDropdown = true;
+                isClickInsideCustomDropdown = true;
             }
         });
         
         const mobileContents = document.querySelectorAll('.mobile-dropdown-content');
         mobileContents.forEach(content => {
             if (content.contains(event.target)) {
-                isClickInsideDropdown = true;
+                isClickInsideCustomDropdown = true;
             }
         });
         
-        // Jika klik di luar semua dropdown, tutup semuanya
-        if (!isClickInsideDropdown) {
-            closeAllDesktopDropdowns();
+        // Cek Bootstrap profile dropdown
+        const profileToggle = document.querySelector('.dropdown .dropdown-toggle');
+        const profileMenu = document.querySelector('.whiteblue-dropdown');
+        if (profileToggle && profileToggle.contains(event.target)) {
+            // Klik di profile toggle, biarkan Bootstrap menanganinya
+            return;
+        }
+        
+        // Jika klik di luar semua custom dropdown, tutup mereka
+        if (!isClickInsideCustomDropdown) {
+            closeAllCustomDropdowns();
             closeAllMobileDropdowns();
+            
+            // Jangan tutup Bootstrap dropdown profile
+            // Biarkan Bootstrap menanganinya sendiri
         }
     });
     
     // ============================================
-    // 8. ESCAPE KEY HANDLER
+    // 8. ESCAPE KEY HANDLER - HANYA UNTUK CUSTOM DROPDOWNS
     // ============================================
     
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            console.log('Escape key pressed - closing all dropdowns');
-            closeAllDesktopDropdowns();
+            console.log('Escape key pressed - closing custom dropdowns');
+            closeAllCustomDropdowns();
             closeAllMobileDropdowns();
+            
+            // Jangan tutup Bootstrap dropdown dengan ESC
+            // Biarkan Bootstrap menanganinya sendiri
         }
     });
     
@@ -2504,9 +2505,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
-            console.log('Window resized - closing all dropdowns');
-            closeAllDesktopDropdowns();
+            console.log('Window resized - closing custom dropdowns');
+            closeAllCustomDropdowns();
             closeAllMobileDropdowns();
+            
+            // Bootstrap akan menangani resize untuk dropdownnya sendiri
         }, 250);
     });
     
@@ -2528,26 +2531,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // 11. FIX UNTUK BOOTSTRAP DROPDOWN CONFLICT
+    // 11. FIX: CEK DROPDOWN STATE SAAT CLICK PROFILE
     // ============================================
     
-    // Mencegah Bootstrap mengganggu dropdown custom kita
-    document.addEventListener('show.bs.dropdown', function(event) {
-        const target = event.target;
-        const isCustomDropdown = 
-            target.id === 'notifContainer' || 
-            target.id === 'favoriteContainer' || 
-            target.id === 'cartContainer' ||
-            target.closest('#notifContainer') || 
-            target.closest('#favoriteContainer') || 
-            target.closest('#cartContainer');
-        
-        if (isCustomDropdown) {
-            console.log('Preventing Bootstrap dropdown for custom element');
-            event.preventDefault();
-            event.stopPropagation();
+    // Tambahkan event listener untuk profile dropdown toggle
+    const profileToggle = document.querySelector('.dropdown .dropdown-toggle');
+    if (profileToggle) {
+        profileToggle.addEventListener('click', function(e) {
+            console.log('Profile dropdown toggle clicked');
+            
+            // Tutup semua custom dropdowns saat profile diklik
+            closeAllCustomDropdowns();
+            closeAllMobileDropdowns();
+            
+            // Biarkan Bootstrap menangani sisanya
+        });
+    }
+    
+    // ============================================
+    // 12. FIX: ATUR Z-INDEX UNTUK MENCEGAH OVERLAP
+    // ============================================
+    
+    // Pastikan Bootstrap dropdown memiliki z-index yang tinggi
+    const style = document.createElement('style');
+    style.textContent = `
+        .dropdown-menu.whiteblue-dropdown {
+            z-index: 10000 !important;
         }
-    });
+        
+        .notif-dropdown,
+        .favorite-dropdown,
+        .cart-popup {
+            z-index: 9999 !important;
+        }
+    `;
+    document.head.appendChild(style);
     
     console.log('All dropdown handlers initialized successfully');
 });
@@ -2668,14 +2686,16 @@ function navigateToWishlist() {
 // ============================================
 
 window.addEventListener('load', function() {
-    // Pastikan semua dropdown tertutup setelah semua konten dimuat
+    // Pastikan semua custom dropdown tertutup setelah semua konten dimuat
     setTimeout(function() {
-        const allDropdowns = document.querySelectorAll(
-            '.whiteblue-dropdown, .notif-dropdown, .favorite-dropdown, .cart-popup, .mobile-dropdown-content'
+        const customDropdowns = document.querySelectorAll(
+            '.notif-dropdown, .favorite-dropdown, .cart-popup, .mobile-dropdown-content'
         );
         
-        allDropdowns.forEach(dropdown => {
-            dropdown.style.display = 'none';
+        customDropdowns.forEach(dropdown => {
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
         });
         
         const allOverlays = document.querySelectorAll('.mobile-dropdown-overlay');
@@ -2685,7 +2705,33 @@ window.addEventListener('load', function() {
         
         document.body.style.overflow = 'auto';
         
-        console.log('Final check: All dropdowns should be closed after window load');
+        console.log('Final check: All custom dropdowns should be closed after window load');
+        
+        // Jangan sentuh Bootstrap dropdown profile
     }, 100);
 });
+
+// ============================================
+// FIX: HAPUS EVENT LISTENER YANG MENCEGAH BOOTSTRAP
+// ============================================
+
+// HAPUS atau COMMENT bagian ini karena mengganggu Bootstrap:
+/*
+document.addEventListener('show.bs.dropdown', function(event) {
+    const target = event.target;
+    const isCustomDropdown = 
+        target.id === 'notifContainer' || 
+        target.id === 'favoriteContainer' || 
+        target.id === 'cartContainer' ||
+        target.closest('#notifContainer') || 
+        target.closest('#favoriteContainer') || 
+        target.closest('#cartContainer');
+    
+    if (isCustomDropdown) {
+        console.log('Preventing Bootstrap dropdown for custom element');
+        event.preventDefault();
+        event.stopPropagation();
+    }
+});
+*/
 </script>
