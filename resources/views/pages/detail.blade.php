@@ -464,7 +464,7 @@
     ? (filter_var($product->img, FILTER_VALIDATE_URL) 
         ? $product->img 
         : asset('storage/' . $product->img)) 
-    : asset('images/default-product.png') }}"
+    : asset('img/sate-ayam.png') }}"
      alt="{{ $product->product_name }}"
      class="product-img mb-3"
      id="mainProductImg">
@@ -478,13 +478,13 @@
         ? (filter_var($product->img, FILTER_VALIDATE_URL) 
             ? $product->img 
             : asset('storage/' . $product->img)) 
-        : asset('images/default-product.png') }}"
+        : asset('img/sate-ayam.png') }}"
          class="thumb-img"
          data-large="{{ $product->img 
             ? (filter_var($product->img, FILTER_VALIDATE_URL) 
                 ? $product->img 
                 : asset('storage/' . $product->img)) 
-            : asset('images/default-product.png') }}">
+            : asset('img/sate-ayam.png') }}">
 
     <!-- Thumbnail tambahan -->
     @foreach ($productPhotos as $photo)
@@ -492,13 +492,13 @@
             ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
                 ? $photo->photo_path 
                 : asset('storage/' . $photo->photo_path)) 
-            : asset('images/default-product.png') }}"
+            : asset('img/sate-ayam.png') }}"
              class="thumb-img"
              data-large="{{ $photo->photo_path 
                 ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
                     ? $photo->photo_path 
                     : asset('storage/' . $photo->photo_path)) 
-                : asset('images/default-product.png') }}">
+                : asset('img/sate-ayam.png') }}">
     @endforeach
 
 </div>
@@ -629,7 +629,7 @@
             ? (filter_var($media->media_path, FILTER_VALIDATE_URL) 
                 ? $media->media_path 
                 : asset('storage/' . $media->media_path)) 
-            : asset('images/default-media.png');
+            : asset('img/sate-ayam.png');
     @endphp
 
     @if (str_contains($media->media_type, 'image'))

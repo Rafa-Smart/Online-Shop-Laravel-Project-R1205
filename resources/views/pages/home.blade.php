@@ -1010,9 +1010,9 @@ input[type="range"]:active::-webkit-slider-thumb {
     ? (filter_var($product->img, FILTER_VALIDATE_URL) 
         ? $product->img 
         : asset('storage/' . $product->img)) 
-    : asset('img/product-3.png') }}"
+    : asset('img/sate-ayam.png') }}"
      alt="{{ $product->product_name }}"
-     onerror="this.src='{{ asset('img/product-3.png') }}'">
+     onerror="this.src='{{ asset('img/sate-ayam.png') }}'">
 
                             </a>
 
