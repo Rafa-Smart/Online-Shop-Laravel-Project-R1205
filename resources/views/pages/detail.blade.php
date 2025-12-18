@@ -460,40 +460,34 @@
                         <div class="col-md-6">
 
                             <!-- Foto utama -->
-                           <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('img/sate-ayam.png') }}"
-     alt="{{ $product->product_name }}" 
-     class="product-img mb-3" 
-     id="mainProductImg"
-     onerror="this.onerror=null; this.src='{{ asset('img/sate-ayam.png') }}'">
+                            <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('img/sate-ayam.png') }}"
+                                alt="{{ $product->product_name }}" class="product-img mb-3" id="mainProductImg"
+                                onerror="this.onerror=null; this.src='{{ asset('img/sate-ayam.png') }}'">
 
 
                             <!-- Thumbnail grid -->
                             <div class="thumb-grid">
 
                                 <!-- Thumbnail utama -->
-                                <img src="{{ asset('storage/' . ($product->img ?? '')) }}"
-     class="thumb-img"
-     data-large="{{ asset('storage/' . ($product->img ?? '')) }}"
-     onerror="this.src='{{ asset('img/sate-ayam.png') }}'; this.setAttribute('data-large', '{{ asset('img/sate-ayam.png') }}')">
+                                <img src="{{ asset('storage/' . ($product->img ?? '')) }}" class="thumb-img"
+                                    data-large="{{ asset('storage/' . ($product->img ?? '')) }}"
+                                    onerror="this.src='{{ asset('img/sate-ayam.png') }}'; this.setAttribute('data-large', '{{ asset('img/sate-ayam.png') }}')">
 
                                 <!-- Thumbnail tambahan -->
-                                @if(count($productPhotos) > 0)
-    @foreach ($productPhotos as $photo)
-        <img src="{{ asset('storage/' . ($photo->photo_path ?? '')) }}"
-             class="thumb-img"
-             data-large="{{ asset('storage/' . ($photo->photo_path ?? '')) }}"
-             onerror="this.onerror=null; this.src='{{ asset('img/sate-ayam.png') }}'; this.setAttribute('data-large', '{{ asset('img/sate-ayam.png') }}')">
-    @endforeach
-@else
-    {{-- Tampilkan placeholder jika tidak ada foto detail --}}
-    <div class="no-photos-placeholder">
-        <img src="{{ asset('img/sate-ayam.png') }}"
-             class="thumb-img"
-             data-large="{{ asset('img/sate-ayam.png') }}"
-             alt="Tidak ada foto detail">
-        <small class="text-muted d-block">Belum ada foto detail</small>
-    </div>
-@endif
+                                @if (count($productPhotos) > 0)
+                                    @foreach ($productPhotos as $photo)
+                                        <img src="{{ asset('storage/' . ($photo->photo_path ?? '')) }}" class="thumb-img"
+                                            data-large="{{ asset('storage/' . ($photo->photo_path ?? '')) }}"
+                                            onerror="this.onerror=null; this.src='{{ asset('img/product-4.png') }}'; this.setAttribute('data-large', '{{ asset('img/product-4.png') }}')">
+                                    @endforeach
+                                @else
+                                    {{-- Tampilkan placeholder jika tidak ada foto detail --}}
+                                    <div class="no-photos-placeholder">
+                                        <img src="{{ asset('img/product-4.png') }}" class="thumb-img"
+                                            data-large="{{ asset('img/product-4.png') }}" alt="Tidak ada foto detail">
+                                        <small class="text-muted d-block">Belum ada foto detail</small>
+                                    </div>
+                                @endif
 
                             </div>
 
@@ -1010,7 +1004,7 @@ Terima kasih kak 🙏✨
                         // 🔥 STEP 2 — SETELAH ORDER DISIMPAN → buka WhatsApp
                         const encoded = encodeURIComponent(message);
                         const url =
-                        `https://api.whatsapp.com/send?phone=${sellerPhone}&text=${encoded}`;
+                            `https://api.whatsapp.com/send?phone=${sellerPhone}&text=${encoded}`;
                         window.location.href = url;
                     })
                     .catch(err => {

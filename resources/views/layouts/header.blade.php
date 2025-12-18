@@ -1579,7 +1579,42 @@
     transform: translateX(6px) !important;
 }
 
+/* Tambahkan di akhir bagian <style> */
+#profileDropdownMenu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    display: none !important;
+}
 
+#profileDropdownMenu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    display: block !important;
+}
+
+/* Memastikan semua dropdown custom tertutup saat awal */
+.whiteblue-dropdown,
+.notif-dropdown,
+.favorite-dropdown,
+.cart-popup {
+    display: none !important;
+}
+
+/* Animation untuk mobile dropdowns */
+.mobile-dropdown-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+}
+
+.mobile-dropdown-content[style*="display: block"] {
+    opacity: 1;
+    transform: translateY(0);
+}
 </style>
 
 <div class="notif-dropdown" id="notifDropdown">
@@ -2084,126 +2119,393 @@
 
 <script>
 // ============================================
-// FUNGSI UTAMA UNTUK MOBILE
+// FUNGSI UTAMA UNTUK SEMUA DROPDOWN
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing dropdowns');
+    
+    // ============================================
+    // 1. INISIALISASI - TUTUP SEMUA DROPDOWN SAAT HALAMAN DIMUAT
+    // ============================================
+    function initializeDropdowns() {
+        console.log('Initializing dropdowns...');
+        
+        // Tutup semua dropdown custom
+        const allCustomDropdowns = document.querySelectorAll(
+            '.whiteblue-dropdown, .notif-dropdown, .favorite-dropdown, .cart-popup, .mobile-dropdown-content'
+        );
+        
+        allCustomDropdowns.forEach(dropdown => {
+            dropdown.style.display = 'none';
+            dropdown.classList.remove('show');
+        });
+        
+        // Tutup semua overlay mobile
+        const mobileOverlays = document.querySelectorAll('.mobile-dropdown-overlay');
+        mobileOverlays.forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        // Reset body overflow
+        document.body.style.overflow = 'auto';
+        
+        console.log('All dropdowns initialized and closed');
+    }
+    
+    // Panggil fungsi inisialisasi
+    initializeDropdowns();
+    
+    // ============================================
+    // 2. DROPDOWN PROFIL (DESKTOP) - FIX UTAMA
+    // ============================================
+    const profileDropdown = document.getElementById('profileDropdown');
+    const profileMenu = document.getElementById('profileDropdownMenu');
+    
+    if (profileDropdown && profileMenu) {
+        console.log('Profile dropdown elements found');
+        
+        // Pastikan dropdown profil tertutup saat halaman dimuat
+        profileMenu.style.display = 'none';
+        profileMenu.classList.remove('show');
+        
+        // Handler untuk klik pada tombol profil
+        profileDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Profile dropdown clicked');
+            
+            // Tutup semua dropdown custom lainnya
+            closeAllCustomDropdowns();
+            
+            // Tutup semua dropdown mobile
+            closeAllMobileDropdowns();
+            
+            // Toggle dropdown profil
+            const isCurrentlyVisible = profileMenu.style.display === 'block';
+            
+            if (isCurrentlyVisible) {
+                // Tutup dropdown
+                profileMenu.style.display = 'none';
+                profileMenu.classList.remove('show');
+                console.log('Profile dropdown closed');
+            } else {
+                // Buka dropdown
+                profileMenu.style.display = 'block';
+                profileMenu.classList.add('show');
+                
+                // Tambahkan sedikit delay untuk trigger animation
+                setTimeout(() => {
+                    profileMenu.style.opacity = '1';
+                    profileMenu.style.visibility = 'visible';
+                    profileMenu.style.transform = 'translateY(0)';
+                }, 10);
+                
+                console.log('Profile dropdown opened');
+            }
+        });
+        
+        // Mencegah dropdown tertutup saat klik di dalam dropdown
+        profileMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // ============================================
+    // 3. DROPDOWN CUSTOM LAINNYA (Notif, Wishlist, Cart)
+    // ============================================
+    const notifContainer = document.getElementById('notifContainer');
+    const notifDropdown = notifContainer ? notifContainer.querySelector('.notif-dropdown') : null;
+    
+    const favoriteContainer = document.getElementById('favoriteContainer');
+    const favoriteDropdown = favoriteContainer ? favoriteContainer.querySelector('.favorite-dropdown') : null;
+    
+    const cartContainer = document.getElementById('cartContainer');
+    const cartPopup = cartContainer ? cartContainer.querySelector('.cart-popup') : null;
+    
+    // Array dropdown custom
+    const customDropdowns = [
+        { 
+            container: notifContainer, 
+            element: notifDropdown, 
+            id: 'notif',
+            name: 'Notification'
+        },
+        { 
+            container: favoriteContainer, 
+            element: favoriteDropdown, 
+            id: 'favorite',
+            name: 'Wishlist'
+        },
+        { 
+            container: cartContainer, 
+            element: cartPopup, 
+            id: 'cart',
+            name: 'Cart'
+        }
+    ].filter(item => item.container && item.element);
+    
+    console.log('Found custom dropdowns:', customDropdowns.length);
+    
+    // Setup event listeners untuk setiap dropdown custom
+    customDropdowns.forEach(item => {
+        if (item.container && item.element) {
+            item.container.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                console.log(`${item.name} dropdown clicked`);
+                
+                // Tutup dropdown profil
+                if (profileMenu) {
+                    profileMenu.style.display = 'none';
+                    profileMenu.classList.remove('show');
+                }
+                
+                // Tutup semua dropdown mobile
+                closeAllMobileDropdowns();
+                
+                // Tutup dropdown custom lainnya
+                customDropdowns.forEach(d => {
+                    if (d.id !== item.id && d.element) {
+                        d.element.style.display = 'none';
+                        d.element.classList.remove('show');
+                    }
+                });
+                
+                // Toggle dropdown yang diklik
+                const isCurrentlyVisible = item.element.style.display === 'block';
+                
+                if (isCurrentlyVisible) {
+                    item.element.style.display = 'none';
+                    item.element.classList.remove('show');
+                    console.log(`${item.name} dropdown closed`);
+                } else {
+                    item.element.style.display = 'block';
+                    item.element.classList.add('show');
+                    console.log(`${item.name} dropdown opened`);
+                }
+                
+                // Mencegah event bubbling
+                event.cancelBubble = true;
+                return false;
+            });
+            
+            // Mencegah dropdown tertutup saat klik di dalamnya
+            item.element.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    });
+    
+    // ============================================
+    // 4. FUNGSI BANTUAN UNTUK MENUTUP DROPDOWN
+    // ============================================
+    function closeAllCustomDropdowns() {
+        console.log('Closing all custom dropdowns');
+        
+        // Tutup dropdown profil
+        if (profileMenu) {
+            profileMenu.style.display = 'none';
+            profileMenu.classList.remove('show');
+        }
+        
+        // Tutup semua dropdown custom
+        customDropdowns.forEach(item => {
+            if (item.element) {
+                item.element.style.display = 'none';
+                item.element.classList.remove('show');
+            }
+        });
+    }
+    
+    // ============================================
+    // 5. EVENT LISTENER UNTUK KLIK DI LUAR DROPDOWN
+    // ============================================
+    document.addEventListener('click', function(event) {
+        let clickedInsideDropdown = false;
+        
+        // Cek apakah klik berada di dalam dropdown profil
+        if (profileDropdown && profileDropdown.contains(event.target)) {
+            clickedInsideDropdown = true;
+        }
+        if (profileMenu && profileMenu.contains(event.target)) {
+            clickedInsideDropdown = true;
+        }
+        
+        // Cek apakah klik berada di dalam dropdown custom
+        customDropdowns.forEach(item => {
+            if (item.container && item.container.contains(event.target)) {
+                clickedInsideDropdown = true;
+            }
+            if (item.element && item.element.contains(event.target)) {
+                clickedInsideDropdown = true;
+            }
+        });
+        
+        // Jika klik di luar semua dropdown, tutup semuanya
+        if (!clickedInsideDropdown) {
+            closeAllCustomDropdowns();
+        }
+    });
+    
+    // ============================================
+    // 6. FUNGSI UNTUK MOBILE DROPDOWNS
+    // ============================================
+    
     // Fungsi untuk membuka dropdown mobile
     function openMobileDropdown(overlayId, contentId) {
-        document.getElementById(overlayId).style.display = 'block';
-        document.getElementById(contentId).style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Mencegah scroll
+        console.log(`Opening mobile dropdown: ${contentId}`);
+        
+        // Tutup semua dropdown desktop terlebih dahulu
+        closeAllCustomDropdowns();
+        
+        // Tutup semua dropdown mobile lainnya
+        closeAllMobileDropdowns();
+        
+        // Buka dropdown yang diminta
+        const overlay = document.getElementById(overlayId);
+        const content = document.getElementById(contentId);
+        
+        if (overlay && content) {
+            overlay.style.display = 'block';
+            content.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Trigger reflow untuk animasi
+            content.offsetHeight;
+            content.style.opacity = '1';
+            content.style.transform = 'translateY(0)';
+        }
     }
-
+    
     // Fungsi untuk menutup semua dropdown mobile
     function closeAllMobileDropdowns() {
+        console.log('Closing all mobile dropdowns');
+        
         const overlays = document.querySelectorAll('.mobile-dropdown-overlay');
         const contents = document.querySelectorAll('.mobile-dropdown-content');
         
-        overlays.forEach(overlay => overlay.style.display = 'none');
-        contents.forEach(content => content.style.display = 'none');
-        document.body.style.overflow = 'auto'; // Mengembalikan scroll
+        overlays.forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        contents.forEach(content => {
+            content.style.display = 'none';
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(20px)';
+        });
+        
+        document.body.style.overflow = 'auto';
     }
-
-    // Event listeners untuk tombol mobile
-    document.getElementById('mobileProfileBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileProfileOverlay', 'mobileProfileContent');
+    
+    // ============================================
+    // 7. EVENT LISTENERS UNTUK MOBILE
+    // ============================================
+    
+    // Profile mobile
+    const mobileProfileBtn = document.getElementById('mobileProfileBtn');
+    if (mobileProfileBtn) {
+        mobileProfileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileProfileOverlay', 'mobileProfileContent');
+        });
+    }
+    
+    // Notifications mobile
+    const mobileNotifBtn = document.getElementById('mobileNotifBtn');
+    if (mobileNotifBtn) {
+        mobileNotifBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileNotifOverlay', 'mobileNotifContent');
+        });
+    }
+    
+    // Cart mobile
+    const mobileCartBtn = document.getElementById('mobileCartBtn');
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileCartOverlay', 'mobileCartContent');
+        });
+    }
+    
+    // Wishlist mobile
+    const mobileWishlistBtn = document.getElementById('mobileWishlistBtn');
+    if (mobileWishlistBtn) {
+        mobileWishlistBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileWishlistOverlay', 'mobileWishlistContent');
+        });
+    }
+    
+    // Close buttons untuk mobile
+    const mobileCloseButtons = [
+        { id: 'mobileNotifClose', overlay: 'mobileNotifOverlay', content: 'mobileNotifContent' },
+        { id: 'mobileCartClose', overlay: 'mobileCartOverlay', content: 'mobileCartContent' },
+        { id: 'mobileWishlistClose', overlay: 'mobileWishlistOverlay', content: 'mobileWishlistContent' }
+    ];
+    
+    mobileCloseButtons.forEach(button => {
+        const closeBtn = document.getElementById(button.id);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAllMobileDropdowns();
+            });
+        }
     });
-
-    document.getElementById('mobileNotifBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileNotifOverlay', 'mobileNotifContent');
-    });
-
-    document.getElementById('mobileCartBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileCartOverlay', 'mobileCartContent');
-    });
-
-    document.getElementById('mobileWishlistBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileWishlistOverlay', 'mobileWishlistContent');
-    });
-
-    // Event listeners untuk tombol close
-    document.getElementById('mobileNotifClose').addEventListener('click', closeAllMobileDropdowns);
-    document.getElementById('mobileCartClose').addEventListener('click', closeAllMobileDropdowns);
-    document.getElementById('mobileWishlistClose').addEventListener('click', closeAllMobileDropdowns);
-
-    // Event listeners untuk overlay (menutup saat klik di luar)
+    
+    // Overlay click untuk menutup dropdown mobile
     document.querySelectorAll('.mobile-dropdown-overlay').forEach(overlay => {
-        overlay.addEventListener('click', closeAllMobileDropdowns);
+        overlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAllMobileDropdowns();
+        });
     });
-
-    // Event listener untuk mencegah klik di dalam dropdown menutup dropdown
+    
+    // Mencegah klik di dalam konten mobile menutup dropdown
     document.querySelectorAll('.mobile-dropdown-content').forEach(content => {
         content.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     });
-
+    
     // ============================================
-    // FUNGSI UNTUK DESKTOP (tetap bekerja)
+    // 8. ESCAPE KEY HANDLER
     // ============================================
-    const notifContainer = document.getElementById('notifContainer');
-    const notifDropdown = notifContainer ? notifContainer.querySelector('.notif-dropdown') : null;
-
-    const favoriteContainer = document.getElementById('favoriteContainer');
-    const favoriteDropdown = favoriteContainer ? favoriteContainer.querySelector('.favorite-dropdown') : null;
-
-    const cartContainer = document.getElementById('cartContainer');
-    const cartPopup = cartContainer ? cartContainer.querySelector('.cart-popup') : null;
-
-    const dropdowns = [
-        { container: notifContainer, element: notifDropdown },
-        { container: favoriteContainer, element: favoriteDropdown },
-        { container: cartContainer, element: cartPopup }
-    ].filter(item => item.container && item.element);
-
-    function closeAllDropdowns(excludeElement = null) {
-        dropdowns.forEach(item => {
-            if (item.element && item.element !== excludeElement) {
-                item.element.style.display = 'none';
-            }
-        });
-    }
-
-    function toggleDropdown(event, dropdownElement) {
-        event.stopPropagation();
-        const isCurrentlyOpen = dropdownElement.style.display === 'block';
-        closeAllDropdowns(dropdownElement);
-        dropdownElement.style.display = isCurrentlyOpen ? 'none' : 'block';
-    }
-
-    dropdowns.forEach(item => {
-        item.container.addEventListener('click', function(event) {
-            if (item.container === cartContainer || item.container === favoriteContainer) {
-                event.preventDefault();
-            }
-            toggleDropdown(event, item.element);
-        });
-    });
-
-    document.addEventListener('click', function(event) {
-        let isInsideAnyContainer = false;
-        dropdowns.forEach(item => {
-            if (item.container && item.container.contains(event.target)) {
-                isInsideAnyContainer = true;
-            }
-        });
-
-        if (!isInsideAnyContainer) {
-            closeAllDropdowns();
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' || event.keyCode === 27) {
+            console.log('Escape key pressed - closing all dropdowns');
+            closeAllCustomDropdowns();
+            closeAllMobileDropdowns();
         }
     });
-
+    
     // ============================================
-    // FITUR SEARCH AUTO-SUBMIT
+    // 9. RESIZE HANDLER - TUTUP DROPDOWN SAAT RESIZE
+    // ============================================
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            console.log('Window resized - closing all dropdowns');
+            closeAllCustomDropdowns();
+            closeAllMobileDropdowns();
+        }, 250);
+    });
+    
+    // ============================================
+    // 10. SEARCH AUTO-SUBMIT
     // ============================================
     const searchInput = document.querySelector('.search-input');
     const searchForm = document.querySelector('.search-form');
-
+    
     if (searchInput && searchForm) {
         let timeout;
         searchInput.addEventListener('keyup', function() {
@@ -2213,46 +2515,125 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1000);
         });
     }
+    
+    // ============================================
+    // 11. NOTIFICATION HANDLING
+    // ============================================
+    function markNotificationAsRead(orderId) {
+        fetch(`/notifications/${orderId}/read`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Hapus notifikasi dari tampilan desktop
+                const notificationItem = document.querySelector(`.notif-item[data-id="${orderId}"]`);
+                if (notificationItem) {
+                    notificationItem.remove();
+                }
+                
+                // Hapus notifikasi dari tampilan mobile
+                const mobileNotificationItem = document.querySelector(`.mobile-notification-item[data-id="${orderId}"]`);
+                if (mobileNotificationItem) {
+                    mobileNotificationItem.remove();
+                }
+                
+                // Update badge count
+                updateNotificationBadge();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    
+    function updateNotificationBadge() {
+        // Hitung ulang jumlah notifikasi
+        const notificationCountDesktop = document.querySelectorAll('.notif-item').length;
+        const notificationCountMobile = document.querySelectorAll('.mobile-notification-item').length;
+        const notificationCount = Math.max(notificationCountDesktop, notificationCountMobile);
+        
+        // Update badge desktop
+        const badgeDesktop = document.querySelector('#notifContainer .badge-cart');
+        if (badgeDesktop) {
+            if (notificationCount > 0) {
+                badgeDesktop.textContent = notificationCount;
+                badgeDesktop.style.display = 'flex';
+            } else {
+                badgeDesktop.style.display = 'none';
+            }
+        }
+        
+        // Update badge mobile
+        const badgeMobile = document.querySelector('#mobileNotifBtn .mobile-badge');
+        if (badgeMobile) {
+            if (notificationCount > 0) {
+                badgeMobile.textContent = notificationCount;
+                badgeMobile.style.display = 'flex';
+            } else {
+                badgeMobile.style.display = 'none';
+            }
+        }
+    }
+    
+    // Event delegation untuk tombol OK notifikasi
+    document.addEventListener('click', function(e) {
+        // Desktop notifications
+        if (e.target && e.target.classList.contains('notif-ok-btn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const form = e.target.closest('form');
+            const notifItem = e.target.closest('.notif-item');
+            
+            if (notifItem && form) {
+                const orderId = notifItem.getAttribute('data-id');
+                markNotificationAsRead(orderId);
+            }
+        }
+        
+        // Mobile notifications
+        if (e.target && e.target.classList.contains('mobile-notif-ok-btn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const form = e.target.closest('form');
+            const notifItem = e.target.closest('.mobile-notification-item');
+            
+            if (notifItem && form) {
+                const orderId = notifItem.getAttribute('data-id');
+                markNotificationAsRead(orderId);
+            }
+        }
+    });
+    
+    console.log('All dropdown handlers initialized successfully');
 });
 
 // ============================================
-// FUNGSI UNTUK HANDLE NOTIFIKASI
+// FUNGSI UNTUK MENCEGAH BOOTSTRAP CONFLICT
 // ============================================
-function markNotificationAsRead(orderId) {
-    // AJAX call untuk menandai notifikasi sebagai dibaca
-    fetch(`/notifications/${orderId}/read`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Hapus notifikasi dari tampilan
-            const notificationItem = document.querySelector(`.notif-item[data-id="${orderId}"]`);
-            if (notificationItem) {
-                notificationItem.remove();
-            }
+(function() {
+    // Tunggu sampai Bootstrap selesai load
+    if (typeof bootstrap !== 'undefined') {
+        console.log('Bootstrap detected, preventing dropdown conflicts');
+        
+        // Override Bootstrap dropdown behavior untuk dropdown custom kita
+        document.addEventListener('show.bs.dropdown', function(event) {
+            const dropdown = event.target;
+            const isOurCustomDropdown = dropdown.id === 'profileDropdown' || 
+                                        dropdown.closest('#notifContainer') || 
+                                        dropdown.closest('#favoriteContainer') || 
+                                        dropdown.closest('#cartContainer');
             
-            // Update badge count
-            updateNotificationBadge();
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function updateNotificationBadge() {
-    // Hitung ulang jumlah notifikasi
-    const notificationCount = document.querySelectorAll('.notif-item').length;
-    const badge = document.querySelector('.badge-cart');
-    
-    if (notificationCount > 0) {
-        badge.textContent = notificationCount;
-        badge.style.display = 'flex';
-    } else {
-        badge.style.display = 'none';
+            if (isOurCustomDropdown) {
+                console.log('Preventing default Bootstrap dropdown behavior');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
     }
-}
+})();
 </script>
