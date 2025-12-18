@@ -473,19 +473,36 @@
     <!-- Thumbnail grid -->
     <div class="thumb-grid">
 
-        <!-- Thumbnail utama -->
-        <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}"
+    <!-- Thumbnail utama -->
+    <img src="{{ $product->img 
+        ? (filter_var($product->img, FILTER_VALIDATE_URL) 
+            ? $product->img 
+            : asset('storage/' . $product->img)) 
+        : asset('images/default-product.png') }}"
+         class="thumb-img"
+         data-large="{{ $product->img 
+            ? (filter_var($product->img, FILTER_VALIDATE_URL) 
+                ? $product->img 
+                : asset('storage/' . $product->img)) 
+            : asset('images/default-product.png') }}">
+
+    <!-- Thumbnail tambahan -->
+    @foreach ($productPhotos as $photo)
+        <img src="{{ $photo->photo_path 
+            ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
+                ? $photo->photo_path 
+                : asset('storage/' . $photo->photo_path)) 
+            : asset('images/default-product.png') }}"
              class="thumb-img"
-             data-large="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}">
+             data-large="{{ $photo->photo_path 
+                ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
+                    ? $photo->photo_path 
+                    : asset('storage/' . $photo->photo_path)) 
+                : asset('images/default-product.png') }}">
+    @endforeach
 
-        <!-- Thumbnail tambahan -->
-        @foreach ($productPhotos as $photo)
-            <img src="{{ $photo->photo_path ? asset('storage/' . $photo->photo_path) : asset('images/default-product.png') }}"
-                 class="thumb-img"
-                 data-large="{{ $photo->photo_path ? asset('storage/' . $photo->photo_path) : asset('images/default-product.png') }}">
-        @endforeach
+</div>
 
-    </div>
 
 </div>
 
@@ -608,7 +625,11 @@
 
                                     @foreach ($review->medias as $media)
     @php
-        $mediaPath = $media->media_path ? asset('storage/' . $media->media_path) : asset('images/default-media.png');
+        $mediaPath = $media->media_path 
+            ? (filter_var($media->media_path, FILTER_VALIDATE_URL) 
+                ? $media->media_path 
+                : asset('storage/' . $media->media_path)) 
+            : asset('images/default-media.png');
     @endphp
 
     @if (str_contains($media->media_type, 'image'))
@@ -626,6 +647,7 @@
         </a>
     @endif
 @endforeach
+
 
 
                                 </div>

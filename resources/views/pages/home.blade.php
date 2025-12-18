@@ -1006,9 +1006,14 @@ input[type="range"]:active::-webkit-slider-thumb {
                         <!-- Image Section -->
                         <div class="product-image-wrapper">
                             <a href="{{ route('product.detail', $product->id) }}">
-                                <img src="{{ asset('storage/' . $product->img) }}" 
-                                     alt="{{ $product->product_name }}"
-                                     onerror="this.src='{{ asset('img/product-3.png') }}'">
+                                <img src="{{ $product->img 
+    ? (filter_var($product->img, FILTER_VALIDATE_URL) 
+        ? $product->img 
+        : asset('storage/' . $product->img)) 
+    : asset('img/product-3.png') }}"
+     alt="{{ $product->product_name }}"
+     onerror="this.src='{{ asset('img/product-3.png') }}'">
+
                             </a>
 
                             <!-- Badges -->
