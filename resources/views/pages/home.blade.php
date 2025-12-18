@@ -868,7 +868,7 @@ input[type="range"]:active::-webkit-slider-thumb {
                             <div class="discount-badge">-{{ $discount }}%</div>
                         @endif
                         <div class="slide-left">
-                            <img src="{{ asset('storage/' . $ad->bg_image) ? asset('img/sate-ayam.png') }}" alt="Ad Image">
+                            <img src="{{ asset('storage/' . $ad->bg_image)) ? asset('img/sate-ayam.png') }}" alt="Ad Image">
 
                         </div>
                         <div class="slide-right">
