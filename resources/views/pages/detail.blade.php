@@ -459,52 +459,46 @@
                         {{-- Sub-Kolom Gambar (col-md-6) --}}
                         <div class="col-md-6">
 
-    <!-- Foto utama -->
-    <img src="{{ $product->img 
-    ? (filter_var($product->img, FILTER_VALIDATE_URL) 
-        ? $product->img 
-        : asset('storage/' . $product->img)) 
-    : asset('img/sate-ayam.png') }}"
-     alt="{{ $product->product_name }}"
-     class="product-img mb-3"
-     id="mainProductImg">
+                            <!-- Foto utama -->
+                           <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('img/sate-ayam.png') }}"
+     alt="{{ $product->product_name }}" 
+     class="product-img mb-3" 
+     id="mainProductImg"
+     onerror="this.onerror=null; this.src='{{ asset('img/sate-ayam.png') }}'">
 
 
-    <!-- Thumbnail grid -->
-    <div class="thumb-grid">
+                            <!-- Thumbnail grid -->
+                            <div class="thumb-grid">
 
-    <!-- Thumbnail utama -->
-    <img src="{{ $product->img 
-        ? (filter_var($product->img, FILTER_VALIDATE_URL) 
-            ? $product->img 
-            : asset('storage/' . $product->img)) 
-        : asset('img/sate-ayam.png') }}"
-         class="thumb-img"
-         data-large="{{ $product->img 
-            ? (filter_var($product->img, FILTER_VALIDATE_URL) 
-                ? $product->img 
-                : asset('storage/' . $product->img)) 
-            : asset('img/sate-ayam.png') }}">
+                                <!-- Thumbnail utama -->
+                                <img src="{{ asset('storage/' . ($product->img ?? '')) }}"
+     class="thumb-img"
+     data-large="{{ asset('storage/' . ($product->img ?? '')) }}"
+     onerror="this.src='{{ asset('img/sate-ayam.png') }}'; this.setAttribute('data-large', '{{ asset('img/sate-ayam.png') }}')">
 
-    <!-- Thumbnail tambahan -->
+                                <!-- Thumbnail tambahan -->
+                                @if(count($productPhotos) > 0)
     @foreach ($productPhotos as $photo)
-        <img src="{{ $photo->photo_path 
-            ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
-                ? $photo->photo_path 
-                : asset('storage/' . $photo->photo_path)) 
-            : asset('img/sate-ayam.png') }}"
+        <img src="{{ asset('storage/' . ($photo->photo_path ?? '')) }}"
              class="thumb-img"
-             data-large="{{ $photo->photo_path 
-                ? (filter_var($photo->photo_path, FILTER_VALIDATE_URL) 
-                    ? $photo->photo_path 
-                    : asset('storage/' . $photo->photo_path)) 
-                : asset('img/sate-ayam.png') }}">
+             data-large="{{ asset('storage/' . ($photo->photo_path ?? '')) }}"
+             onerror="this.onerror=null; this.src='{{ asset('img/sate-ayam.png') }}'; this.setAttribute('data-large', '{{ asset('img/sate-ayam.png') }}')">
     @endforeach
+@else
+    {{-- Tampilkan placeholder jika tidak ada foto detail --}}
+    <div class="no-photos-placeholder">
+        <img src="{{ asset('img/sate-ayam.png') }}"
+             class="thumb-img"
+             data-large="{{ asset('img/sate-ayam.png') }}"
+             alt="Tidak ada foto detail">
+        <small class="text-muted d-block">Belum ada foto detail</small>
+    </div>
+@endif
 
-</div>
+                            </div>
 
 
-</div>
+                        </div>
 
 
                         {{-- Sub-Kolom Detail (col-md-6) --}}
@@ -624,29 +618,32 @@
                                 <div id="review-gallery-{{ $review->id }}" class="d-flex gap-2 mt-2">
 
                                     @foreach ($review->medias as $media)
-    @php
-        $mediaPath = $media->media_path 
-            ? (filter_var($media->media_path, FILTER_VALIDATE_URL) 
-                ? $media->media_path 
-                : asset('storage/' . $media->media_path)) 
-            : asset('img/sate-ayam.png');
-    @endphp
+                                        @php
+                                            $mediaPath = $media->media_path
+                                                ? (filter_var($media->media_path, FILTER_VALIDATE_URL)
+                                                    ? $media->media_path
+                                                    : asset('storage/' . $media->media_path))
+                                                : asset('img/sate-ayam.png');
+                                        @endphp
 
-    @if (str_contains($media->media_type, 'image'))
-        <!-- FOTO -->
-        <a href="{{ $mediaPath }}" class="review-media-item" data-lg-size="1600-900">
-            <img src="{{ $mediaPath }}"
-                 style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
-        </a>
-    @else
-        <!-- VIDEO -->
-        <a href="{{ $mediaPath }}" class="review-media-item" data-lg-size="1280-720" data-lg-video="true">
-            <video style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
-                <source src="{{ $mediaPath }}">
-            </video>
-        </a>
-    @endif
-@endforeach
+                                        @if (str_contains($media->media_type, 'image'))
+                                            <!-- FOTO -->
+                                            <a href="{{ $mediaPath }}" class="review-media-item"
+                                                data-lg-size="1600-900">
+                                                <img src="{{ $mediaPath }}"
+                                                    style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
+                                            </a>
+                                        @else
+                                            <!-- VIDEO -->
+                                            <a href="{{ $mediaPath }}" class="review-media-item" data-lg-size="1280-720"
+                                                data-lg-video="true">
+                                                <video
+                                                    style="width:75px; height:75px; object-fit:cover; border-radius:6px;">
+                                                    <source src="{{ $mediaPath }}">
+                                                </video>
+                                            </a>
+                                        @endif
+                                    @endforeach
 
 
 
@@ -955,20 +952,20 @@
             // 2️⃣ Beli via WhatsApp (Auto Redirect)
             const qty = parseInt(qtyInput.value);
             // =========================
-whatsappBtn.addEventListener('click', function() {
+            whatsappBtn.addEventListener('click', function() {
 
-    const qty = parseInt(qtyInput.value);
-    const buyerId = {{ Auth::user()->buyer->id }};
-    const sellerId = {{ $product->seller_id }};
-    const productId = {{ $product->id }};
-    const productName = @json($product->name);
+                const qty = parseInt(qtyInput.value);
+                const buyerId = {{ Auth::user()->buyer->id }};
+                const sellerId = {{ $product->seller_id }};
+                const productId = {{ $product->id }};
+                const productName = @json($product->name);
 
-    let sellerPhone = "{{ $product->seller->phone_number ?? '628xxxx' }}";
-    sellerPhone = sellerPhone.replace(/^\+?0/, "62");
+                let sellerPhone = "{{ $product->seller->phone_number ?? '628xxxx' }}";
+                sellerPhone = sellerPhone.replace(/^\+?0/, "62");
 
-    const total = qty * price;
+                const total = qty * price;
 
-    const message = `
+                const message = `
 🧾 *ORDER RECEIPT*
 
 ────────────────────────
@@ -985,42 +982,43 @@ whatsappBtn.addEventListener('click', function() {
 Terima kasih kak 🙏✨
 `;
 
-    const dataToSend = [{
-        buyer_id: buyerId,
-        seller_id: sellerId,
-        status: "pending",
-        total_price: total,
-        details: [{
-            product_id: productId,
-            quantity: qty,
-            price: price
-        }]
-    }];
+                const dataToSend = [{
+                    buyer_id: buyerId,
+                    seller_id: sellerId,
+                    status: "pending",
+                    total_price: total,
+                    details: [{
+                        product_id: productId,
+                        quantity: qty,
+                        price: price
+                    }]
+                }];
 
-    // 🔥 STEP 1 — SIMPAN ORDER KE DATABASE
-    fetch("{{ route('order.store') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            orders_data: JSON.stringify(dataToSend)
-        })
-    })
-    .then(res => res.json())
-    .then(res => {
-        // 🔥 STEP 2 — SETELAH ORDER DISIMPAN → buka WhatsApp
-        const encoded = encodeURIComponent(message);
-        const url = `https://api.whatsapp.com/send?phone=${sellerPhone}&text=${encoded}`;
-        window.location.href = url;
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Terjadi kesalahan. Order tidak tersimpan.");
-    });
+                // 🔥 STEP 1 — SIMPAN ORDER KE DATABASE
+                fetch("{{ route('order.store') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            orders_data: JSON.stringify(dataToSend)
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        // 🔥 STEP 2 — SETELAH ORDER DISIMPAN → buka WhatsApp
+                        const encoded = encodeURIComponent(message);
+                        const url =
+                        `https://api.whatsapp.com/send?phone=${sellerPhone}&text=${encoded}`;
+                        window.location.href = url;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("Terjadi kesalahan. Order tidak tersimpan.");
+                    });
 
-});
+            });
 
 
 
