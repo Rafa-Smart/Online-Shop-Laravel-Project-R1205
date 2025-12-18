@@ -459,8 +459,9 @@
                         {{-- Sub-Kolom Gambar (col-md-6) --}}
                         <div class="col-md-6">
 
+
     <!-- Foto utama -->
-    <img src="{{ $product->img ? asset('storage/' . $product->img) : asset('images/default-product.png') }}"
+    <img src="{{ $product->img ? (filter_var($product->img, FILTER_VALIDATE_URL) ? asset('storage/' . $product->img) : asset('images/default-product.png') }}"
          alt="{{ $product->product_name }}"
          class="product-img mb-3"
          id="mainProductImg">
