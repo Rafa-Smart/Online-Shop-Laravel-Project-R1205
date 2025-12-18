@@ -2088,122 +2088,435 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing all dropdowns');
+    
+    // ============================================
+    // 1. INISIALISASI - TUTUP SEMUA DROPDOWN SAAT AWAL
+    // ============================================
+    function initializeDropdowns() {
+        console.log('Closing all dropdowns on initialization...');
+        
+        // Pastikan semua dropdown desktop tertutup
+        const desktopDropdowns = [
+            '.whiteblue-dropdown',
+            '.notif-dropdown', 
+            '.favorite-dropdown', 
+            '.cart-popup'
+        ];
+        
+        desktopDropdowns.forEach(selector => {
+            const dropdown = document.querySelector(selector);
+            if (dropdown) {
+                dropdown.style.display = 'none';
+                console.log(`Closed: ${selector}`);
+            }
+        });
+        
+        // Tutup semua mobile dropdowns
+        const mobileOverlays = document.querySelectorAll('.mobile-dropdown-overlay');
+        const mobileContents = document.querySelectorAll('.mobile-dropdown-content');
+        
+        mobileOverlays.forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        mobileContents.forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        document.body.style.overflow = 'auto';
+        
+        // Hentikan Bootstrap dropdown yang mungkin terbuka
+        const bootstrapDropdowns = document.querySelectorAll('.dropdown-menu.show');
+        bootstrapDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+        
+        console.log('All dropdowns initialized and closed');
+    }
+    
+    // Panggil fungsi inisialisasi
+    initializeDropdowns();
+    
+    // ============================================
+    // 2. FUNGSI UNTUK MOBILE DROPDOWNS
+    // ============================================
+    
     // Fungsi untuk membuka dropdown mobile
     function openMobileDropdown(overlayId, contentId) {
-        document.getElementById(overlayId).style.display = 'block';
-        document.getElementById(contentId).style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Mencegah scroll
+        // Tutup semua dropdown terlebih dahulu
+        closeAllDesktopDropdowns();
+        closeAllMobileDropdowns();
+        
+        const overlay = document.getElementById(overlayId);
+        const content = document.getElementById(contentId);
+        
+        if (overlay && content) {
+            overlay.style.display = 'block';
+            content.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            console.log(`Opened mobile dropdown: ${contentId}`);
+        }
     }
-
+    
     // Fungsi untuk menutup semua dropdown mobile
     function closeAllMobileDropdowns() {
         const overlays = document.querySelectorAll('.mobile-dropdown-overlay');
         const contents = document.querySelectorAll('.mobile-dropdown-content');
         
-        overlays.forEach(overlay => overlay.style.display = 'none');
-        contents.forEach(content => content.style.display = 'none');
-        document.body.style.overflow = 'auto'; // Mengembalikan scroll
+        overlays.forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        contents.forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        document.body.style.overflow = 'auto';
+        console.log('Closed all mobile dropdowns');
     }
-
-    // Event listeners untuk tombol mobile
-    document.getElementById('mobileProfileBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileProfileOverlay', 'mobileProfileContent');
+    
+    // ============================================
+    // 3. EVENT LISTENERS UNTUK MOBILE
+    // ============================================
+    
+    // Profile mobile
+    const mobileProfileBtn = document.getElementById('mobileProfileBtn');
+    if (mobileProfileBtn) {
+        mobileProfileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileProfileOverlay', 'mobileProfileContent');
+        });
+    }
+    
+    // Notifications mobile
+    const mobileNotifBtn = document.getElementById('mobileNotifBtn');
+    if (mobileNotifBtn) {
+        mobileNotifBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileNotifOverlay', 'mobileNotifContent');
+        });
+    }
+    
+    // Cart mobile
+    const mobileCartBtn = document.getElementById('mobileCartBtn');
+    if (mobileCartBtn) {
+        mobileCartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileCartOverlay', 'mobileCartContent');
+        });
+    }
+    
+    // Wishlist mobile
+    const mobileWishlistBtn = document.getElementById('mobileWishlistBtn');
+    if (mobileWishlistBtn) {
+        mobileWishlistBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openMobileDropdown('mobileWishlistOverlay', 'mobileWishlistContent');
+        });
+    }
+    
+    // Close buttons untuk mobile
+    const closeButtons = [
+        { id: 'mobileNotifClose', action: 'close' },
+        { id: 'mobileCartClose', action: 'close' },
+        { id: 'mobileWishlistClose', action: 'close' }
+    ];
+    
+    closeButtons.forEach(button => {
+        const closeBtn = document.getElementById(button.id);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeAllMobileDropdowns();
+                console.log(`Clicked close button: ${button.id}`);
+            });
+        }
     });
-
-    document.getElementById('mobileNotifBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileNotifOverlay', 'mobileNotifContent');
-    });
-
-    document.getElementById('mobileCartBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileCartOverlay', 'mobileCartContent');
-    });
-
-    document.getElementById('mobileWishlistBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        openMobileDropdown('mobileWishlistOverlay', 'mobileWishlistContent');
-    });
-
-    // Event listeners untuk tombol close
-    document.getElementById('mobileNotifClose').addEventListener('click', closeAllMobileDropdowns);
-    document.getElementById('mobileCartClose').addEventListener('click', closeAllMobileDropdowns);
-    document.getElementById('mobileWishlistClose').addEventListener('click', closeAllMobileDropdowns);
-
-    // Event listeners untuk overlay (menutup saat klik di luar)
+    
+    // Overlay click untuk menutup dropdown mobile
     document.querySelectorAll('.mobile-dropdown-overlay').forEach(overlay => {
-        overlay.addEventListener('click', closeAllMobileDropdowns);
+        overlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAllMobileDropdowns();
+            console.log('Clicked overlay - closing mobile dropdowns');
+        });
     });
-
-    // Event listener untuk mencegah klik di dalam dropdown menutup dropdown
+    
+    // Mencegah klik di dalam konten mobile menutup dropdown
     document.querySelectorAll('.mobile-dropdown-content').forEach(content => {
         content.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     });
-
+    
     // ============================================
-    // FUNGSI UNTUK DESKTOP (tetap bekerja)
+    // 4. FUNGSI UNTUK DESKTOP DROPDOWNS
     // ============================================
+    
     const notifContainer = document.getElementById('notifContainer');
-    const notifDropdown = notifContainer ? notifContainer.querySelector('.notif-dropdown') : null;
-
+    const notifDropdown = document.getElementById('notifDropdown');
+    
     const favoriteContainer = document.getElementById('favoriteContainer');
     const favoriteDropdown = favoriteContainer ? favoriteContainer.querySelector('.favorite-dropdown') : null;
-
+    
     const cartContainer = document.getElementById('cartContainer');
     const cartPopup = cartContainer ? cartContainer.querySelector('.cart-popup') : null;
-
-    const dropdowns = [
-        { container: notifContainer, element: notifDropdown },
-        { container: favoriteContainer, element: favoriteDropdown },
-        { container: cartContainer, element: cartPopup }
-    ].filter(item => item.container && item.element);
-
-    function closeAllDropdowns(excludeElement = null) {
-        dropdowns.forEach(item => {
-            if (item.element && item.element !== excludeElement) {
-                item.element.style.display = 'none';
-            }
+    
+    // ============================================
+    // 5. FUNGSI BANTUAN DESKTOP
+    // ============================================
+    
+    function closeAllDesktopDropdowns() {
+        console.log('Closing all desktop dropdowns...');
+        
+        if (notifDropdown) {
+            notifDropdown.style.display = 'none';
+        }
+        
+        if (favoriteDropdown) {
+            favoriteDropdown.style.display = 'none';
+        }
+        
+        if (cartPopup) {
+            cartPopup.style.display = 'none';
+        }
+        
+        // Tutup Bootstrap profile dropdown
+        const profileDropdownMenu = document.querySelector('.whiteblue-dropdown');
+        if (profileDropdownMenu) {
+            profileDropdownMenu.style.display = 'none';
+        }
+        
+        // Tutup Bootstrap dropdown lainnya
+        const bootstrapDropdowns = document.querySelectorAll('.dropdown-menu.show');
+        bootstrapDropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
         });
+        
+        console.log('All desktop dropdowns closed');
     }
-
-    function toggleDropdown(event, dropdownElement) {
+    
+    function toggleDesktopDropdown(event, container, dropdownElement) {
+        event.preventDefault();
         event.stopPropagation();
+        
+        console.log(`Toggling dropdown for: ${container.id}`);
+        
+        // Tutup semua dropdown lainnya
+        if (dropdownElement !== notifDropdown && notifDropdown) {
+            notifDropdown.style.display = 'none';
+        }
+        if (dropdownElement !== favoriteDropdown && favoriteDropdown) {
+            favoriteDropdown.style.display = 'none';
+        }
+        if (dropdownElement !== cartPopup && cartPopup) {
+            cartPopup.style.display = 'none';
+        }
+        
+        // Toggle dropdown yang diklik
         const isCurrentlyOpen = dropdownElement.style.display === 'block';
-        closeAllDropdowns(dropdownElement);
         dropdownElement.style.display = isCurrentlyOpen ? 'none' : 'block';
+        
+        // Jika dropdown dibuka, atur positioning
+        if (!isCurrentlyOpen) {
+            positionDesktopDropdown(container, dropdownElement);
+        }
+        
+        console.log(`${container.id} dropdown is now: ${dropdownElement.style.display}`);
     }
-
-    dropdowns.forEach(item => {
-        item.container.addEventListener('click', function(event) {
-            if (item.container === cartContainer || item.container === favoriteContainer) {
-                event.preventDefault();
-            }
-            toggleDropdown(event, item.element);
+    
+    function positionDesktopDropdown(container, dropdownElement) {
+        const rect = container.getBoundingClientRect();
+        dropdownElement.style.position = 'absolute';
+        dropdownElement.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+        dropdownElement.style.right = (window.innerWidth - rect.right) + 'px';
+        dropdownElement.style.zIndex = '9999';
+    }
+    
+    // ============================================
+    // 6. EVENT LISTENERS UNTUK DESKTOP DROPDOWNS
+    // ============================================
+    
+    // Notifikasi
+    if (notifContainer && notifDropdown) {
+        notifContainer.addEventListener('click', function(event) {
+            toggleDesktopDropdown(event, notifContainer, notifDropdown);
         });
-    });
-
+        
+        // Mencegah klik di dalam dropdown menutupnya
+        notifDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Wishlist
+    if (favoriteContainer && favoriteDropdown) {
+        favoriteContainer.addEventListener('click', function(event) {
+            toggleDesktopDropdown(event, favoriteContainer, favoriteDropdown);
+        });
+        
+        // Handler untuk klik item dalam wishlist dropdown
+        favoriteDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // Jika klik adalah item wishlist
+            const wishlistItem = e.target.closest('.wishlist-item');
+            if (wishlistItem) {
+                const onclickAttr = wishlistItem.getAttribute('onclick');
+                if (onclickAttr) {
+                    try {
+                        // Eksekusi onclick
+                        eval(onclickAttr);
+                    } catch (error) {
+                        console.error('Error executing wishlist item onclick:', error);
+                    }
+                }
+            }
+            
+            // Jika klik adalah link Go to Wishlist
+            const wishlistLink = e.target.closest('a[href*="wishlist"]');
+            if (wishlistLink) {
+                return; // Biarkan link berfungsi normal
+            }
+        });
+    }
+    
+    // Cart
+    if (cartContainer && cartPopup) {
+        cartContainer.addEventListener('click', function(event) {
+            toggleDesktopDropdown(event, cartContainer, cartPopup);
+        });
+        
+        // Handler untuk klik item dalam cart dropdown
+        cartPopup.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // Jika klik adalah item cart
+            const cartItem = e.target.closest('.cart-item');
+            if (cartItem) {
+                const onclickAttr = cartItem.getAttribute('onclick');
+                if (onclickAttr) {
+                    try {
+                        // Eksekusi onclick
+                        eval(onclickAttr);
+                    } catch (error) {
+                        console.error('Error executing cart item onclick:', error);
+                    }
+                }
+            }
+            
+            // Jika klik adalah link Go to Cart
+            const cartLink = e.target.closest('a[onclick*="showCarts"]');
+            if (cartLink) {
+                const onclickAttr = cartLink.getAttribute('onclick');
+                if (onclickAttr) {
+                    try {
+                        // Eksekusi onclick
+                        eval(onclickAttr);
+                    } catch (error) {
+                        console.error('Error executing cart link onclick:', error);
+                    }
+                }
+            }
+        });
+    }
+    
+    // ============================================
+    // 7. KLIK DI LUAR UNTUK MENUTUP SEMUA DROPDOWN
+    // ============================================
+    
     document.addEventListener('click', function(event) {
-        let isInsideAnyContainer = false;
-        dropdowns.forEach(item => {
+        // Cek apakah klik berada di dalam salah satu dropdown atau containernya
+        let isClickInsideDropdown = false;
+        
+        // Cek desktop dropdowns
+        const desktopContainers = [
+            { container: notifContainer, dropdown: notifDropdown },
+            { container: favoriteContainer, dropdown: favoriteDropdown },
+            { container: cartContainer, dropdown: cartPopup }
+        ];
+        
+        desktopContainers.forEach(item => {
             if (item.container && item.container.contains(event.target)) {
-                isInsideAnyContainer = true;
+                isClickInsideDropdown = true;
+            }
+            if (item.dropdown && item.dropdown.contains(event.target)) {
+                isClickInsideDropdown = true;
             }
         });
-
-        if (!isInsideAnyContainer) {
-            closeAllDropdowns();
+        
+        // Cek profile dropdown
+        const profileToggle = document.querySelector('.dropdown .dropdown-toggle');
+        const profileMenu = document.querySelector('.whiteblue-dropdown');
+        if (profileToggle && profileToggle.contains(event.target)) {
+            isClickInsideDropdown = true;
+        }
+        if (profileMenu && profileMenu.contains(event.target)) {
+            isClickInsideDropdown = true;
+        }
+        
+        // Cek mobile dropdowns
+        const mobileIcons = document.querySelectorAll('.mobile-icon-item');
+        mobileIcons.forEach(icon => {
+            if (icon.contains(event.target)) {
+                isClickInsideDropdown = true;
+            }
+        });
+        
+        const mobileContents = document.querySelectorAll('.mobile-dropdown-content');
+        mobileContents.forEach(content => {
+            if (content.contains(event.target)) {
+                isClickInsideDropdown = true;
+            }
+        });
+        
+        // Jika klik di luar semua dropdown, tutup semuanya
+        if (!isClickInsideDropdown) {
+            closeAllDesktopDropdowns();
+            closeAllMobileDropdowns();
         }
     });
-
+    
     // ============================================
-    // FITUR SEARCH AUTO-SUBMIT
+    // 8. ESCAPE KEY HANDLER
     // ============================================
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            console.log('Escape key pressed - closing all dropdowns');
+            closeAllDesktopDropdowns();
+            closeAllMobileDropdowns();
+        }
+    });
+    
+    // ============================================
+    // 9. WINDOW RESIZE HANDLER
+    // ============================================
+    
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            console.log('Window resized - closing all dropdowns');
+            closeAllDesktopDropdowns();
+            closeAllMobileDropdowns();
+        }, 250);
+    });
+    
+    // ============================================
+    // 10. FITUR SEARCH AUTO-SUBMIT
+    // ============================================
+    
     const searchInput = document.querySelector('.search-input');
     const searchForm = document.querySelector('.search-form');
-
+    
     if (searchInput && searchForm) {
         let timeout;
         searchInput.addEventListener('keyup', function() {
@@ -2213,11 +2526,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1000);
         });
     }
+    
+    // ============================================
+    // 11. FIX UNTUK BOOTSTRAP DROPDOWN CONFLICT
+    // ============================================
+    
+    // Mencegah Bootstrap mengganggu dropdown custom kita
+    document.addEventListener('show.bs.dropdown', function(event) {
+        const target = event.target;
+        const isCustomDropdown = 
+            target.id === 'notifContainer' || 
+            target.id === 'favoriteContainer' || 
+            target.id === 'cartContainer' ||
+            target.closest('#notifContainer') || 
+            target.closest('#favoriteContainer') || 
+            target.closest('#cartContainer');
+        
+        if (isCustomDropdown) {
+            console.log('Preventing Bootstrap dropdown for custom element');
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    });
+    
+    console.log('All dropdown handlers initialized successfully');
 });
 
 // ============================================
 // FUNGSI UNTUK HANDLE NOTIFIKASI
 // ============================================
+
 function markNotificationAsRead(orderId) {
     // AJAX call untuk menandai notifikasi sebagai dibaca
     fetch(`/notifications/${orderId}/read`, {
@@ -2230,10 +2568,16 @@ function markNotificationAsRead(orderId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Hapus notifikasi dari tampilan
+            // Hapus notifikasi dari tampilan desktop
             const notificationItem = document.querySelector(`.notif-item[data-id="${orderId}"]`);
             if (notificationItem) {
                 notificationItem.remove();
+            }
+            
+            // Hapus notifikasi dari tampilan mobile
+            const mobileNotificationItem = document.querySelector(`.mobile-notification-item[data-id="${orderId}"]`);
+            if (mobileNotificationItem) {
+                mobileNotificationItem.remove();
             }
             
             // Update badge count
@@ -2245,14 +2589,103 @@ function markNotificationAsRead(orderId) {
 
 function updateNotificationBadge() {
     // Hitung ulang jumlah notifikasi
-    const notificationCount = document.querySelectorAll('.notif-item').length;
-    const badge = document.querySelector('.badge-cart');
+    const notificationCountDesktop = document.querySelectorAll('.notif-item').length;
+    const notificationCountMobile = document.querySelectorAll('.mobile-notification-item').length;
+    const notificationCount = Math.max(notificationCountDesktop, notificationCountMobile);
     
-    if (notificationCount > 0) {
-        badge.textContent = notificationCount;
-        badge.style.display = 'flex';
-    } else {
-        badge.style.display = 'none';
+    // Update badge desktop
+    const badgeDesktop = document.querySelector('#notifContainer .badge-cart');
+    if (badgeDesktop) {
+        if (notificationCount > 0) {
+            badgeDesktop.textContent = notificationCount;
+            badgeDesktop.style.display = 'flex';
+        } else {
+            badgeDesktop.style.display = 'none';
+        }
+    }
+    
+    // Update badge mobile
+    const badgeMobile = document.querySelector('#mobileNotifBtn .mobile-badge');
+    if (badgeMobile) {
+        if (notificationCount > 0) {
+            badgeMobile.textContent = notificationCount;
+            badgeMobile.style.display = 'flex';
+        } else {
+            badgeMobile.style.display = 'none';
+        }
     }
 }
+
+// Event delegation untuk tombol OK notifikasi
+document.addEventListener('click', function(e) {
+    // Desktop notifications
+    if (e.target && e.target.classList.contains('notif-ok-btn')) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const form = e.target.closest('form');
+        const notifItem = e.target.closest('.notif-item');
+        
+        if (notifItem && form) {
+            const orderId = notifItem.getAttribute('data-id');
+            markNotificationAsRead(orderId);
+        }
+    }
+    
+    // Mobile notifications
+    if (e.target && e.target.classList.contains('mobile-notif-ok-btn')) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const form = e.target.closest('form');
+        const notifItem = e.target.closest('.mobile-notification-item');
+        
+        if (notifItem && form) {
+            const orderId = notifItem.getAttribute('data-id');
+            markNotificationAsRead(orderId);
+        }
+    }
+});
+
+// ============================================
+// FUNGSI BANTUAN TAMBAHAN
+// ============================================
+
+function navigateToProduct(productId) {
+    window.location.href = '/product/detail/' + productId;
+}
+
+function navigateToCart() {
+    window.location.href = '/cart';
+}
+
+function navigateToWishlist() {
+    window.location.href = '/wishlist';
+}
+
+// ============================================
+// INISIALISASI TAMBAHAN SAAT WINDOW LOAD
+// ============================================
+
+window.addEventListener('load', function() {
+    // Pastikan semua dropdown tertutup setelah semua konten dimuat
+    setTimeout(function() {
+        const allDropdowns = document.querySelectorAll(
+            '.whiteblue-dropdown, .notif-dropdown, .favorite-dropdown, .cart-popup, .mobile-dropdown-content'
+        );
+        
+        allDropdowns.forEach(dropdown => {
+            dropdown.style.display = 'none';
+        });
+        
+        const allOverlays = document.querySelectorAll('.mobile-dropdown-overlay');
+        allOverlays.forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        document.body.style.overflow = 'auto';
+        
+        console.log('Final check: All dropdowns should be closed after window load');
+    }, 100);
+});
 </script>
