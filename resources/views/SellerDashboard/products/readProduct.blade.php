@@ -505,7 +505,20 @@
                              data-price="{{ $product->price }}"
                              data-rating="{{ $product->average_rating }}"
                              data-created="{{ $product->created_at->timestamp }}">
-                            <img src="{{ asset('storage/'.$product->img) }}" alt="{{ $product->product_name }}" class="product-image" onerror="this.src='{{ asset('img/avatar.jpg') }}'">
+
+
+
+                            
+
+                            <img src="{{ $product->img 
+    ? (filter_var($product->img, FILTER_VALIDATE_URL) 
+        ? $product->img 
+        : asset('storage/' . $product->img)) 
+    : asset('img/product-3.png') }}"
+     alt="{{ $product->product_name }}"
+     onerror="this.src='{{ asset('img/product-3.png') }}'">
+
+
                             <div class="product-body">
                                 <h3 class="product-name">{{ $product->product_name }}</h3>
                                 <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
