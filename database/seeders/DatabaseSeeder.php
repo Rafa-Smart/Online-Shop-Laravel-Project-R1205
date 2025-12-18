@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Clear existing categories
-        DB::table('categories')->truncate();
 
         // Insert 10 e-commerce categories
         $categories = [
